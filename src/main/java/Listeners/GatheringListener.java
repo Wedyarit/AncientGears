@@ -64,14 +64,14 @@ public class GatheringListener extends BaseListener {
         ArrayList<Tool> toolArrayList = getToolArray();
         if (resource.getCustomName() != null)
             for (Ore ore : oreArrayList)
-                for (Tool tool : toolArrayList)
                     if (isContains(toolArrayList, player.getInventory().getItemInMainHand()) != -1)
                         if (resource.getCustomName().equals(ore.getName()))
                             if (toolArrayList.get(isContains(toolArrayList, player.getInventory().getItemInMainHand())).getTier() >= ore.getTier()) {
                                 setCD(resource, ore.getCooldown());
                                 addItemsByChance(ore.getDrop(), ore.getChance(), maxcount, player);
                                 break;
-                            }
+                            } else
+                                player.sendMessage(ChatColor.RED + "" + player.getInventory().getItemInMainHand().getItemMeta().getDisplayName() + " не может добыть " + ore.getName() + " ,нужна кирка минимум " + ore.getTier() + "  тира" );
     }
 
     @EventHandler

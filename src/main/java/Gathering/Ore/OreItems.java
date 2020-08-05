@@ -56,6 +56,12 @@ public class OreItems {
             .lore(ChatColor.GRAY + "[★★★★✰] Материал")
             .build();
 
+    public static ItemStack brassOre = new ItemConstructor(Material.GOLD_INGOT)
+            .amount(1)
+            .displayName(ChatColor.GRAY + "Слиток Латуни")
+            .lore(ChatColor.GRAY + "[★★✰✰✰] Материал")
+            .build();
+
     //////////////////////// Инструменты /////////////////////////////////////////////////
 
     public static ItemStack t1PickAxe = new ItemConstructor(Material.WOODEN_PICKAXE)
