@@ -1,6 +1,5 @@
 package Listeners;
 
-import Gathering.Ore.OreVeins;
 import Gathering.Ore.OreItems;
 import AncientGears.AncientGears;
 import Gathering.ResourceManager;
@@ -25,32 +24,32 @@ public class GatheringListener extends BaseListener {
         int maxcount = 3;
         if (resource.getCustomName() != null) {
             if (player.getInventory().getItemInMainHand().equals(OreItems.t1PickAxe)) {
-                if (resource.equals(ResourceManager.stoneOre.getOre())) {
+                if (resource.getCustomName().equals(ResourceManager.stoneOre.getName())) {
                     setCD(resource, ResourceManager.stoneOre.getCooldown());
                     addItemsByChance(ResourceManager.stoneOre.getDrop(), ResourceManager.stoneOre.getChance(), maxcount, player);
-                } else if (resource.equals(ResourceManager.coalOre.getOre())) {
+                } else if (resource.getCustomName().equals(ResourceManager.coalOre.getName())) {
                     setCD(resource, ResourceManager.coalOre.getCooldown());
                     addItemsByChance(ResourceManager.coalOre.getDrop(), ResourceManager.coalOre.getChance(), maxcount, player);
                 }
             } else if (player.getInventory().getItemInMainHand().equals(OreItems.t2PickAxe)) {
-                if (resource.equals(ResourceManager.copperOre.getOre())) {
+                if (resource.getCustomName().equals(ResourceManager.copperOre.getName())) {
                     setCD(resource, ResourceManager.copperOre.getCooldown());
                     addItemsByChance(ResourceManager.copperOre.getDrop(), ResourceManager.copperOre.getChance(), maxcount, player);
-                } else if (resource.equals(ResourceManager.tinOre.getOre())) {
+                } else if (resource.getCustomName().equals(ResourceManager.tinOre.getName())) {
                     setCD(resource, ResourceManager.tinOre.getCooldown());
                     addItemsByChance(ResourceManager.tinOre.getDrop(), ResourceManager.tinOre.getChance(), maxcount, player);
-                } else if (resource.equals(ResourceManager.ironOre.getOre())) {
+                } else if (resource.getCustomName().equals(ResourceManager.ironOre.getName())) {
                     setCD(resource, ResourceManager.ironOre.getCooldown());
                     addItemsByChance(ResourceManager.ironOre.getDrop(), ResourceManager.ironOre.getChance(), maxcount, player);
                 }
             } else if (player.getInventory().getItemInMainHand().equals(OreItems.t3PickAxe)) {
-                if (resource.equals(ResourceManager.goldOre.getOre())) {
+                if (resource.getCustomName().equals(ResourceManager.goldOre.getName())) {
                     setCD(resource, ResourceManager.goldOre.getCooldown());
                     addItemsByChance(ResourceManager.goldOre.getDrop(), ResourceManager.goldOre.getChance(), maxcount, player);
-                } else if (resource.equals(ResourceManager.titanOre.getOre())) {
+                } else if (resource.getCustomName().equals(ResourceManager.titanOre.getName())) {
                     setCD(resource, ResourceManager.titanOre.getCooldown());
                     addItemsByChance(ResourceManager.titanOre.getDrop(), ResourceManager.titanOre.getChance(), maxcount, player);
-                } else if (resource.equals(ResourceManager.zincOre.getOre())) {
+                } else if (resource.getCustomName().equals(ResourceManager.zincOre.getName())) {
                     setCD(resource, ResourceManager.zincOre.getCooldown());
                     addItemsByChance(ResourceManager.zincOre.getDrop(), ResourceManager.zincOre.getChance(), maxcount, player);
                 }
@@ -82,13 +81,13 @@ public class GatheringListener extends BaseListener {
             int time = seconds * 20;
             @Override
             public void run() {
-               if (time <= 0) {
-                   armorStand.getEquipment().setItemInMainHand(rightArm);
-                   armorStand.getEquipment().setItemInOffHand(leftArm);
-                   armorStand.getEquipment().setHelmet(head);
-                   armorStand.setCustomNameVisible(true);
-                   this.cancel();
-               }
+                if (time <= 0) {
+                    armorStand.getEquipment().setItemInMainHand(rightArm);
+                    armorStand.getEquipment().setItemInOffHand(leftArm);
+                    armorStand.getEquipment().setHelmet(head);
+                    armorStand.setCustomNameVisible(true);
+                    this.cancel();
+                }
                 time--;
             }
         }.runTaskTimer(AncientGears.getInstance(), 0,20);

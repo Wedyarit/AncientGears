@@ -27,13 +27,20 @@ public class ResourceConstructor {
         TREE
     }
 
-    public ResourceConstructor(String name) {
+
+
+    public ResourceConstructor(ArmorStand armorStand) {
+       this.base = armorStand;
+       this.base.setInvulnerable(true);
+       this.base.setGravity(false);
+       this.base.setVisible(false);
+       this.base.setArms(false);
+    }
+
+    public ResourceConstructor setName(String name ) {
         this.base.setCustomName(name);
         this.base.setCustomNameVisible(true);
-        this.base.setInvulnerable(true);
-        this.base.setGravity(false);
-        this.base.setVisible(false);
-        this.base.setArms(false);
+        return this;
     }
 
     public ResourceConstructor setType(ResourceType type) {

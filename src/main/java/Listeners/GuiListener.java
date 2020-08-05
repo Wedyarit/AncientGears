@@ -1,8 +1,9 @@
 package Listeners;
 
-import Gathering.Ore.OreVeins;
 import Gathering.Ore.OreItems;
+import Gathering.ResourceManager;
 import Utilities.GuiConstructor;
+import Utilities.ResourceConstructor;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -105,28 +106,60 @@ public class GuiListener extends BaseListener {
         World world = player.getWorld();
         ArmorStand as =  (ArmorStand) world.spawnEntity(player.getLocation(), EntityType.ARMOR_STAND);
         if (clickedItem.equals(OreItems.stoneOre)) {
-            as = OreVeins.stoneOre;
+            as = new ResourceConstructor(as)
+                    .setName(ResourceManager.stoneOre.getName())
+                    .setMaterial(ResourceManager.stoneOre.getDrop())
+                    .setType(ResourceConstructor.ResourceType.ORE)
+                    .build();
             player.closeInventory();
         } else if (clickedItem.equals(OreItems.coalOre)) {
-            as = OreVeins.coalOre;
+            as = new ResourceConstructor(as)
+                    .setName(ResourceManager.coalOre.getName())
+                    .setMaterial(ResourceManager.coalOre.getDrop())
+                    .setType(ResourceConstructor.ResourceType.ORE)
+                    .build();
             player.closeInventory();
         } else if (clickedItem.equals(OreItems.ironOre)) {
-            as = OreVeins.ironOre;
+            as = new ResourceConstructor(as)
+                    .setName(ResourceManager.ironOre.getName())
+                    .setMaterial(ResourceManager.ironOre.getDrop())
+                    .setType(ResourceConstructor.ResourceType.ORE)
+                    .build();
             player.closeInventory();
         } else if (clickedItem.equals(OreItems.copperOre)) {
-            as = OreVeins.copperOre;
+            as = new ResourceConstructor(as)
+                    .setName(ResourceManager.copperOre.getName())
+                    .setMaterial(ResourceManager.copperOre.getDrop())
+                    .setType(ResourceConstructor.ResourceType.ORE)
+                    .build();
             player.closeInventory();
         } else if (clickedItem.equals(OreItems.tinOre)) {
-            as = OreVeins.tinOre;
+            as = new ResourceConstructor(as)
+                    .setName(ResourceManager.tinOre.getName())
+                    .setMaterial(ResourceManager.tinOre.getDrop())
+                    .setType(ResourceConstructor.ResourceType.ORE)
+                    .build();
             player.closeInventory();
         } else if (clickedItem.equals(OreItems.zincOre)) {
-            as = OreVeins.zincOre;
+            as = new ResourceConstructor(as)
+                    .setName(ResourceManager.zincOre.getName())
+                    .setMaterial(ResourceManager.zincOre.getDrop())
+                    .setType(ResourceConstructor.ResourceType.ORE)
+                    .build();
             player.closeInventory();
         } else if (clickedItem.equals(OreItems.goldOre)) {
-            as = OreVeins.goldOre;
+            as = new ResourceConstructor(as)
+                    .setName(ResourceManager.goldOre.getName())
+                    .setMaterial(ResourceManager.goldOre.getDrop())
+                    .setType(ResourceConstructor.ResourceType.ORE)
+                    .build();
             player.closeInventory();
         } else if (clickedItem.equals(OreItems.titanOre)) {
-            as = OreVeins.titanOre;
+            as = new ResourceConstructor(as)
+                    .setName(ResourceManager.titanOre.getName())
+                    .setMaterial(ResourceManager.titanOre.getDrop())
+                    .setType(ResourceConstructor.ResourceType.ORE)
+                    .build();
             player.closeInventory();
         }
     }

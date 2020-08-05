@@ -6,15 +6,13 @@ import org.bukkit.inventory.ItemStack;
 import java.util.ArrayList;
 
 public class Ore {
-    private final ArmorStand ore;
     private final String name;
     private final ItemStack tool;
     private final ItemStack drop;
     private final Double chance;
     private final Integer cooldown;
 
-    public Ore(ArmorStand ore, String name, ItemStack tool, ItemStack drop, Double chance, Integer cooldown) {
-        this.ore = ore;
+    public Ore(String name, ItemStack tool, ItemStack drop, Double chance, Integer cooldown) {
         this.name = name;
         this.tool = tool;
         this.drop = drop;
@@ -28,10 +26,6 @@ public class Ore {
 
     public ItemStack getTool() {
         return tool;
-    }
-
-    public ArmorStand getOre() {
-        return ore;
     }
 
     public ItemStack getDrop() {
