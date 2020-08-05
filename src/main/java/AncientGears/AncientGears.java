@@ -1,5 +1,6 @@
 package AncientGears;
 
+import Gathering.ResourceManager;
 import Listeners.GatheringListener;
 import Listeners.GuiListener;
 import Listeners.InventoryListener;
@@ -32,5 +33,6 @@ public final class AncientGears extends JavaPlugin {
         new GuiListener();
         new InventoryListener();
         new GatheringListener();
+        new ResourceManager();
     }
 }
