@@ -1,6 +1,8 @@
 package Utilities;
 
 import Gathering.Ore.OreItems;
+import Gathering.ResourceManager;
+import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;

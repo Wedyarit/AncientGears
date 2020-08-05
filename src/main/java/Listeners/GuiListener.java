@@ -47,6 +47,7 @@ public class GuiListener extends BaseListener {
 
     @EventHandler
     public void onInteract(PlayerInteractEvent e) {
+        if (e.getItem() == null) return;
         if (!e.getItem().equals(OreItems.profMenu)) return;
         e.getPlayer().openInventory(guiGathering);
     }

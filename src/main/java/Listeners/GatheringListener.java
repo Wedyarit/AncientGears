@@ -3,6 +3,7 @@ package Listeners;
 import Gathering.Ore.OreItems;
 import AncientGears.AncientGears;
 import Gathering.ResourceManager;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Player;
@@ -28,7 +29,7 @@ public class GatheringListener extends BaseListener {
             if (player.getInventory().getItemInMainHand().equals(OreItems.t1PickAxe)) {
                 if (resource.getCustomName().equals(ResourceManager.stoneOre.getName())) {
                     setCD(resource, ResourceManager.stoneOre.getCooldown());
-                    addItemsByChance(ResourceManager.stoneOre.getDrop(), ResourceManager.stoneOre.getChance(), maxcount, player);
+                    addItemsByChance(ResourceManager.stoneOre.getTool(), ResourceManager.stoneOre.getChance(), maxcount, player);
                 } else if (resource.getCustomName().equals(ResourceManager.coalOre.getName())) {
                     setCD(resource, ResourceManager.coalOre.getCooldown());
                     addItemsByChance(ResourceManager.coalOre.getDrop(), ResourceManager.coalOre.getChance(), maxcount, player);
@@ -65,10 +66,10 @@ public class GatheringListener extends BaseListener {
     }
 
     private void addItemsByChance(ItemStack item, Double chance, Integer maxCount, Player player) {
-        ArrayList<ItemStack> toReturn = null;
         chance *= 0.01;
         for(int i = 0; i < maxCount; i++) {
             double random = Math.random();
+            Bukkit.broadcastMessage(item + "");
             if (chance <= random) player.getInventory().addItem(item);
         }
     }
@@ -85,9 +86,10 @@ public class GatheringListener extends BaseListener {
         armorStand.setCustomNameVisible(false);
 
         new BukkitRunnable() {
-            int time = seconds * 20;
+            int time = seconds;
             @Override
             public void run() {
+                time--;
                 if (time <= 0) {
                     armorStand.getEquipment().setItemInMainHand(rightArm);
                     armorStand.getEquipment().setItemInOffHand(leftArm);
@@ -95,7 +97,7 @@ public class GatheringListener extends BaseListener {
                     armorStand.setCustomNameVisible(true);
                     this.cancel();
                 }
-                time--;
+
             }
         }.runTaskTimer(AncientGears.getInstance(), 0,20);
     }
