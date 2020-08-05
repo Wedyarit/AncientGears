@@ -73,7 +73,6 @@ public class GatheringListener extends BaseListener {
                             }
     }
 
-
     @EventHandler
     private void onInteract(EntityInteractEvent e) {
         if (e.getEntity() instanceof ArmorStand) e.setCancelled(true);
