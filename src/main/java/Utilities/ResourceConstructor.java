@@ -27,17 +27,14 @@ public class ResourceConstructor {
         TREE
     }
 
-
-
     public ResourceConstructor(ArmorStand armorStand) {
-       this.base = armorStand;
-       this.base.setInvulnerable(true);
-       this.base.setGravity(false);
-       this.base.setVisible(false);
-       this.base.setArms(false);
+        this.base = armorStand;
+        this.base.setGravity(false);
+        this.base.setVisible(false);
+        this.base.setArms(false);
     }
 
-    public ResourceConstructor setName(String name ) {
+    public ResourceConstructor setName(String name) {
         this.base.setCustomName(name);
         this.base.setCustomNameVisible(true);
         return this;
@@ -47,22 +44,22 @@ public class ResourceConstructor {
         switch (type) {
             case ORE: {
                 this.base.setArms(true);
-                this.base.setLeftArmPose(new EulerAngle(50,30,-135));
-                this.base.setRightArmPose(new EulerAngle(-100,-30,-135));
-                this.base.setLeftLegPose(new EulerAngle(-145,0, 0));
-                this.base.setRightLegPose(new EulerAngle(225,0, 0));
+                this.base.setLeftArmPose(new EulerAngle(50, 30, -135));
+                this.base.setRightArmPose(new EulerAngle(-100, -30, -135));
+                this.base.setLeftLegPose(new EulerAngle(-145, 0, 0));
+                this.base.setRightLegPose(new EulerAngle(225, 0, 0));
             }
             case CROP: {
                 this.base.setArms(true);
-                this.base.setLeftLegPose(new EulerAngle(-145,0, 0));
-                this.base.setRightLegPose(new EulerAngle(225,0, 0));
-                this.base.setLeftArmPose(new EulerAngle(200,10,-135));
-                this.base.setRightArmPose(new EulerAngle(135,10,-135));
+                this.base.setLeftLegPose(new EulerAngle(-145, 0, 0));
+                this.base.setRightLegPose(new EulerAngle(225, 0, 0));
+                this.base.setLeftArmPose(new EulerAngle(200, 10, -135));
+                this.base.setRightArmPose(new EulerAngle(135, 10, -135));
             }
             case FISH: {
                 this.base.setArms(true);
-                this.base.setLeftLegPose(new EulerAngle(-145,0, 0));
-                this.base.setRightLegPose(new EulerAngle(225,0, 0));
+                this.base.setLeftLegPose(new EulerAngle(-145, 0, 0));
+                this.base.setRightLegPose(new EulerAngle(225, 0, 0));
             }
             case TREE: {
 

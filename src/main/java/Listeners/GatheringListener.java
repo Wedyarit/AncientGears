@@ -3,6 +3,7 @@ package Listeners;
 import Gathering.Ore.OreItems;
 import AncientGears.AncientGears;
 import Gathering.ResourceManager;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Player;
@@ -10,6 +11,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityInteractEvent;
+import org.bukkit.event.player.PlayerInteractAtEntityEvent;
+import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -60,14 +63,14 @@ public class GatheringListener extends BaseListener {
     }
 
     @EventHandler
-    private void onInteract(EntityInteractEvent e) {
-        if (e.getEntity() instanceof  ArmorStand) e.setCancelled(true);
+    private void onInteract(PlayerInteractAtEntityEvent e) {
+        if (e.getRightClicked() instanceof ArmorStand) e.setCancelled(true);
     }
 
     private void addItemsByChance(ItemStack item, Double chance, Integer maxCount, Player player) {
         ArrayList<ItemStack> toReturn = null;
         chance *= 0.01;
-        for(int i = 0; i < maxCount; i++) {
+        for (int i = 0; i < maxCount; i++) {
             double random = Math.random();
             if (chance <= random) player.getInventory().addItem(item);
         }
@@ -86,6 +89,7 @@ public class GatheringListener extends BaseListener {
 
         new BukkitRunnable() {
             int time = seconds * 20;
+
             @Override
             public void run() {
                 if (time <= 0) {
@@ -97,6 +101,6 @@ public class GatheringListener extends BaseListener {
                 }
                 time--;
             }
-        }.runTaskTimer(AncientGears.getInstance(), 0,20);
+        }.runTaskTimer(AncientGears.getInstance(), 0, 20);
     }
 }

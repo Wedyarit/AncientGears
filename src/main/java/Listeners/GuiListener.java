@@ -108,56 +108,56 @@ public class GuiListener extends BaseListener {
         if (clickedItem.equals(OreItems.stoneOre)) {
             as = new ResourceConstructor(as)
                     .setName(ResourceManager.stoneOre.getName())
-                    .setMaterial(ResourceManager.stoneOre.getDrop())
                     .setType(ResourceConstructor.ResourceType.ORE)
+                    .setMaterial(OreItems.stoneOre)
                     .build();
             player.closeInventory();
         } else if (clickedItem.equals(OreItems.coalOre)) {
             as = new ResourceConstructor(as)
                     .setName(ResourceManager.coalOre.getName())
-                    .setMaterial(ResourceManager.coalOre.getDrop())
+                    .setMaterial(OreItems.coalOre)
                     .setType(ResourceConstructor.ResourceType.ORE)
                     .build();
             player.closeInventory();
         } else if (clickedItem.equals(OreItems.ironOre)) {
             as = new ResourceConstructor(as)
                     .setName(ResourceManager.ironOre.getName())
-                    .setMaterial(ResourceManager.ironOre.getDrop())
+                    .setMaterial(OreItems.ironOre)
                     .setType(ResourceConstructor.ResourceType.ORE)
                     .build();
             player.closeInventory();
         } else if (clickedItem.equals(OreItems.copperOre)) {
             as = new ResourceConstructor(as)
                     .setName(ResourceManager.copperOre.getName())
-                    .setMaterial(ResourceManager.copperOre.getDrop())
+                    .setMaterial(OreItems.copperOre)
                     .setType(ResourceConstructor.ResourceType.ORE)
                     .build();
             player.closeInventory();
         } else if (clickedItem.equals(OreItems.tinOre)) {
             as = new ResourceConstructor(as)
                     .setName(ResourceManager.tinOre.getName())
-                    .setMaterial(ResourceManager.tinOre.getDrop())
+                    .setMaterial(OreItems.tinOre)
                     .setType(ResourceConstructor.ResourceType.ORE)
                     .build();
             player.closeInventory();
         } else if (clickedItem.equals(OreItems.zincOre)) {
             as = new ResourceConstructor(as)
                     .setName(ResourceManager.zincOre.getName())
-                    .setMaterial(ResourceManager.zincOre.getDrop())
+                    .setMaterial(OreItems.zincOre)
                     .setType(ResourceConstructor.ResourceType.ORE)
                     .build();
             player.closeInventory();
         } else if (clickedItem.equals(OreItems.goldOre)) {
             as = new ResourceConstructor(as)
                     .setName(ResourceManager.goldOre.getName())
-                    .setMaterial(ResourceManager.goldOre.getDrop())
+                    .setMaterial(OreItems.goldOre)
                     .setType(ResourceConstructor.ResourceType.ORE)
                     .build();
             player.closeInventory();
         } else if (clickedItem.equals(OreItems.titanOre)) {
             as = new ResourceConstructor(as)
                     .setName(ResourceManager.titanOre.getName())
-                    .setMaterial(ResourceManager.titanOre.getDrop())
+                    .setMaterial(OreItems.titanOre)
                     .setType(ResourceConstructor.ResourceType.ORE)
                     .build();
             player.closeInventory();
@@ -173,6 +173,7 @@ public class GuiListener extends BaseListener {
         final ItemStack clickedItem = e.getCurrentItem();
         if (clickedItem == null || clickedItem.getType() == Material.AIR) return;
         Player player = (Player) e.getWhoClicked();
+        player.closeInventory();
         if (clickedItem.equals(OreItems.oreMenu)) {
             player.openInventory(guiOre);
         } else if (clickedItem.equals(OreItems.cropMenu)) {

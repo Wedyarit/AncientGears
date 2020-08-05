@@ -21,22 +21,22 @@ public class Ore {
     }
 
     public String getName() {
-        return name;
+        return this.name;
     }
 
     public ItemStack getTool() {
-        return tool;
+        return this.tool;
     }
 
     public ItemStack getDrop() {
-        return drop;
+        return this.drop;
     }
 
     public Double getChance() {
-        return chance;
+        return this.chance;
     }
 
     public Integer getCooldown() {
-        return cooldown;
+        return this.cooldown;
     }
 }
