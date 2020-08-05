@@ -1,5 +1,6 @@
 package AncientGears;
 
+import Gathering.Ore.OreItems;
 import Gathering.ResourceManager;
 import Listeners.GatheringListener;
 import Listeners.GuiListener;

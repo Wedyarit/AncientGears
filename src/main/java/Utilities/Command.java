@@ -18,6 +18,9 @@ public class Command implements CommandExecutor {
             ItemStack[] loot = {OreItems.coalOre, OreItems.ironOre};
             LootChestSpawn.spawnChest(loot, player.getLocation());
 
+            player.getInventory().addItem(OreItems.profMenu);
+            player.getInventory().addItem(OreItems.t1PickAxe);
+
         }
         return true;
     }
