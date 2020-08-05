@@ -72,7 +72,7 @@ public class GuiListener extends BaseListener {
     @EventHandler
     public void onToolGuiClick(final InventoryClickEvent e) {
         Inventory inv = e.getInventory();
-        if (inv != guiTools)
+        if (inv != guiTools) return;
             e.setCancelled(true);
 
         final ItemStack clickedItem = e.getCurrentItem();
@@ -97,8 +97,8 @@ public class GuiListener extends BaseListener {
     @EventHandler
     public void onOreGuiClick(final InventoryClickEvent e) {
         Inventory inv = e.getInventory();
-        if (inv != guiOre)
-            e.setCancelled(true);
+        if (inv != guiOre) return;
+        e.setCancelled(true);
 
         final ItemStack clickedItem = e.getCurrentItem();
         if (clickedItem == null || clickedItem.getType() == Material.AIR) return;
@@ -167,7 +167,7 @@ public class GuiListener extends BaseListener {
     @EventHandler
     public void onGatheringGuiClick(final InventoryClickEvent e) {
         Inventory inv = e.getInventory();
-        if (inv != guiGathering)
+        if (inv != guiGathering) return;
             e.setCancelled(true);
 
         final ItemStack clickedItem = e.getCurrentItem();
