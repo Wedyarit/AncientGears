@@ -1,11 +1,8 @@
 package Listeners;
 
-import Gathering.GatheringEnums;
-import Gathering.Ore.Ore;
+import Gathering.Ore.OreVeins;
 import Gathering.Ore.OreItems;
-import Listeners.BaseListener;
 import Utilities.GuiConstructor;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -20,30 +17,30 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 public class GuiListener extends BaseListener {
-    private static final Inventory guiTools = new GuiConstructor(27, GatheringEnums.menu.TOOLS.getDisplayName())
+    private static final Inventory guiTools = new GuiConstructor(27, OreItems.toolMenu.getItemMeta().getDisplayName())
             .setItems(  OreItems.t1PickAxe, OreItems.t2PickAxe, OreItems.t3PickAxe,
                         OreItems.t4PickAxe, OreItems.t5PickAxe, OreItems.t6PickAxe)
             .bulid();
 
-    private static final Inventory guiGathering = new GuiConstructor(4, GatheringEnums.menu.GATHERING.getDisplayName())
+    private static final Inventory guiGathering = new GuiConstructor(4, OreItems.profMenu.getItemMeta().getDisplayName())
             .setItems(OreItems.oreMenu, OreItems.lumberMenu, OreItems.cropMenu, OreItems.fishingMenu)
             .bulid();
 
-    private static final Inventory guiOre = new GuiConstructor(9, GatheringEnums.menu.ORE.getDisplayName())
+    private static final Inventory guiOre = new GuiConstructor(9, OreItems.oreMenu.getItemMeta().getDisplayName())
             .setItems(  OreItems.stoneOre, OreItems.coalOre, OreItems.copperOre,
                         OreItems.tinOre, OreItems.ironOre, OreItems.goldOre,
                         OreItems.zincOre, OreItems.titanOre)
             .bulid();
 
-    private static final Inventory guiLumber = new GuiConstructor(9, GatheringEnums.menu.LUMBER.getDisplayName())
+    private static final Inventory guiLumber = new GuiConstructor(9, OreItems.lumberMenu.getItemMeta().getDisplayName())
             .setItems(OreItems.oreMenu, OreItems.lumberMenu, OreItems.cropMenu, OreItems.fishingMenu)
             .bulid();
 
-    private static final Inventory guiFarming= new GuiConstructor(9, GatheringEnums.menu.CROP.getDisplayName())
+    private static final Inventory guiFarming= new GuiConstructor(9, OreItems.cropMenu.getItemMeta().getDisplayName())
             .setItems(OreItems.oreMenu, OreItems.lumberMenu, OreItems.cropMenu, OreItems.fishingMenu)
             .bulid();
 
-    private static final Inventory guiFishing = new GuiConstructor(9, GatheringEnums.menu.FISHING.getDisplayName())
+    private static final Inventory guiFishing = new GuiConstructor(9, OreItems.fishingMenu.getItemMeta().getDisplayName())
             .setItems(OreItems.oreMenu, OreItems.lumberMenu, OreItems.cropMenu, OreItems.fishingMenu)
             .bulid();
 
@@ -108,28 +105,28 @@ public class GuiListener extends BaseListener {
         World world = player.getWorld();
         ArmorStand as =  (ArmorStand) world.spawnEntity(player.getLocation(), EntityType.ARMOR_STAND);
         if (clickedItem.equals(OreItems.stoneOre)) {
-            as = Ore.stoneOre;
+            as = OreVeins.stoneOre;
             player.closeInventory();
         } else if (clickedItem.equals(OreItems.coalOre)) {
-            as = Ore.coalOre;
+            as = OreVeins.coalOre;
             player.closeInventory();
         } else if (clickedItem.equals(OreItems.ironOre)) {
-            as = Ore.ironOre;
+            as = OreVeins.ironOre;
             player.closeInventory();
         } else if (clickedItem.equals(OreItems.copperOre)) {
-            as = Ore.copperOre;
+            as = OreVeins.copperOre;
             player.closeInventory();
         } else if (clickedItem.equals(OreItems.tinOre)) {
-            as = Ore.tinOre;
+            as = OreVeins.tinOre;
             player.closeInventory();
         } else if (clickedItem.equals(OreItems.zincOre)) {
-            as = Ore.zincOre;
+            as = OreVeins.zincOre;
             player.closeInventory();
         } else if (clickedItem.equals(OreItems.goldOre)) {
-            as = Ore.goldOre;
+            as = OreVeins.goldOre;
             player.closeInventory();
         } else if (clickedItem.equals(OreItems.titanOre)) {
-            as = Ore.titanOre;
+            as = OreVeins.titanOre;
             player.closeInventory();
         }
     }

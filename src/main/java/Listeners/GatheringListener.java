@@ -1,8 +1,9 @@
 package Listeners;
 
-import Gathering.Ore.OreEnums;
+import Gathering.Ore.OreVeins;
 import Gathering.Ore.OreItems;
 import AncientGears.AncientGears;
+import Gathering.ResourceManager;
 import org.bukkit.Material;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Player;
@@ -21,30 +22,37 @@ public class GatheringListener extends BaseListener {
         Player player = (Player) e.getDamager();
         if (!(e.getEntity() instanceof ArmorStand)) return;
         ArmorStand resource = (ArmorStand) e.getEntity();
+        int maxcount = 3;
         if (resource.getCustomName() != null) {
             if (player.getInventory().getItemInMainHand().equals(OreItems.t1PickAxe)) {
-                if (resource.equals(OreEnums.STONE.getAs())) {
-                    setCD(resource, 30);
-                    addItemsByChance(OreItems.stoneOre, 75.0, 3, player);
-                } else if (resource.equals(OreEnums.COAL.getAs())) {
-                    setCD(resource, 45);
-                    addItemsByChance(OreItems.coalOre, 65.0, 2, player);
+                if (resource.equals(ResourceManager.stoneOre.getOre())) {
+                    setCD(resource, ResourceManager.stoneOre.getCooldown());
+                    addItemsByChance(ResourceManager.stoneOre.getDrop(), ResourceManager.stoneOre.getChance(), maxcount, player);
+                } else if (resource.equals(ResourceManager.coalOre.getOre())) {
+                    setCD(resource, ResourceManager.coalOre.getCooldown());
+                    addItemsByChance(ResourceManager.coalOre.getDrop(), ResourceManager.coalOre.getChance(), maxcount, player);
                 }
             } else if (player.getInventory().getItemInMainHand().equals(OreItems.t2PickAxe)) {
-                if (resource.equals(OreEnums.COPPER)) {
-                    setCD(resource, 60);
-                    addItemsByChance(OreItems.copperOre, 60.0, 3, player);
-                } else if (resource.equals(OreEnums.TIN)) {
-                    setCD(resource, 60);
-                    addItemsByChance(OreItems.tinOre, 60.0, 3, player);
-                } else if (resource.equals(OreEnums.IRON)) {
-                    setCD(resource, 60);
-                    addItemsByChance(OreItems.ironOre, 60.0, 3, player);
+                if (resource.equals(ResourceManager.copperOre.getOre())) {
+                    setCD(resource, ResourceManager.copperOre.getCooldown());
+                    addItemsByChance(ResourceManager.copperOre.getDrop(), ResourceManager.copperOre.getChance(), maxcount, player);
+                } else if (resource.equals(ResourceManager.tinOre.getOre())) {
+                    setCD(resource, ResourceManager.tinOre.getCooldown());
+                    addItemsByChance(ResourceManager.tinOre.getDrop(), ResourceManager.tinOre.getChance(), maxcount, player);
+                } else if (resource.equals(ResourceManager.ironOre.getOre())) {
+                    setCD(resource, ResourceManager.ironOre.getCooldown());
+                    addItemsByChance(ResourceManager.ironOre.getDrop(), ResourceManager.ironOre.getChance(), maxcount, player);
                 }
             } else if (player.getInventory().getItemInMainHand().equals(OreItems.t3PickAxe)) {
-                if (resource.equals(OreEnums.GOLD)) {
-                    setCD(resource, 60);
-                    addItemsByChance(OreItems.goldOre, 30.0, 3, player);
+                if (resource.equals(ResourceManager.goldOre.getOre())) {
+                    setCD(resource, ResourceManager.goldOre.getCooldown());
+                    addItemsByChance(ResourceManager.goldOre.getDrop(), ResourceManager.goldOre.getChance(), maxcount, player);
+                } else if (resource.equals(ResourceManager.titanOre.getOre())) {
+                    setCD(resource, ResourceManager.titanOre.getCooldown());
+                    addItemsByChance(ResourceManager.titanOre.getDrop(), ResourceManager.titanOre.getChance(), maxcount, player);
+                } else if (resource.equals(ResourceManager.zincOre.getOre())) {
+                    setCD(resource, ResourceManager.zincOre.getCooldown());
+                    addItemsByChance(ResourceManager.zincOre.getDrop(), ResourceManager.zincOre.getChance(), maxcount, player);
                 }
             }
         }

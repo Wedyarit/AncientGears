@@ -1,5 +1,6 @@
 package Gathering.Ore;
 
+import Gathering.ResourceManager;
 import Utilities.ItemConstructor;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -10,49 +11,49 @@ public class OreItems {
 
     public static ItemStack stoneOre = new ItemConstructor(Material.COBBLESTONE)
             .amount(1)
-            .displayName(OreNames.oreNames().get(0))
+            .displayName(ResourceManager.stoneOre.getName())
             .lore(ChatColor.GRAY + "[✰✰✰✰✰] Материал")
             .build();
 
     public static ItemStack coalOre = new ItemConstructor(Material.COAL)
             .amount(1)
-            .displayName(OreNames.oreNames().get(1))
+            .displayName(ResourceManager.coalOre.getName())
             .lore(ChatColor.GRAY + "[★✰✰✰✰] Материал")
             .build();
 
     public static ItemStack ironOre = new ItemConstructor(Material.IRON_ORE)
             .amount(1)
-            .displayName(OreNames.oreNames().get(2))
+            .displayName(ResourceManager.ironOre.getName())
             .lore(ChatColor.GRAY + "[★✰✰✰✰] Материал")
             .build();
 
     public static ItemStack copperOre = new ItemConstructor(Material.ORANGE_CONCRETE_POWDER)
             .amount(1)
-            .displayName(OreNames.oreNames().get(3))
+            .displayName(ResourceManager.copperOre.getName())
             .lore(ChatColor.GRAY + "[★✰✰✰✰] Материал")
             .build();
 
     public static ItemStack tinOre = new ItemConstructor(Material.WHITE_CONCRETE_POWDER)
             .amount(1)
-            .displayName(OreNames.oreNames().get(4))
+            .displayName(ResourceManager.tinOre.getName())
             .lore(ChatColor.GRAY + "[★✰✰✰✰] Материал")
             .build();
 
     public static ItemStack zincOre = new ItemConstructor(Material.WHITE_CONCRETE_POWDER)
             .amount(1)
-            .displayName(OreNames.oreNames().get(5))
+            .displayName(ResourceManager.zincOre.getName())
             .lore(ChatColor.GRAY + "[★★✰✰✰] Материал")
             .build();
 
     public static ItemStack goldOre = new ItemConstructor(Material.GOLD_ORE)
             .amount(1)
-            .displayName(OreNames.oreNames().get(6))
+            .displayName(ResourceManager.goldOre.getName())
             .lore(ChatColor.GRAY + "[★✰✰✰✰] Материал")
             .build();
 
     public static ItemStack titanOre = new ItemConstructor(Material.BLUE_STAINED_GLASS)
             .amount(1)
-            .displayName(OreNames.oreNames().get(7))
+            .displayName(ResourceManager.titanOre.getName())
             .lore(ChatColor.GRAY + "[★★★★✰] Материал")
             .build();
 
@@ -104,6 +105,12 @@ public class OreItems {
     public static ItemStack oreMenu = new ItemConstructor(Material.IRON_ORE)
             .amount(1)
             .displayName(ChatColor.RED + "Шахтерство")
+            .lore(ChatColor.GRAY + "[★★★★★] Меню")
+            .build();
+
+    public static ItemStack toolMenu = new ItemConstructor(Material.NETHERITE_PICKAXE)
+            .amount(1)
+            .displayName(ChatColor.RED + "Инструменты")
             .lore(ChatColor.GRAY + "[★★★★★] Меню")
             .build();
 

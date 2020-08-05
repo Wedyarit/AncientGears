@@ -1,46 +1,48 @@
 package Gathering.Ore;
 
-import Utilities.ResourceConstructor;
 import org.bukkit.entity.ArmorStand;
+import org.bukkit.inventory.ItemStack;
+
+import java.util.ArrayList;
 
 public class Ore {
-    public static ArmorStand stoneOre = new ResourceConstructor(OreNames.oreNames().get(0))
-            .setType(ResourceConstructor.ResourceType.ORE)
-            .setMaterial(OreItems.stoneOre)
-            .build();
+    private final ArmorStand ore;
+    private final String name;
+    private final ItemStack tool;
+    private final ItemStack drop;
+    private final Double chance;
+    private final Integer cooldown;
 
-    public static ArmorStand coalOre = new ResourceConstructor(OreNames.oreNames().get(1))
-            .setType(ResourceConstructor.ResourceType.ORE)
-            .setMaterial(OreItems.coalOre)
-            .build();
+    public Ore(ArmorStand ore, String name, ItemStack tool, ItemStack drop, Double chance, Integer cooldown) {
+        this.ore = ore;
+        this.name = name;
+        this.tool = tool;
+        this.drop = drop;
+        this.chance = chance;
+        this.cooldown = cooldown;
+    }
 
-    public static ArmorStand ironOre = new ResourceConstructor(OreNames.oreNames().get(2))
-            .setType(ResourceConstructor.ResourceType.ORE)
-            .setMaterial(OreItems.ironOre)
-            .build();
+    public String getName() {
+        return name;
+    }
 
-    public static ArmorStand copperOre = new ResourceConstructor(OreNames.oreNames().get(3))
-            .setType(ResourceConstructor.ResourceType.ORE)
-            .setMaterial(OreItems.copperOre)
-            .build();
+    public ItemStack getTool() {
+        return tool;
+    }
 
-    public static ArmorStand goldOre = new ResourceConstructor(OreNames.oreNames().get(4))
-            .setType(ResourceConstructor.ResourceType.ORE)
-            .setMaterial(OreItems.goldOre)
-            .build();
+    public ArmorStand getOre() {
+        return ore;
+    }
 
-    public static ArmorStand tinOre = new ResourceConstructor(OreNames.oreNames().get(5))
-            .setType(ResourceConstructor.ResourceType.ORE)
-            .setMaterial(OreItems.tinOre)
-            .build();
+    public ItemStack getDrop() {
+        return drop;
+    }
 
-    public static ArmorStand zincOre = new ResourceConstructor(OreNames.oreNames().get(6))
-            .setType(ResourceConstructor.ResourceType.ORE)
-            .setMaterial(OreItems.zincOre)
-            .build();
+    public Double getChance() {
+        return chance;
+    }
 
-    public static ArmorStand titanOre = new ResourceConstructor(OreNames.oreNames().get(7))
-            .setType(ResourceConstructor.ResourceType.ORE)
-            .setMaterial(OreItems.titanOre)
-            .build();
+    public Integer getCooldown() {
+        return cooldown;
+    }
 }

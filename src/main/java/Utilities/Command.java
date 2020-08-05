@@ -1,11 +1,8 @@
 package Utilities;
 
-import Gathering.Ore.Ore;
 import Gathering.Ore.OreItems;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 
 public class Command implements CommandExecutor {
