@@ -19,25 +19,25 @@ import org.bukkit.inventory.ItemStack;
 
 public class GuiListener extends BaseListener {
     private static final Inventory guiTools = new GuiConstructor(27, OreItems.toolMenu.getItemMeta().getDisplayName())
-            .setItems(  OreItems.t1PickAxe, OreItems.t2PickAxe, OreItems.t3PickAxe,
-                        OreItems.t4PickAxe, OreItems.t5PickAxe, OreItems.t6PickAxe)
+            .setItems(OreItems.t1PickAxe, OreItems.t2PickAxe, OreItems.t3PickAxe,
+                    OreItems.t4PickAxe, OreItems.t5PickAxe, OreItems.t6PickAxe)
             .bulid();
 
-    private static final Inventory guiGathering = new GuiConstructor(4, OreItems.profMenu.getItemMeta().getDisplayName())
+    private static final Inventory guiGathering = new GuiConstructor(9, OreItems.profMenu.getItemMeta().getDisplayName())
             .setItems(OreItems.oreMenu, OreItems.lumberMenu, OreItems.cropMenu, OreItems.fishingMenu)
             .bulid();
 
     private static final Inventory guiOre = new GuiConstructor(9, OreItems.oreMenu.getItemMeta().getDisplayName())
-            .setItems(  OreItems.stoneOre, OreItems.coalOre, OreItems.copperOre,
-                        OreItems.tinOre, OreItems.ironOre, OreItems.goldOre,
-                        OreItems.zincOre, OreItems.titanOre)
+            .setItems(OreItems.stoneOre, OreItems.coalOre, OreItems.copperOre,
+                    OreItems.tinOre, OreItems.ironOre, OreItems.goldOre,
+                    OreItems.zincOre, OreItems.titanOre)
             .bulid();
 
     private static final Inventory guiLumber = new GuiConstructor(9, OreItems.lumberMenu.getItemMeta().getDisplayName())
             .setItems(OreItems.oreMenu, OreItems.lumberMenu, OreItems.cropMenu, OreItems.fishingMenu)
             .bulid();
 
-    private static final Inventory guiFarming= new GuiConstructor(9, OreItems.cropMenu.getItemMeta().getDisplayName())
+    private static final Inventory guiFarming = new GuiConstructor(9, OreItems.cropMenu.getItemMeta().getDisplayName())
             .setItems(OreItems.oreMenu, OreItems.lumberMenu, OreItems.cropMenu, OreItems.fishingMenu)
             .bulid();
 
@@ -54,13 +54,13 @@ public class GuiListener extends BaseListener {
     @EventHandler
     public void onInventoryDrag(final InventoryDragEvent e) {
         Inventory inv = e.getInventory();
-        if (    inv == guiGathering || 
-                inv == guiOre || 
+        if (inv == guiGathering ||
+                inv == guiOre ||
                 inv == guiLumber ||
-                inv == guiFarming || 
+                inv == guiFarming ||
                 inv == guiFishing ||
                 inv == guiTools
-        
+
         )
             e.setCancelled(true);
     }
@@ -104,7 +104,7 @@ public class GuiListener extends BaseListener {
         if (clickedItem == null || clickedItem.getType() == Material.AIR) return;
         Player player = (Player) e.getWhoClicked();
         World world = player.getWorld();
-        ArmorStand as =  (ArmorStand) world.spawnEntity(player.getLocation(), EntityType.ARMOR_STAND);
+        ArmorStand as = (ArmorStand) world.spawnEntity(player.getLocation(), EntityType.ARMOR_STAND);
         if (clickedItem.equals(OreItems.stoneOre)) {
             as = new ResourceConstructor(as)
                     .setName(ResourceManager.stoneOre.getName())
@@ -169,24 +169,20 @@ public class GuiListener extends BaseListener {
         Inventory inv = e.getInventory();
         if (inv != guiGathering)
             e.setCancelled(true);
-        
+
         final ItemStack clickedItem = e.getCurrentItem();
         if (clickedItem == null || clickedItem.getType() == Material.AIR) return;
         Player player = (Player) e.getWhoClicked();
-        if (clickedItem.equals(guiOre)) {
-            player.closeInventory();
+        if (clickedItem.equals(OreItems.oreMenu)) {
             player.openInventory(guiOre);
-        } else if (clickedItem.equals(guiFarming)) {
-            player.closeInventory();
+        } else if (clickedItem.equals(OreItems.cropMenu)) {
             player.openInventory(guiFarming);
-        } else if (clickedItem.equals(guiLumber)) {
-            player.closeInventory();
+        } else if (clickedItem.equals(OreItems.lumberMenu)) {
             player.openInventory(guiLumber);
-        } else if (clickedItem.equals(guiFishing)) {
-            player.closeInventory();
+        } else if (clickedItem.equals(OreItems.fishingMenu)) {
             player.openInventory(guiFishing);
-        } else {
-            player.sendMessage(ChatColor.GREEN + "AVALON САСАТЬ!");
+        } else if (clickedItem.equals(OreItems.toolMenu)) {
+            player.openInventory(guiTools);
         }
     }
 }

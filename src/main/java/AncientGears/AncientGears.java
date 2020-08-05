@@ -29,7 +29,7 @@ public final class AncientGears extends JavaPlugin {
     }
 
     public void registerListeners() {
-        //new GuiListener();
+        new GuiListener();
         new InventoryListener();
         new GatheringListener();
     }
