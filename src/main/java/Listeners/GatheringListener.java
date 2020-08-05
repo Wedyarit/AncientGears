@@ -97,6 +97,7 @@ public class GatheringListener extends BaseListener {
         armorStand.getEquipment().setHelmet(new ItemStack(Material.AIR));
 
         armorStand.setCustomNameVisible(false);
+        armorStand.setInvulnerable(true);
 
         new BukkitRunnable() {
             int time = seconds;
@@ -109,6 +110,7 @@ public class GatheringListener extends BaseListener {
                     armorStand.getEquipment().setItemInOffHand(leftArm);
                     armorStand.getEquipment().setHelmet(head);
                     armorStand.setCustomNameVisible(true);
+                    armorStand.setInvulnerable(false);
                     this.cancel();
                 }
 
