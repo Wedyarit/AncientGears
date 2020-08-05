@@ -34,5 +34,6 @@ public final class AncientGears extends JavaPlugin {
         new InventoryListener();
         new GatheringListener();
         new ResourceManager();
+        new GuiListener();
     }
 }

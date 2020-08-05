@@ -46,10 +46,10 @@ public class GatheringListener extends BaseListener {
         return arrayList;
     }
 
-    private boolean isContains(ArrayList<Tool> arrayList, ItemStack tool1) {
+    private int isContains(ArrayList<Tool> arrayList, ItemStack tool1) {
         for (Tool tool : arrayList)
-            if (tool.getTool().equals(tool1)) return true;
-        return false;
+            if (tool.getTool().equals(tool1)) return arrayList.indexOf(tool);
+        return -1;
     }
 
     @EventHandler(priority = EventPriority.LOW)
@@ -65,11 +65,12 @@ public class GatheringListener extends BaseListener {
         if (resource.getCustomName() != null)
             for (Ore ore : oreArrayList)
                 for (Tool tool : toolArrayList)
-                    if (isContains(toolArrayList, player.getInventory().getItemInMainHand()))
+                    if (isContains(toolArrayList, player.getInventory().getItemInMainHand()) != -1)
                         if (resource.getCustomName().equals(ore.getName()))
-                            if (toolArrayList.get(toolArrayList.indexOf(tool)).getTier() >= ore.getTier()) {
+                            if (toolArrayList.get(isContains(toolArrayList, player.getInventory().getItemInMainHand())).getTier() >= ore.getTier()) {
                                 setCD(resource, ore.getCooldown());
                                 addItemsByChance(ore.getDrop(), ore.getChance(), maxcount, player);
+                                break;
                             }
     }
 

@@ -20,6 +20,10 @@ public class Command implements CommandExecutor {
 
             player.getInventory().addItem(OreItems.profMenu);
             player.getInventory().addItem(OreItems.t1PickAxe);
+            player.getInventory().addItem(OreItems.t2PickAxe);
+            player.getInventory().addItem(OreItems.t3PickAxe);
+            player.getInventory().addItem(OreItems.t4PickAxe);
+            player.getInventory().addItem(OreItems.t5PickAxe);
 
         }
         return true;
