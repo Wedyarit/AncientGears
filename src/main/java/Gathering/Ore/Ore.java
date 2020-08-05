@@ -7,14 +7,14 @@ import java.util.ArrayList;
 
 public class Ore {
     private final String name;
-    private final ItemStack tool;
+    private final Integer tier;
     private final ItemStack drop;
     private final Double chance;
     private final Integer cooldown;
 
-    public Ore(String name, ItemStack tool, ItemStack drop, Double chance, Integer cooldown) {
+    public Ore(String name, Integer tier, ItemStack drop, Double chance, Integer cooldown) {
         this.name = name;
-        this.tool = tool;
+        this.tier = tier;
         this.drop = drop;
         this.chance = chance;
         this.cooldown = cooldown;
@@ -24,8 +24,8 @@ public class Ore {
         return this.name;
     }
 
-    public ItemStack getTool() {
-        return this.tool;
+    public Integer getTier() {
+        return this.tier;
     }
 
     public ItemStack getDrop() {

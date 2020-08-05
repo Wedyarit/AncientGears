@@ -2,13 +2,13 @@ package Gathering.Ore;
 
 import Gathering.ResourceManager;
 import Utilities.ItemConstructor;
+import com.sun.org.omg.CORBA.Initializer;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
 public class OreItems {
     //////////////////////// Руда /////////////////////////////////////////////////
-
     public static ItemStack stoneOre = new ItemConstructor(Material.COBBLESTONE)
             .amount(1)
             .displayName(ResourceManager.stoneOre.getName())

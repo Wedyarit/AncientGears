@@ -17,7 +17,7 @@ public class LootChestSpawn {
        Chest chest = (Chest) block.getState();
        Inventory inventory = chest.getBlockInventory();
        inventory.addItem(loot);
-       ArmorStand timer = (ArmorStand) block.getLocation().getWorld().spawnEntity(block.getLocation().add(0.5,-1.0,0.5), EntityType.ARMOR_STAND);
+       ArmorStand timer = (ArmorStand) block.getLocation().getWorld().spawnEntity(block.getLocation().add(0.5,0.5,0.5), EntityType.ARMOR_STAND);
 
        timer.setInvulnerable(true);
        timer.setGravity(true);
