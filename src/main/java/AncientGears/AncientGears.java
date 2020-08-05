@@ -2,6 +2,7 @@ package AncientGears;
 
 import Gathering.Ore.OreItems;
 import Gathering.ResourceManager;
+import Listeners.DropListener;
 import Listeners.GatheringListener;
 import Listeners.GuiListener;
 import Listeners.InventoryListener;
@@ -35,5 +36,6 @@ public final class AncientGears extends JavaPlugin {
         new GatheringListener();
         new ResourceManager();
         new GuiListener();
+        new DropListener();
     }
 }
