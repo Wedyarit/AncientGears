@@ -6,8 +6,11 @@ import AncientGears.AncientGears;
 import Gathering.ResourceManager;
 import Gathering.Tool;
 import com.google.common.base.Strings;
+import net.md_5.bungee.api.ChatMessageType;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Player;
@@ -18,6 +21,7 @@ import org.bukkit.event.entity.EntityInteractEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
 
@@ -66,13 +70,16 @@ public class GatheringListener extends BaseListener {
         if (resource.getCustomName() != null)
             for (Ore ore : oreArrayList)
                 if (isContains(toolArrayList, player.getInventory().getItemInMainHand()) != -1)
-                    if (resource.getCustomName().equals(ore.getName()))
-                        if (toolArrayList.get(isContains(toolArrayList, player.getInventory().getItemInMainHand())).getTier() >= ore.getTier()) {
+                    if (resource.getCustomName().equals(ore.getName())) {
+                        int tier = toolArrayList.get(isContains(toolArrayList, player.getInventory().getItemInMainHand())).getTier();
+                        if (tier >= ore.getTier()) {
+                            gather(resource, toolArrayList.get(isContains(toolArrayList, player.getInventory().getItemInMainHand())).getTier(), player, ore.getTier(), ore.getCooldown());
                             setCD(resource, ore.getCooldown());
                             addItemsByChance(ore.getDrop(), ore.getChance(), maxcount, player);
                             break;
                         } else
                             player.sendMessage(ChatColor.RED + "" + player.getInventory().getItemInMainHand().getItemMeta().getDisplayName() + " не может добыть " + ore.getName() + " ,нужна кирка минимум " + ore.getTier() + "  тира");
+                    }
     }
 
     @EventHandler
@@ -95,6 +102,35 @@ public class GatheringListener extends BaseListener {
 
         return Strings.repeat("" + completedColor + symbol, progressBars)
                 + Strings.repeat("" + notCompletedColor + symbol, totalBars - progressBars);
+    }
+
+    private void gather(ArmorStand as,Integer toolTier, Player player, Integer oreDurability, Integer cooldown) {
+        String name = as.getCustomName();
+
+        new BukkitRunnable() {
+            final int power = toolTier * 5;
+            int current = oreDurability * 20;
+            final char symbol = '|';
+            final Vector maxDistance = new Vector(4,4,4);
+            @Override
+            public void run() {
+                as.setCustomName(name + ": " +getProgressBar(20,100, 20,symbol,ChatColor.GREEN, ChatColor.RESET));
+                if (current - power <= 0)
+                current = 0;
+                current -= power;
+                Location pLoc = player.getLocation();
+                Location oLoc = as.getLocation();
+                if (pLoc.distance(oLoc) > 3) {
+                    as.setCustomName(name);
+                    player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(ChatColor.RED + "Слишком далеко от рессурса"));
+                    this.cancel();
+                }
+                if (current <= 0)
+                    setCD(as, cooldown);
+                    this.cancel();
+            }
+        }.runTaskTimer(AncientGears.getInstance(),0,20);
+
     }
 
     private void setCD(ArmorStand armorStand, Integer seconds) {

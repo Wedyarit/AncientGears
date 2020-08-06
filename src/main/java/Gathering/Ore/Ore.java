@@ -12,6 +12,7 @@ public class Ore {
     private final Double chance;
     private final Integer cooldown;
 
+
     public Ore(String name, Integer tier, ItemStack drop, Double chance, Integer cooldown) {
         this.name = name;
         this.tier = tier;

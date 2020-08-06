@@ -18,12 +18,6 @@ public class Command implements CommandExecutor {
         if (sender instanceof Player) {
             Player player = (Player) sender;
 
-            Bukkit.broadcastMessage(GatheringListener.getOreStatus(100, 50));
-            Bukkit.broadcastMessage(GatheringListener.getProgressBar(50, 100, 20, '|', ChatColor.GREEN, ChatColor.RED));
-
-            ItemStack[] loot = {OreItems.coalOre, OreItems.ironOre};
-            LootChestSpawn.spawnChest(loot, player.getLocation());
-
             player.getInventory().addItem(OreItems.profMenu);
             player.getInventory().addItem(OreItems.t1PickAxe);
             player.getInventory().addItem(OreItems.t2PickAxe);
