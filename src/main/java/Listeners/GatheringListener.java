@@ -108,7 +108,7 @@ public class GatheringListener extends BaseListener {
             final int power = toolTier * 2;
             int current = oreDurability * 40;
             final char symbol = '|';
-            final Vector maxDistance = new Vector(4, 4, 4);
+            final int maxDistance = 4;
 
             @Override
             public void run() {
@@ -127,7 +127,7 @@ public class GatheringListener extends BaseListener {
                 World world = oLoc.getWorld();
                 world.spawnParticle(Particle.CLOUD, oLoc,1);
                 world.playSound(oLoc, Sound.BLOCK_ANVIL_PLACE, 2,2);
-                if (pLoc.distance(oLoc) > 3) {
+                if (pLoc.distance(oLoc) > maxDistance) {
                     as.setCustomName(name);
                     player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(ChatColor.RED + "Слишком далеко от рессурса"));
                     this.cancel();
