@@ -10,15 +10,18 @@ public class Ore {
     private final Integer tier;
     private final ItemStack drop;
     private final Double chance;
+    private final Integer durability;
     private final Integer cooldown;
 
 
-    public Ore(String name, Integer tier, ItemStack drop, Double chance, Integer cooldown) {
+
+    public Ore(String name, Integer tier, ItemStack drop, Double chance, Integer cooldown, Integer durability) {
         this.name = name;
         this.tier = tier;
         this.drop = drop;
         this.chance = chance;
         this.cooldown = cooldown;
+        this.durability = durability;
     }
 
     public String getName() {
@@ -39,5 +42,9 @@ public class Ore {
 
     public Integer getCooldown() {
         return this.cooldown;
+    }
+
+    public Integer getDurability() {
+        return this.durability;
     }
 }

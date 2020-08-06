@@ -27,25 +27,26 @@ import java.util.ArrayList;
 public class GatheringListener extends BaseListener {
     private ArrayList<Ore> getOreArray() {
         ArrayList<Ore> arrayList = new ArrayList<>();
-        arrayList.add(new Ore(ChatColor.GRAY + "Булыжник", 1, OreItems.stoneOre, 80.0, 30));
-        arrayList.add(new Ore(ChatColor.GRAY + "Уголь", 1, OreItems.coalOre, 70.0, 45));
-        arrayList.add(new Ore(ChatColor.GRAY + "Железная руда", 2, OreItems.ironOre, 60.0, 60));
-        arrayList.add(new Ore(ChatColor.GRAY + "Оловянная руда", 2, OreItems.tinOre, 60.0, 60));
-        arrayList.add(new Ore(ChatColor.GRAY + "Медная руда", 2, OreItems.copperOre, 60.0, 60));
-        arrayList.add(new Ore(ChatColor.GRAY + "Цинковая руда", 3, OreItems.zincOre, 40.0, 60));
-        arrayList.add(new Ore(ChatColor.GRAY + "Золотая руда", 3, OreItems.goldOre, 30.0, 120));
-        arrayList.add(new Ore(ChatColor.GRAY + "Титановая руда", 3, OreItems.titanOre, 20.0, 120));
+        arrayList.add(new Ore(ChatColor.GRAY + "Булыжник", 1, OreItems.stoneOre, 80.0, 30,50));
+        arrayList.add(new Ore(ChatColor.GRAY + "Уголь", 1, OreItems.coalOre, 70.0, 45,35));
+        arrayList.add(new Ore(ChatColor.GRAY + "Железная руда", 2, OreItems.ironOre, 60.0, 60,150));
+        arrayList.add(new Ore(ChatColor.GRAY + "Оловянная руда", 2, OreItems.tinOre, 60.0, 60,110));
+        arrayList.add(new Ore(ChatColor.GRAY + "Медная руда", 2, OreItems.copperOre, 60.0, 60,110));
+        arrayList.add(new Ore(ChatColor.GRAY + "Цинковая руда", 3, OreItems.zincOre, 40.0, 60,90));
+        arrayList.add(new Ore(ChatColor.GRAY + "Золотая руда", 3, OreItems.goldOre, 30.0, 120,60));
+        arrayList.add(new Ore(ChatColor.GRAY + "Титановая руда", 3, OreItems.titanOre, 20.0, 120,240));
         return arrayList;
     }
 
+
     private ArrayList<Tool> getToolArray() {
         ArrayList<Tool> arrayList = new ArrayList<>();
-        arrayList.add(new Tool(OreItems.t1PickAxe, 1));
-        arrayList.add(new Tool(OreItems.t2PickAxe, 2));
-        arrayList.add(new Tool(OreItems.t3PickAxe, 3));
-        arrayList.add(new Tool(OreItems.t4PickAxe, 4));
-        arrayList.add(new Tool(OreItems.t5PickAxe, 5));
-        arrayList.add(new Tool(OreItems.t6PickAxe, 6));
+        arrayList.add(new Tool(Tool.Type.PICKAXE, 1, OreItems.t1PickAxe,5,1));
+        arrayList.add(new Tool(Tool.Type.PICKAXE, 2, OreItems.t2PickAxe,10,1));
+        arrayList.add(new Tool(Tool.Type.PICKAXE, 3, OreItems.t3PickAxe,20,2));
+        arrayList.add(new Tool(Tool.Type.PICKAXE, 4, OreItems.t4PickAxe,40,2));
+        arrayList.add(new Tool(Tool.Type.PICKAXE, 5, OreItems.t5PickAxe,80,3));
+        arrayList.add(new Tool(Tool.Type.PICKAXE, 6, OreItems.t6PickAxe,160,3));
         return arrayList;
     }
 
@@ -71,7 +72,7 @@ public class GatheringListener extends BaseListener {
                     if (resource.getCustomName().equals(ore.getName())) {
                         int tier = toolArrayList.get(isContains(toolArrayList, player.getInventory().getItemInMainHand())).getTier();
                         if (tier >= ore.getTier()) {
-                            player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText("Вы начали добычу ресурса " + ore.getName()));
+                            // Нужно получить тул игрока, в Tool есть метод getTool()
                             gather(resource, player.getInventory().getItemInMainHand(), toolArrayList.get(isContains(toolArrayList, player.getInventory().getItemInMainHand())).getTier(), player, ore.getTier(), ore.getCooldown(), ore);
                             break;
                         } else {
@@ -86,9 +87,9 @@ public class GatheringListener extends BaseListener {
         if (e.getEntity() instanceof ArmorStand) e.setCancelled(true);
     }
 
-    private void addItemsByChance(ItemStack item, Double chance, Integer maxCount, Player player) {
+    private void addItemsByChance(ItemStack item, Double chance, Integer luckFactor, Player player) {
         chance *= 0.01;
-        for (int i = 0; i < maxCount; i++) {
+        for (int i = 0; i < luckFactor; i++) {
             double random = Math.random();
             if (chance >= random) {
                 player.getInventory().addItem(item);
@@ -107,18 +108,19 @@ public class GatheringListener extends BaseListener {
                 + Strings.repeat("" + notCompletedColor + symbol, totalBars - progressBars);
     }
 
-    private void gather(ArmorStand as, ItemStack tool, Integer toolTier, Player player, Integer oreDurability, Integer cooldown, Ore ore) {
+    private void gather(ArmorStand as, Tool tool, Integer toolTier, Player player, Ore ore) {
 
         new BukkitRunnable() {
             final String name = as.getCustomName();
-            final int power = toolTier * 2;
-            int current = oreDurability * 40;
+            final int power = tool.getSpeed();
+            int current = ore.getDurability();
             final char symbol = '|';
             final int maxDistance = 4;
 
             @Override
             public void run() {
                 current -= power;
+                player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText("Вы добываете " + ore.getName()));
                 as.setCustomName(name + ": " + getProgressBar(current, oreDurability * 40, 20, symbol, ChatColor.RESET, ChatColor.GOLD));
                 if (current - power <= 0)
                     current = 0;
@@ -140,7 +142,7 @@ public class GatheringListener extends BaseListener {
                     this.cancel();
                     return;
                 }
-                if (!player.getInventory().getItemInMainHand().equals(tool)) {
+                if (!player.getInventory().getItemInMainHand().equals(tool.getTool())) {
                     as.setCustomName(name);
                     player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(ChatColor.RED + "Вы выронили инструмент!"));
                     world.playSound(oLoc, Sound.ENTITY_BLAZE_HURT, 10, 0);
@@ -149,8 +151,8 @@ public class GatheringListener extends BaseListener {
                 }
                 if (current < 0) {
                     as.setCustomName(name);
-                    setCD(as, cooldown);
-                    addItemsByChance(ore.getDrop(), ore.getChance(), 3, player);
+                    setCD(as, ore.getCooldown());
+                    addItemsByChance(ore.getDrop(), ore.getChance(), tool.getLuckFactor(), player);
                     this.cancel();
                     return;
                 }

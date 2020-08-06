@@ -67,37 +67,37 @@ public class OreItems {
     public static ItemStack t1PickAxe = new ItemConstructor(Material.WOODEN_PICKAXE)
             .amount(1)
             .displayName(ChatColor.GRAY + "Деревянная кирка")
-            .lore(ChatColor.GRAY + "[✰✰✰✰✰] Кирка")
+            .lore(ChatColor.GRAY + "[✰✰✰✰✰] Кирка","",ChatColor.GRAY + "Фактор удачи: " + ChatColor.GOLD + "0")
             .build();
 
     public static ItemStack t2PickAxe = new ItemConstructor(Material.STONE_PICKAXE)
             .amount(1)
             .displayName(ChatColor.GRAY + "Каменная кирка")
-            .lore(ChatColor.GRAY + "[★✰✰✰✰] Кирка")
+            .lore(ChatColor.GRAY + "[★✰✰✰✰] Кирка","",ChatColor.GRAY + "Фактор удачи: " + ChatColor.GOLD + "0")
             .build();
 
     public static ItemStack t3PickAxe = new ItemConstructor(Material.IRON_PICKAXE)
             .amount(1)
             .displayName(ChatColor.GRAY + "Железная кирка")
-            .lore(ChatColor.GRAY + "[★★✰✰✰] Кирка")
+            .lore(ChatColor.GRAY + "[★★✰✰✰] Кирка","",ChatColor.GRAY + "Фактор удачи: " + ChatColor.GOLD + "1")
             .build();
 
     public static ItemStack t4PickAxe = new ItemConstructor(Material.GOLDEN_PICKAXE)
             .amount(1)
             .displayName(ChatColor.GRAY + "Золотая кирка")
-            .lore(ChatColor.GRAY + "[★★★✰✰] Кирка")
+            .lore(ChatColor.GRAY + "[★★★✰✰] Кирка","",ChatColor.GRAY + "Фактор удачи: " + ChatColor.GOLD + "1")
             .build();
 
     public static ItemStack t5PickAxe = new ItemConstructor(Material.DIAMOND_PICKAXE)
             .amount(1)
             .displayName(ChatColor.GRAY + "Алмазная кирка")
-            .lore(ChatColor.GRAY + "[★★★★✰] Кирка")
+            .lore(ChatColor.GRAY + "[★★★★✰] Кирка","",ChatColor.GRAY + "Фактор удачи: " + ChatColor.GOLD + "2")
             .build();
 
     public static ItemStack t6PickAxe = new ItemConstructor(Material.DIAMOND_PICKAXE)
             .amount(1)
             .displayName(ChatColor.GRAY + "Незеритовая кирка")
-            .lore(ChatColor.GRAY + "[★★★★★] Кирка")
+            .lore(ChatColor.GRAY + "[★★★★★] Кирка","",ChatColor.GRAY + "Фактор удачи: " + ChatColor.GOLD + "2")
             .build();
 
     //////////////////////// Меню /////////////////////////////////////////////////
