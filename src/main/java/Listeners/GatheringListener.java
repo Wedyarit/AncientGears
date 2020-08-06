@@ -73,9 +73,8 @@ public class GatheringListener extends BaseListener {
                     if (resource.getCustomName().equals(ore.getName())) {
                         int tier = toolArrayList.get(isContains(toolArrayList, player.getInventory().getItemInMainHand())).getTier();
                         if (tier >= ore.getTier()) {
-                            gather(resource, toolArrayList.get(isContains(toolArrayList, player.getInventory().getItemInMainHand())).getTier(), player, ore.getTier(), ore.getCooldown());
-                            setCD(resource, ore.getCooldown());
-                            addItemsByChance(ore.getDrop(), ore.getChance(), maxcount, player);
+                            gather(resource, toolArrayList.get(isContains(toolArrayList, player.getInventory().getItemInMainHand())).getTier(), player, ore.getTier(), ore.getCooldown(), ore);
+//                            setCD(resource, ore.getCooldown());
                             break;
                         } else
                             player.sendMessage(ChatColor.RED + "" + player.getInventory().getItemInMainHand().getItemMeta().getDisplayName() + " не может добыть " + ore.getName() + " ,нужна кирка минимум " + ore.getTier() + "  тира");
@@ -96,7 +95,7 @@ public class GatheringListener extends BaseListener {
     }
 
     public static String getProgressBar(int current, int max, int totalBars, char symbol, ChatColor completedColor,
-                                 ChatColor notCompletedColor) {
+                                        ChatColor notCompletedColor) {
         float percent = (float) current / max;
         int progressBars = (int) (totalBars * percent);
 
@@ -104,19 +103,20 @@ public class GatheringListener extends BaseListener {
                 + Strings.repeat("" + notCompletedColor + symbol, totalBars - progressBars);
     }
 
-    private void gather(ArmorStand as,Integer toolTier, Player player, Integer oreDurability, Integer cooldown) {
+    private void gather(ArmorStand as, Integer toolTier, Player player, Integer oreDurability, Integer cooldown, Ore ore) {
         String name = as.getCustomName();
 
         new BukkitRunnable() {
-            final int power = toolTier * 5;
-            int current = oreDurability * 20;
+            final int power = toolTier * 2;
+            int current = oreDurability * 40;
             final char symbol = '|';
-            final Vector maxDistance = new Vector(4,4,4);
+            final Vector maxDistance = new Vector(4, 4, 4);
+
             @Override
             public void run() {
-                as.setCustomName(name + ": " +getProgressBar(20,100, 20,symbol,ChatColor.GREEN, ChatColor.RESET));
+                as.setCustomName(name + ": " + getProgressBar(current, oreDurability * 40, 20, symbol, ChatColor.GREEN, ChatColor.RESET));
                 if (current - power <= 0)
-                current = 0;
+                    current = 0;
                 current -= power;
                 Location pLoc = player.getLocation();
                 Location oLoc = as.getLocation();
@@ -125,11 +125,13 @@ public class GatheringListener extends BaseListener {
                     player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(ChatColor.RED + "Слишком далеко от рессурса"));
                     this.cancel();
                 }
-                if (current <= 0)
+                if (current <= 0) {
                     setCD(as, cooldown);
+                    addItemsByChance(ore.getDrop(), ore.getChance(), 3, player);
                     this.cancel();
+                }
             }
-        }.runTaskTimer(AncientGears.getInstance(),0,20);
+        }.runTaskTimer(AncientGears.getInstance(), 0, 20);
 
     }
 
