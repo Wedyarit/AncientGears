@@ -5,6 +5,7 @@ import Gathering.Ore.Ore;
 import Gathering.Ore.OreItems;
 import Gathering.Structures.BaseRecipe;
 import org.bukkit.Bukkit;
+import org.bukkit.Particle;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Item;
@@ -32,14 +33,12 @@ public class DropListener extends BaseListener {
     }
 
     private boolean isEnough(ArrayList<Item> items, ArrayList<ItemStack> itemstacks) {
-        Bukkit.broadcastMessage(items.toString());
         ArrayList<ItemStack> itemstacks1 = new ArrayList<>();
         for (Item item : items) {
             itemstacks1.add(item.getItemStack());
         }
         ArrayList<ItemStack> commonItemstacks = new ArrayList<>(itemstacks);
         commonItemstacks.retainAll(itemstacks1);
-        Bukkit.broadcastMessage(commonItemstacks.size() + " | " + itemstacks.size());
         return commonItemstacks.size() == itemstacks.size();
     }
 
@@ -51,7 +50,6 @@ public class DropListener extends BaseListener {
         }
         ArrayList<ItemStack> commonItemstacks = new ArrayList<>(itemstacks);
         commonItemstacks.retainAll(itemstacks1);
-        Bukkit.broadcastMessage(commonItemstacks.size() + " | " + itemstacks.size());
         for (Item item : items) {
             if (commonItemstacks.contains(item.getItemStack()))
                 removeItems.add(item);
@@ -74,13 +72,14 @@ public class DropListener extends BaseListener {
                 for (Entity entity : entities) {
                     if (entity instanceof Item) {
                         entityItems.add((Item) entity);
-                        Bukkit.broadcastMessage(((Item) entity).getItemStack().getItemMeta().getDisplayName());
                     }
                 }
                 for (BaseRecipe recipe : recipes) {
                     if (isEnough(entityItems, recipe.getNeed())) {
                         for (int i = 0; i < recipe.getResultCount(); i++) {
-                            player.getInventory().addItem(recipe.getResult());
+                            Item resItem = (Item) item.getWorld().spawnEntity(item.getLocation(), EntityType.DROPPED_ITEM);
+                            resItem.setItemStack(recipe.getResult());
+                            item.getWorld().spawnParticle(Particle.FLAME, item.getLocation(), 10, 1, 1, 1, 0);
                         }
                         ArrayList<Item> removeItems = getRemoveItems(entityItems, recipe.getNeed());
                         for (Item removeItem : removeItems)

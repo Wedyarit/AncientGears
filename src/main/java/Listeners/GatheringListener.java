@@ -71,11 +71,13 @@ public class GatheringListener extends BaseListener {
                     if (resource.getCustomName().equals(ore.getName())) {
                         int tier = toolArrayList.get(isContains(toolArrayList, player.getInventory().getItemInMainHand())).getTier();
                         if (tier >= ore.getTier()) {
+                            player.sendMessage(AncientGears.prefix + "Вы начали добычу ресурса " + ore.getName());
                             gather(resource, player.getInventory().getItemInMainHand(), toolArrayList.get(isContains(toolArrayList, player.getInventory().getItemInMainHand())).getTier(), player, ore.getTier(), ore.getCooldown(), ore);
-//                            setCD(resource, ore.getCooldown());
                             break;
-                        } else
-                            player.sendMessage(ChatColor.RED + "" + player.getInventory().getItemInMainHand().getItemMeta().getDisplayName() + " не может добыть " + ore.getName() + " ,нужна кирка минимум " + ore.getTier() + "  тира");
+                        } else {
+                            player.sendMessage(AncientGears.prefix + player.getInventory().getItemInMainHand().getItemMeta().getDisplayName() + ChatColor.RED + " не может добыть " + ore.getName() + ChatColor.RED + ", нужна кирка минимум " + ChatColor.GRAY + ore.getTier() + ChatColor.RED + " тира!");
+                            player.playSound(player.getLocation(), Sound.ENTITY_VILLAGER_NO, 2, 5);
+                        }
                     }
     }
 
@@ -88,7 +90,11 @@ public class GatheringListener extends BaseListener {
         chance *= 0.01;
         for (int i = 0; i < maxCount; i++) {
             double random = Math.random();
-            if (chance >= random) player.getInventory().addItem(item);
+            if (chance >= random) {
+                player.getInventory().addItem(item);
+                player.sendMessage(AncientGears.prefix + "Вы добыли " + item.getItemMeta().getDisplayName());
+                player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2, 2);
+            }
         }
     }
 
@@ -101,7 +107,7 @@ public class GatheringListener extends BaseListener {
                 + Strings.repeat("" + notCompletedColor + symbol, totalBars - progressBars);
     }
 
-    private void gather(ArmorStand as, ItemStack tool,Integer toolTier, Player player, Integer oreDurability, Integer cooldown, Ore ore) {
+    private void gather(ArmorStand as, ItemStack tool, Integer toolTier, Player player, Integer oreDurability, Integer cooldown, Ore ore) {
 
         new BukkitRunnable() {
             final String name = as.getCustomName();
@@ -112,11 +118,6 @@ public class GatheringListener extends BaseListener {
 
             @Override
             public void run() {
-                if (!player.getInventory().getItemInMainHand().equals(tool)) {
-                    as.setCustomName(name);
-                    player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(ChatColor.RED + "Выронил инструмент!"));
-                    this.cancel();
-                }
                 as.setCustomName(name + ": " + getProgressBar(current, oreDurability * 40, 20, symbol, ChatColor.RESET, ChatColor.GOLD));
                 if (current - power <= 0)
                     current = 0;
@@ -125,19 +126,32 @@ public class GatheringListener extends BaseListener {
                 Location pLoc = player.getLocation();
                 Location oLoc = as.getLocation();
                 World world = oLoc.getWorld();
-                world.spawnParticle(Particle.CLOUD, oLoc,1);
-                world.playSound(oLoc, Sound.BLOCK_ANVIL_PLACE, 2,2);
+
                 if (pLoc.distance(oLoc) > maxDistance) {
                     as.setCustomName(name);
-                    player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(ChatColor.RED + "Слишком далеко от рессурса"));
+                    player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(ChatColor.RED + "Вы отошли слишком далеко от ресурса!"));
+                    player.sendMessage(AncientGears.prefix + ChatColor.RED + "Вы отошли слишком далеко от ресурса!");
+                    world.playSound(oLoc, Sound.ENTITY_BLAZE_HURT, 10, 0);
                     this.cancel();
+                    return;
                 }
-                if (current <= 0) {
+                if (!player.getInventory().getItemInMainHand().equals(tool)) {
+                    as.setCustomName(name);
+                    player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(ChatColor.RED + "Вы выронили инструмент!"));
+                    player.sendMessage(AncientGears.prefix + ChatColor.RED + "Вы выронили инструмент!");
+                    world.playSound(oLoc, Sound.ENTITY_BLAZE_HURT, 10, 0);
+                    this.cancel();
+                    return;
+                }
+                if (current < 0) {
                     as.setCustomName(name);
                     setCD(as, cooldown);
                     addItemsByChance(ore.getDrop(), ore.getChance(), 3, player);
                     this.cancel();
+                    return;
                 }
+                world.spawnParticle(Particle.SMOKE_NORMAL, oLoc, 80, 0.5, 2, 0.5, 0);
+                world.playSound(oLoc, Sound.BLOCK_ANVIL_PLACE, 2, 2);
             }
         }.runTaskTimer(AncientGears.getInstance(), 0, 20);
 
@@ -163,7 +177,7 @@ public class GatheringListener extends BaseListener {
             public void run() {
                 time--;
                 String timeString = String.format("%02d:%02d", time / 60, time % 60);
-                String timeLeft = ChatColor.RED + "" + timeString + " до появления " + name;
+                String timeLeft = ChatColor.RED + "[" + timeString + "] " + ChatColor.WHITE + "Восстановление " + name;
                 armorStand.setCustomName(timeLeft);
                 armorStand.setCustomNameVisible(true);
                 if (time <= 0) {
@@ -171,7 +185,9 @@ public class GatheringListener extends BaseListener {
                     armorStand.getEquipment().setItemInOffHand(leftArm);
                     armorStand.getEquipment().setHelmet(head);
                     armorStand.setCustomNameVisible(true);
+                    armorStand.setCustomName(name);
                     armorStand.setInvulnerable(false);
+                    armorStand.getWorld().playSound(armorStand.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2, 2);
                     this.cancel();
                 }
             }
