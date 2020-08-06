@@ -1,5 +1,6 @@
 package Listeners;
 
+import AncientGears.AncientGears;
 import Gathering.Ore.Ore;
 import Gathering.Ore.OreItems;
 import Gathering.Structures.BaseRecipe;
@@ -13,6 +14,7 @@ import org.bukkit.event.entity.EntityPickupItemEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -64,24 +66,31 @@ public class DropListener extends BaseListener {
         ArrayList<Item> entityItems = new ArrayList<>();
         entityItems.add(item);
         ArrayList<BaseRecipe> recipes = getRecipes();
-        Collection<Entity> entities = item.getNearbyEntities(2, 2, 2);
-        for (Entity entity : entities) {
-            if (entity instanceof Item) {
-                entityItems.add((Item) entity);
-                Bukkit.broadcastMessage(((Item) entity).getItemStack().getItemMeta().getDisplayName());
-            }
-        }
-        for (BaseRecipe recipe : recipes) {
-            if (isEnough(entityItems, recipe.getNeed())) {
-                for (int i = 0; i < recipe.getResultCount(); i++) {
-                    Item resItem = (Item) item.getWorld().spawnEntity(item.getLocation(), EntityType.DROPPED_ITEM);
-                    resItem.setItemStack(recipe.getResult());
+
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                Collection<Entity> entities = item.getNearbyEntities(2, 2, 2);
+                for (Entity entity : entities) {
+                    if (entity instanceof Item) {
+                        entityItems.add((Item) entity);
+                        Bukkit.broadcastMessage(((Item) entity).getItemStack().getItemMeta().getDisplayName());
+                    }
                 }
-                ArrayList<Item> removeItems = getRemoveItems(entityItems, recipe.getNeed());
-                for (Item removeItem : removeItems)
-                    removeItem.remove();
+                for (BaseRecipe recipe : recipes) {
+                    if (isEnough(entityItems, recipe.getNeed())) {
+                        for (int i = 0; i < recipe.getResultCount(); i++) {
+                            player.getInventory().addItem(recipe.getResult());
+                        }
+                        ArrayList<Item> removeItems = getRemoveItems(entityItems, recipe.getNeed());
+                        for (Item removeItem : removeItems)
+                            removeItem.remove();
+                    }
+                }
+                this.cancel();
             }
-        }
+        }.runTaskTimer(AncientGears.getInstance(), 60, 20);
+
 
     }
 
