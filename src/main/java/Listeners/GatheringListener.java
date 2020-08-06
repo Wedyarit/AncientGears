@@ -73,7 +73,7 @@ public class GatheringListener extends BaseListener {
                         int tier = toolArrayList.get(isContains(toolArrayList, player.getInventory().getItemInMainHand())).getTier();
                         if (tier >= ore.getTier()) {
                             // Нужно получить тул игрока, в Tool есть метод getTool()
-                            gather(resource, player.getInventory().getItemInMainHand(), toolArrayList.get(isContains(toolArrayList, player.getInventory().getItemInMainHand())).getTier(), player, ore.getTier(), ore.getCooldown(), ore);
+                            gather(resource, toolArrayList.get(isContains(toolArrayList, player.getInventory().getItemInMainHand())), player, ore);
                             break;
                         } else {
                             player.sendMessage(AncientGears.prefix + player.getInventory().getItemInMainHand().getItemMeta().getDisplayName() + ChatColor.RED + " не может добыть " + ore.getName() + ChatColor.RED + ", нужна кирка минимум " + ChatColor.GRAY + ore.getTier() + ChatColor.RED + " тира!");
@@ -108,7 +108,7 @@ public class GatheringListener extends BaseListener {
                 + Strings.repeat("" + notCompletedColor + symbol, totalBars - progressBars);
     }
 
-    private void gather(ArmorStand as, Tool tool, Integer toolTier, Player player, Ore ore) {
+    private void gather(ArmorStand as, Tool tool, Player player, Ore ore) {
 
         new BukkitRunnable() {
             final String name = as.getCustomName();
@@ -119,11 +119,11 @@ public class GatheringListener extends BaseListener {
 
             @Override
             public void run() {
-                current -= power;
                 player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText("Вы добываете " + ore.getName()));
-                as.setCustomName(name + ": " + getProgressBar(current, oreDurability * 40, 20, symbol, ChatColor.RESET, ChatColor.GOLD));
+                as.setCustomName(name + ": " + getProgressBar(current, ore.getDurability(), 20, symbol, ChatColor.RESET, ChatColor.GOLD));
                 if (current - power <= 0)
                     current = 0;
+                current -= power;
                 player.attack(as);
                 Location pLoc = player.getLocation();
                 Location oLoc = as.getLocation();
