@@ -5,6 +5,7 @@ import Gathering.Ore.OreItems;
 import AncientGears.AncientGears;
 import Gathering.ResourceManager;
 import Gathering.Tool;
+import com.google.common.base.Strings;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -64,14 +65,14 @@ public class GatheringListener extends BaseListener {
         ArrayList<Tool> toolArrayList = getToolArray();
         if (resource.getCustomName() != null)
             for (Ore ore : oreArrayList)
-                    if (isContains(toolArrayList, player.getInventory().getItemInMainHand()) != -1)
-                        if (resource.getCustomName().equals(ore.getName()))
-                            if (toolArrayList.get(isContains(toolArrayList, player.getInventory().getItemInMainHand())).getTier() >= ore.getTier()) {
-                                setCD(resource, ore.getCooldown());
-                                addItemsByChance(ore.getDrop(), ore.getChance(), maxcount, player);
-                                break;
-                            } else
-                                player.sendMessage(ChatColor.RED + "" + player.getInventory().getItemInMainHand().getItemMeta().getDisplayName() + " не может добыть " + ore.getName() + " ,нужна кирка минимум " + ore.getTier() + "  тира" );
+                if (isContains(toolArrayList, player.getInventory().getItemInMainHand()) != -1)
+                    if (resource.getCustomName().equals(ore.getName()))
+                        if (toolArrayList.get(isContains(toolArrayList, player.getInventory().getItemInMainHand())).getTier() >= ore.getTier()) {
+                            setCD(resource, ore.getCooldown());
+                            addItemsByChance(ore.getDrop(), ore.getChance(), maxcount, player);
+                            break;
+                        } else
+                            player.sendMessage(ChatColor.RED + "" + player.getInventory().getItemInMainHand().getItemMeta().getDisplayName() + " не может добыть " + ore.getName() + " ,нужна кирка минимум " + ore.getTier() + "  тира");
     }
 
     @EventHandler
@@ -85,6 +86,15 @@ public class GatheringListener extends BaseListener {
             double random = Math.random();
             if (chance >= random) player.getInventory().addItem(item);
         }
+    }
+
+    public static String getProgressBar(int current, int max, int totalBars, char symbol, ChatColor completedColor,
+                                 ChatColor notCompletedColor) {
+        float percent = (float) current / max;
+        int progressBars = (int) (totalBars * percent);
+
+        return Strings.repeat("" + completedColor + symbol, progressBars)
+                + Strings.repeat("" + notCompletedColor + symbol, totalBars - progressBars);
     }
 
     private void setCD(ArmorStand armorStand, Integer seconds) {
