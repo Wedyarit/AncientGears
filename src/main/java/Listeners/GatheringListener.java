@@ -8,10 +8,7 @@ import Gathering.Tool;
 import com.google.common.base.Strings;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.Material;
+import org.bukkit.*;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -73,7 +70,7 @@ public class GatheringListener extends BaseListener {
                     if (resource.getCustomName().equals(ore.getName())) {
                         int tier = toolArrayList.get(isContains(toolArrayList, player.getInventory().getItemInMainHand())).getTier();
                         if (tier >= ore.getTier()) {
-                            gather(resource, toolArrayList.get(isContains(toolArrayList, player.getInventory().getItemInMainHand())).getTier(), player, ore.getTier(), ore.getCooldown(), ore);
+                            gather(resource, player.getInventory().getItemInMainHand(), toolArrayList.get(isContains(toolArrayList, player.getInventory().getItemInMainHand())).getTier(), player, ore.getTier(), ore.getCooldown(), ore);
 //                            setCD(resource, ore.getCooldown());
                             break;
                         } else
@@ -103,7 +100,7 @@ public class GatheringListener extends BaseListener {
                 + Strings.repeat("" + notCompletedColor + symbol, totalBars - progressBars);
     }
 
-    private void gather(ArmorStand as, Integer toolTier, Player player, Integer oreDurability, Integer cooldown, Ore ore) {
+    private void gather(ArmorStand as, ItemStack tool,Integer toolTier, Player player, Integer oreDurability, Integer cooldown, Ore ore) {
         String name = as.getCustomName();
 
         new BukkitRunnable() {
@@ -114,18 +111,29 @@ public class GatheringListener extends BaseListener {
 
             @Override
             public void run() {
-                as.setCustomName(name + ": " + getProgressBar(current, oreDurability * 40, 20, symbol, ChatColor.GREEN, ChatColor.RESET));
+                if (!player.getInventory().getItemInMainHand().equals(tool)) {
+                    as.setCustomName(name);
+                    player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(ChatColor.RED + "Выронил инструмент!"));
+                    this.cancel();
+                }
+                    this.cancel();
+                as.setCustomName(name + ": " + getProgressBar(current, oreDurability * 40, 20, symbol, ChatColor.RESET, ChatColor.GOLD));
                 if (current - power <= 0)
                     current = 0;
                 current -= power;
+                player.attack(as);
                 Location pLoc = player.getLocation();
                 Location oLoc = as.getLocation();
+                World world = oLoc.getWorld();
+                world.spawnParticle(Particle.CLOUD, oLoc,1);
+                world.playSound(oLoc, Sound.BLOCK_ANVIL_PLACE, 2,2);
                 if (pLoc.distance(oLoc) > 3) {
                     as.setCustomName(name);
                     player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(ChatColor.RED + "Слишком далеко от рессурса"));
                     this.cancel();
                 }
                 if (current <= 0) {
+                    as.setCustomName(name);
                     setCD(as, cooldown);
                     addItemsByChance(ore.getDrop(), ore.getChance(), 3, player);
                     this.cancel();
