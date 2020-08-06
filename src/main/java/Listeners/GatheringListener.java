@@ -101,9 +101,9 @@ public class GatheringListener extends BaseListener {
     }
 
     private void gather(ArmorStand as, ItemStack tool,Integer toolTier, Player player, Integer oreDurability, Integer cooldown, Ore ore) {
-        String name = as.getCustomName();
 
         new BukkitRunnable() {
+            final String name = as.getCustomName();
             final int power = toolTier * 2;
             int current = oreDurability * 40;
             final char symbol = '|';
@@ -116,7 +116,6 @@ public class GatheringListener extends BaseListener {
                     player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(ChatColor.RED + "Выронил инструмент!"));
                     this.cancel();
                 }
-                    this.cancel();
                 as.setCustomName(name + ": " + getProgressBar(current, oreDurability * 40, 20, symbol, ChatColor.RESET, ChatColor.GOLD));
                 if (current - power <= 0)
                     current = 0;
@@ -144,6 +143,7 @@ public class GatheringListener extends BaseListener {
     }
 
     private void setCD(ArmorStand armorStand, Integer seconds) {
+        final String name = armorStand.getCustomName();
         ItemStack head = armorStand.getEquipment().getHelmet();
         ItemStack leftArm = armorStand.getEquipment().getItemInOffHand();
         ItemStack rightArm = armorStand.getEquipment().getItemInMainHand();
@@ -161,6 +161,9 @@ public class GatheringListener extends BaseListener {
             @Override
             public void run() {
                 time--;
+                String timeLeft = ChatColor.RED + "" + (time-1) + " до постановления " + name;
+                armorStand.setCustomName(timeLeft);
+                armorStand.setCustomNameVisible(true);
                 if (time <= 0) {
                     armorStand.getEquipment().setItemInMainHand(rightArm);
                     armorStand.getEquipment().setItemInOffHand(leftArm);
@@ -169,7 +172,6 @@ public class GatheringListener extends BaseListener {
                     armorStand.setInvulnerable(false);
                     this.cancel();
                 }
-
             }
         }.runTaskTimer(AncientGears.getInstance(), 0, 20);
     }
