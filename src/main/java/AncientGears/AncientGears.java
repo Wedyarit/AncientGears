@@ -1,5 +1,6 @@
 package AncientGears;
 
+import Gathering.ItemStackManager;
 import Gathering.Ore.OreItems;
 import Gathering.ResourceManager;
 import Listeners.DropListener;
@@ -13,6 +14,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import static Gathering.InitializeGathering.InitializeOre;
 import static Gathering.InitializeGathering.InitializeTools;
+import static Gathering.Ore.OreItems.InitializeOreItems;
+import static Listeners.GuiListener.InitializeInventoryItems;
 
 public final class AncientGears extends JavaPlugin {
     private static AncientGears instance;
@@ -25,6 +28,8 @@ public final class AncientGears extends JavaPlugin {
 
         this.getCommand("kit").setExecutor(new Command());
 
+        InitializeItemStackManager();
+        InitializeInventoryItems();
         registerListeners();
         InitializeResourceSystem();
     }
@@ -36,6 +41,13 @@ public final class AncientGears extends JavaPlugin {
 
     public static AncientGears getInstance() {
         return AncientGears.instance;
+    }
+
+    public void InitializeItemStackManager() {
+        new ItemStackManager();
+
+        InitializeOreItems();
+
     }
 
     public void InitializeResourceSystem() {

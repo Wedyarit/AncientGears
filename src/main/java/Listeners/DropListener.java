@@ -1,6 +1,7 @@
 package Listeners;
 
 import AncientGears.AncientGears;
+import Gathering.ItemStackManager;
 import Gathering.Ore.Ore;
 import Gathering.Ore.OreItems;
 import Gathering.Structures.BaseRecipe;
@@ -24,7 +25,7 @@ import java.util.Collection;
 public class DropListener extends BaseListener {
     private ArrayList<BaseRecipe> getRecipes() {
         ArrayList<BaseRecipe> arrayList = new ArrayList<>();
-        arrayList.add(new BaseRecipe(recipe(OreItems.copperOre, OreItems.zincOre), OreItems.brassOre, 2));
+        arrayList.add(new BaseRecipe(recipe(ItemStackManager.getInstance().getItem(OreItems.OreItemNames.ZINC_ORE.name()), ItemStackManager.getInstance().getItem(OreItems.OreItemNames.ZINC_ORE.name())), ItemStackManager.getInstance().getItem(OreItems.OreItemNames.BRASS_INGOT.name()), 2));
         return arrayList;
     }
 

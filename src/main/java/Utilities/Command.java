@@ -1,5 +1,6 @@
 package Utilities;
 
+import Gathering.ItemStackManager;
 import Gathering.Ore.Ore;
 import Gathering.Ore.OreItems;
 import Gathering.ResourceManager;
@@ -18,15 +19,10 @@ public class Command implements CommandExecutor {
         if (sender instanceof Player) {
             Player player = (Player) sender;
 
-            player.getInventory().addItem(OreItems.profMenu);
-            player.getInventory().addItem(OreItems.t1PickAxe);
-            player.getInventory().addItem(OreItems.t2PickAxe);
-            player.getInventory().addItem(OreItems.t3PickAxe);
-            player.getInventory().addItem(OreItems.t4PickAxe);
-            player.getInventory().addItem(OreItems.t5PickAxe);
-            player.getInventory().addItem(OreItems.copperOre);
-            player.getInventory().addItem(OreItems.zincOre);
-
+            player.getInventory().addItem(ItemStackManager.getInstance().getItem(OreItems.OreItemNames.MENU_PROF.name()));
+            player.getInventory().addItem(ItemStackManager.getInstance().getItem(OreItems.OreItemNames.T1_PICKAXE.name()));
+            player.getInventory().addItem(ItemStackManager.getInstance().getItem(OreItems.OreItemNames.T6_PICKAXE.name()));
+            player.getInventory().addItem(ItemStackManager.getInstance().getItem(OreItems.OreItemNames.T3_PICKAXE.name()));
         }
         return true;
     }

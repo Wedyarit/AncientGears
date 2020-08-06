@@ -1,8 +1,10 @@
 package Listeners;
 
+import Gathering.ItemStackManager;
 import Gathering.Ore.Ore;
 import Gathering.Ore.OreItems;
 import Gathering.ResourceManager;
+import Gathering.Tool;
 import Utilities.GuiConstructor;
 import Utilities.ResourceConstructor;
 import org.bukkit.ChatColor;
@@ -19,89 +21,108 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class GuiListener extends BaseListener {
-    private static final Inventory guiTools = new GuiConstructor(27, OreItems.toolMenu.getItemMeta().getDisplayName())
-            .setItems(OreItems.t1PickAxe, OreItems.t2PickAxe, OreItems.t3PickAxe,
-                    OreItems.t4PickAxe, OreItems.t5PickAxe, OreItems.t6PickAxe)
-            .bulid();
+    private static final HashMap<ItemStack, Inventory> itemStackInventoryHashMap = new HashMap<>();
 
-    private static final Inventory guiGathering = new GuiConstructor(9, OreItems.profMenu.getItemMeta().getDisplayName())
-            .setItems(OreItems.oreMenu, OreItems.lumberMenu, OreItems.cropMenu, OreItems.fishingMenu)
-            .bulid();
+    public static void InitializeInventoryItems() {
+        itemStackInventoryHashMap.put(ItemStackManager.getInstance().getItem(OreItems.OreItemNames.MENU_TOOLS.name()), new GuiConstructor(27,
+                ChatColor.RED + "Меню Инструментов")
+                .setItems(
+                        ItemStackManager.getInstance().getItem(OreItems.OreItemNames.T1_PICKAXE.name()),
+                        ItemStackManager.getInstance().getItem(OreItems.OreItemNames.T2_PICKAXE.name()),
+                        ItemStackManager.getInstance().getItem(OreItems.OreItemNames.T3_PICKAXE.name()),
+                        ItemStackManager.getInstance().getItem(OreItems.OreItemNames.T4_PICKAXE.name()),
+                        ItemStackManager.getInstance().getItem(OreItems.OreItemNames.T5_PICKAXE.name()),
+                        ItemStackManager.getInstance().getItem(OreItems.OreItemNames.T6_PICKAXE.name()))
+                .bulid());
 
-    private static final Inventory guiOre = new GuiConstructor(9, OreItems.oreMenu.getItemMeta().getDisplayName())
-            .setItems(OreItems.stoneOre, OreItems.coalOre, OreItems.copperOre,
-                    OreItems.tinOre, OreItems.ironOre, OreItems.goldOre,
-                    OreItems.zincOre, OreItems.titanOre)
-            .bulid();
+        itemStackInventoryHashMap.put(ItemStackManager.getInstance().getItem(OreItems.OreItemNames.MENU_PROF.name()), new GuiConstructor(27,
+                ChatColor.RED + "Меню Профессий")
+                .setItems(
+                        ItemStackManager.getInstance().getItem(OreItems.OreItemNames.MENU_MINING.name()),
+                        ItemStackManager.getInstance().getItem(OreItems.OreItemNames.MENU_LUMBER.name()),
+                        ItemStackManager.getInstance().getItem(OreItems.OreItemNames.MENU_FARMING.name()),
+                        ItemStackManager.getInstance().getItem(OreItems.OreItemNames.MENU_FISHING.name()),
+                        ItemStackManager.getInstance().getItem(OreItems.OreItemNames.MENU_TOOLS.name()))
+                .bulid());
 
-    private static final Inventory guiLumber = new GuiConstructor(9, OreItems.lumberMenu.getItemMeta().getDisplayName())
-            .setItems(OreItems.oreMenu, OreItems.lumberMenu, OreItems.cropMenu, OreItems.fishingMenu)
-            .bulid();
+        itemStackInventoryHashMap.put(ItemStackManager.getInstance().getItem(OreItems.OreItemNames.MENU_MINING.name()), new GuiConstructor(27,
+                ChatColor.RED + "Шахтерство")
+                .setItems(
+                        ItemStackManager.getInstance().getItem(OreItems.OreItemNames.STONE_ORE.name()),
+                        ItemStackManager.getInstance().getItem(OreItems.OreItemNames.COAL_ORE.name()),
+                        ItemStackManager.getInstance().getItem(OreItems.OreItemNames.COPPER_ORE.name()),
+                        ItemStackManager.getInstance().getItem(OreItems.OreItemNames.TIN_ORE.name()),
+                        ItemStackManager.getInstance().getItem(OreItems.OreItemNames.IRON_ORE.name()),
+                        ItemStackManager.getInstance().getItem(OreItems.OreItemNames.GOLD_ORE.name()),
+                        ItemStackManager.getInstance().getItem(OreItems.OreItemNames.ZINC_ORE.name()),
+                        ItemStackManager.getInstance().getItem(OreItems.OreItemNames.TITAN_ORE.name()))
+                .bulid());
 
-    private static final Inventory guiFarming = new GuiConstructor(9, OreItems.cropMenu.getItemMeta().getDisplayName())
-            .setItems(OreItems.oreMenu, OreItems.lumberMenu, OreItems.cropMenu, OreItems.fishingMenu)
-            .bulid();
+        itemStackInventoryHashMap.put(ItemStackManager.getInstance().getItem(OreItems.OreItemNames.MENU_LUMBER.name()), new GuiConstructor(27,
+                ChatColor.RED + "Лесорубство")
 
-    private static final Inventory guiFishing = new GuiConstructor(9, OreItems.fishingMenu.getItemMeta().getDisplayName())
-            .setItems(OreItems.oreMenu, OreItems.lumberMenu, OreItems.cropMenu, OreItems.fishingMenu)
-            .bulid();
+                .bulid());
+
+        itemStackInventoryHashMap.put(ItemStackManager.getInstance().getItem(OreItems.OreItemNames.MENU_FARMING.name()), new GuiConstructor(27,
+                ChatColor.RED + "Фермерство")
+
+                .bulid());
+
+        itemStackInventoryHashMap.put(ItemStackManager.getInstance().getItem(OreItems.OreItemNames.MENU_FISHING.name()), new GuiConstructor(27,
+                ChatColor.RED + "Рыболовство")
+
+                .bulid());
+
+
+    }
 
     @EventHandler
     public void onInteract(PlayerInteractEvent e) {
         if (e.getItem() == null) return;
-        if (!e.getItem().equals(OreItems.profMenu)) return;
-        e.getPlayer().openInventory(guiGathering);
+        if (!e.getItem().equals(ItemStackManager.getInstance().getItem(OreItems.OreItemNames.MENU_PROF.name()))) return;
+        e.getPlayer().openInventory(itemStackInventoryHashMap.get(OreItems.OreItemNames.MENU_LUMBER));
     }
 
     @EventHandler
     public void onInventoryDrag(final InventoryDragEvent e) {
         Inventory inv = e.getInventory();
-        if (inv == guiGathering ||
-                inv == guiOre ||
-                inv == guiLumber ||
-                inv == guiFarming ||
-                inv == guiFishing ||
-                inv == guiTools
+        if (inv == itemStackInventoryHashMap.get(OreItems.OreItemNames.MENU_PROF) ||
+                inv == itemStackInventoryHashMap.get(OreItems.OreItemNames.MENU_MINING) ||
+                inv == itemStackInventoryHashMap.get(OreItems.OreItemNames.MENU_LUMBER) ||
+                inv == itemStackInventoryHashMap.get(OreItems.OreItemNames.MENU_FARMING) ||
+                inv == itemStackInventoryHashMap.get(OreItems.OreItemNames.MENU_FISHING) ||
+                inv == itemStackInventoryHashMap.get(OreItems.OreItemNames.MENU_TOOLS)
 
         )
             e.setCancelled(true);
     }
-//    inv != guiOre ||
-//    inv != guiLumber ||
-//    inv != guiFarming ||
-//    inv != guiFishing
 
     @EventHandler
     public void onToolGuiClick(final InventoryClickEvent e) {
         Inventory inv = e.getInventory();
-        if (inv != guiTools) return;
+        if (inv != itemStackInventoryHashMap.get(OreItems.OreItemNames.MENU_TOOLS)) return;
             e.setCancelled(true);
 
         final ItemStack clickedItem = e.getCurrentItem();
         if (clickedItem == null || clickedItem.getType() == Material.AIR) return;
         Player player = (Player) e.getWhoClicked();
 
-        if (clickedItem.equals(OreItems.t1PickAxe)) {
-            player.getInventory().addItem(OreItems.t1PickAxe);
-        } else if (clickedItem.equals(OreItems.t2PickAxe)) {
-            player.getInventory().addItem(OreItems.t2PickAxe);
-        } else if (clickedItem.equals(OreItems.t3PickAxe)) {
-            player.getInventory().addItem(OreItems.t3PickAxe);
-        } else if (clickedItem.equals(OreItems.t4PickAxe)) {
-            player.getInventory().addItem(OreItems.t4PickAxe);
-        } else if (clickedItem.equals(OreItems.t5PickAxe)) {
-            player.getInventory().addItem(OreItems.t5PickAxe);
-        } else if (clickedItem.equals(OreItems.t6PickAxe)) {
-            player.getInventory().addItem(OreItems.t6PickAxe);
+        ArrayList<Tool> toolArrayList = ResourceManager.getInstance().getToolArrayList();
+        for (Tool tool : toolArrayList) {
+            if (clickedItem.equals(tool.getTool()))
+                player.getInventory().addItem(tool.getTool());
+            break;
         }
+        player.closeInventory();
     }
 
     @EventHandler
     public void onOreGuiClick(final InventoryClickEvent e) {
         Inventory inv = e.getInventory();
-        if (inv != guiOre) return;
+        if (inv != itemStackInventoryHashMap.get(OreItems.OreItemNames.MENU_MINING)) return;
         e.setCancelled(true);
 
         final ItemStack clickedItem = e.getCurrentItem();
@@ -122,26 +143,20 @@ public class GuiListener extends BaseListener {
         player.closeInventory();
     }
 
+
     @EventHandler
     public void onGatheringGuiClick(final InventoryClickEvent e) {
         Inventory inv = e.getInventory();
-        if (inv != guiGathering) return;
+        if (inv != itemStackInventoryHashMap.get(OreItems.OreItemNames.MENU_PROF)) return;
             e.setCancelled(true);
 
         final ItemStack clickedItem = e.getCurrentItem();
         if (clickedItem == null || clickedItem.getType() == Material.AIR) return;
         Player player = (Player) e.getWhoClicked();
         player.closeInventory();
-        if (clickedItem.equals(OreItems.oreMenu)) {
-            player.openInventory(guiOre);
-        } else if (clickedItem.equals(OreItems.cropMenu)) {
-            player.openInventory(guiFarming);
-        } else if (clickedItem.equals(OreItems.lumberMenu)) {
-            player.openInventory(guiLumber);
-        } else if (clickedItem.equals(OreItems.fishingMenu)) {
-            player.openInventory(guiFishing);
-        } else if (clickedItem.equals(OreItems.toolMenu)) {
-            player.openInventory(guiTools);
-        }
+
+        for (ItemStack itemStack : itemStackInventoryHashMap.keySet())
+            if (clickedItem.equals(itemStack))
+                player.openInventory(itemStackInventoryHashMap.get(itemStack));
     }
 }
