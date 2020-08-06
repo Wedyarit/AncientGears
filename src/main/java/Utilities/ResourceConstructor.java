@@ -44,8 +44,8 @@ public class ResourceConstructor {
         switch (type) {
             case ORE: {
                 this.base.setArms(true);
-                this.base.setLeftArmPose(new EulerAngle(50, 30, -135));
-                this.base.setRightArmPose(new EulerAngle(-100, -30, -135));
+                this.base.setLeftArmPose(new EulerAngle(125, 250, 10));
+                this.base.setRightArmPose(new EulerAngle(225, 0, -75));
                 this.base.setLeftLegPose(new EulerAngle(-145, 0, 0));
                 this.base.setRightLegPose(new EulerAngle(225, 0, 0));
             }
