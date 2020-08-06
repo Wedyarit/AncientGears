@@ -7,11 +7,15 @@ import Listeners.GatheringListener;
 import Listeners.GuiListener;
 import Listeners.InventoryListener;
 import Utilities.Command;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import static Gathering.InitializeGathering.InitializeOre;
+import static Gathering.InitializeGathering.InitializeTools;
+
 public final class AncientGears extends JavaPlugin {
-    public static AncientGears instance;
+    private static AncientGears instance;
     public static String prefix = ChatColor.GOLD + "[AncientGears] " + ChatColor.WHITE;
 
     @Override
@@ -22,6 +26,7 @@ public final class AncientGears extends JavaPlugin {
         this.getCommand("kit").setExecutor(new Command());
 
         registerListeners();
+        InitializeResourceSystem();
     }
 
     @Override
@@ -31,6 +36,13 @@ public final class AncientGears extends JavaPlugin {
 
     public static AncientGears getInstance() {
         return AncientGears.instance;
+    }
+
+    public void InitializeResourceSystem() {
+        new ResourceManager();
+
+        InitializeOre();
+        InitializeTools();
     }
 
     public void registerListeners() {

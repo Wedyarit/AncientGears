@@ -1,5 +1,6 @@
 package Listeners;
 
+import Gathering.Ore.Ore;
 import Gathering.Ore.OreItems;
 import Gathering.ResourceManager;
 import Utilities.GuiConstructor;
@@ -16,6 +17,8 @@ import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.ArrayList;
 
 public class GuiListener extends BaseListener {
     private static final Inventory guiTools = new GuiConstructor(27, OreItems.toolMenu.getItemMeta().getDisplayName())
@@ -105,64 +108,18 @@ public class GuiListener extends BaseListener {
         if (clickedItem == null || clickedItem.getType() == Material.AIR) return;
         Player player = (Player) e.getWhoClicked();
         World world = player.getWorld();
+        ArrayList<Ore> oreArrayList = ResourceManager.getInstance().getOreArrayList();
         ArmorStand as = (ArmorStand) world.spawnEntity(player.getLocation(), EntityType.ARMOR_STAND);
-        if (clickedItem.equals(OreItems.stoneOre)) {
+        for (Ore ore : oreArrayList) {
+            if (clickedItem.equals(ore.getDrop()))
             as = new ResourceConstructor(as)
-                    .setName(ResourceManager.stoneOre.getName())
+                    .setName(ore.getName())
                     .setType(ResourceConstructor.ResourceType.ORE)
-                    .setMaterial(OreItems.stoneOre)
+                    .setMaterial(ore.getDrop())
                     .build();
-            player.closeInventory();
-        } else if (clickedItem.equals(OreItems.coalOre)) {
-            as = new ResourceConstructor(as)
-                    .setName(ResourceManager.coalOre.getName())
-                    .setMaterial(OreItems.coalOre)
-                    .setType(ResourceConstructor.ResourceType.ORE)
-                    .build();
-            player.closeInventory();
-        } else if (clickedItem.equals(OreItems.ironOre)) {
-            as = new ResourceConstructor(as)
-                    .setName(ResourceManager.ironOre.getName())
-                    .setMaterial(OreItems.ironOre)
-                    .setType(ResourceConstructor.ResourceType.ORE)
-                    .build();
-            player.closeInventory();
-        } else if (clickedItem.equals(OreItems.copperOre)) {
-            as = new ResourceConstructor(as)
-                    .setName(ResourceManager.copperOre.getName())
-                    .setMaterial(OreItems.copperOre)
-                    .setType(ResourceConstructor.ResourceType.ORE)
-                    .build();
-            player.closeInventory();
-        } else if (clickedItem.equals(OreItems.tinOre)) {
-            as = new ResourceConstructor(as)
-                    .setName(ResourceManager.tinOre.getName())
-                    .setMaterial(OreItems.tinOre)
-                    .setType(ResourceConstructor.ResourceType.ORE)
-                    .build();
-            player.closeInventory();
-        } else if (clickedItem.equals(OreItems.zincOre)) {
-            as = new ResourceConstructor(as)
-                    .setName(ResourceManager.zincOre.getName())
-                    .setMaterial(OreItems.zincOre)
-                    .setType(ResourceConstructor.ResourceType.ORE)
-                    .build();
-            player.closeInventory();
-        } else if (clickedItem.equals(OreItems.goldOre)) {
-            as = new ResourceConstructor(as)
-                    .setName(ResourceManager.goldOre.getName())
-                    .setMaterial(OreItems.goldOre)
-                    .setType(ResourceConstructor.ResourceType.ORE)
-                    .build();
-            player.closeInventory();
-        } else if (clickedItem.equals(OreItems.titanOre)) {
-            as = new ResourceConstructor(as)
-                    .setName(ResourceManager.titanOre.getName())
-                    .setMaterial(OreItems.titanOre)
-                    .setType(ResourceConstructor.ResourceType.ORE)
-                    .build();
-            player.closeInventory();
+            break;
         }
+        player.closeInventory();
     }
 
     @EventHandler

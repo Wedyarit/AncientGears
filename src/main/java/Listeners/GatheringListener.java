@@ -25,31 +25,6 @@ import java.util.ArrayList;
 
 
 public class GatheringListener extends BaseListener {
-    private ArrayList<Ore> getOreArray() {
-        ArrayList<Ore> arrayList = new ArrayList<>();
-        arrayList.add(new Ore(ChatColor.GRAY + "Булыжник", 1, OreItems.stoneOre, 80.0, 30,50));
-        arrayList.add(new Ore(ChatColor.GRAY + "Уголь", 1, OreItems.coalOre, 70.0, 45,35));
-        arrayList.add(new Ore(ChatColor.GRAY + "Железная руда", 2, OreItems.ironOre, 60.0, 60,150));
-        arrayList.add(new Ore(ChatColor.GRAY + "Оловянная руда", 2, OreItems.tinOre, 60.0, 60,110));
-        arrayList.add(new Ore(ChatColor.GRAY + "Медная руда", 2, OreItems.copperOre, 60.0, 60,110));
-        arrayList.add(new Ore(ChatColor.GRAY + "Цинковая руда", 3, OreItems.zincOre, 40.0, 60,90));
-        arrayList.add(new Ore(ChatColor.GRAY + "Золотая руда", 3, OreItems.goldOre, 30.0, 120,60));
-        arrayList.add(new Ore(ChatColor.GRAY + "Титановая руда", 3, OreItems.titanOre, 20.0, 120,240));
-        return arrayList;
-    }
-
-
-    private ArrayList<Tool> getToolArray() {
-        ArrayList<Tool> arrayList = new ArrayList<>();
-        arrayList.add(new Tool(Tool.Type.PICKAXE, 1, OreItems.t1PickAxe,5,1));
-        arrayList.add(new Tool(Tool.Type.PICKAXE, 2, OreItems.t2PickAxe,10,1));
-        arrayList.add(new Tool(Tool.Type.PICKAXE, 3, OreItems.t3PickAxe,20,2));
-        arrayList.add(new Tool(Tool.Type.PICKAXE, 4, OreItems.t4PickAxe,40,2));
-        arrayList.add(new Tool(Tool.Type.PICKAXE, 5, OreItems.t5PickAxe,80,3));
-        arrayList.add(new Tool(Tool.Type.PICKAXE, 6, OreItems.t6PickAxe,160,3));
-        return arrayList;
-    }
-
     private int isContains(ArrayList<Tool> arrayList, ItemStack tool1) {
         for (Tool tool : arrayList)
             if (tool.getTool().equals(tool1)) return arrayList.indexOf(tool);
@@ -64,15 +39,14 @@ public class GatheringListener extends BaseListener {
         ArmorStand resource = (ArmorStand) e.getEntity();
         int maxcount = 3;
 
-        ArrayList<Ore> oreArrayList = getOreArray();
-        ArrayList<Tool> toolArrayList = getToolArray();
+        ArrayList<Ore> oreArrayList = ResourceManager.getInstance().getOreArrayList();
+        ArrayList<Tool> toolArrayList =  ResourceManager.getInstance().getToolArrayList();
         if (resource.getCustomName() != null)
             for (Ore ore : oreArrayList)
                 if (isContains(toolArrayList, player.getInventory().getItemInMainHand()) != -1)
                     if (resource.getCustomName().equals(ore.getName())) {
                         int tier = toolArrayList.get(isContains(toolArrayList, player.getInventory().getItemInMainHand())).getTier();
                         if (tier >= ore.getTier()) {
-                            // Нужно получить тул игрока, в Tool есть метод getTool()
                             gather(resource, toolArrayList.get(isContains(toolArrayList, player.getInventory().getItemInMainHand())), player, ore);
                             break;
                         } else {

@@ -1,18 +1,97 @@
 package Gathering;
 
+import Gathering.Crop.Crop;
+import Gathering.Fish.Fish;
 import Gathering.Ore.Ore;
 import Gathering.Ore.OreItems;
+import Gathering.Tree.Tree;
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
-import org.bukkit.inventory.ItemStack;
+
+import java.util.ArrayList;
 
 public class ResourceManager {
-    public static Ore stoneOre = new Ore(ChatColor.GRAY + "Булыжник", 1, OreItems.stoneOre, 80.0, 30, 50);
-    public static Ore coalOre = new Ore(ChatColor.GRAY + "Уголь", 1, OreItems.coalOre, 70.0, 45, 35);
-    public static Ore ironOre = new Ore(ChatColor.GRAY + "Железная руда", 2, OreItems.ironOre, 60.0, 60, 150);
-    public static Ore tinOre = new Ore(ChatColor.GRAY + "Оловянная руда", 2,OreItems.tinOre, 10.0, 60, 110);
-    public static Ore copperOre = new Ore(ChatColor.GRAY + "Медная руда", 2, OreItems.copperOre, 60.0, 60, 110);
-    public static Ore zincOre = new Ore(ChatColor.GRAY + "Цинковая руда", 3, OreItems.zincOre, 40.0, 60, 90);
-    public static Ore goldOre = new Ore(ChatColor.GRAY + "Золотая руда", 3, OreItems.goldOre, 30.0, 120, 60);
-    public static Ore titanOre = new Ore(ChatColor.GRAY + "Титановая руда", 3, OreItems.titanOre, 20.0, 120, 240);
+    private ArrayList<Ore> oreArrayList;
+    private ArrayList<Tree> treesArrayList;
+    private ArrayList<Fish> fishArrayList;
+    private ArrayList<Crop> cropsArrayList;
+    private ArrayList<Tool> toolArrayList;
+    private static ResourceManager instance;
+
+    public ResourceManager() {
+
+    }
+
+    public ResourceManager addOre(Ore ore) {
+        oreArrayList.add(ore);
+        return this;
+    }
+
+    public ResourceManager removeOre(Ore ore) {
+        oreArrayList.remove(ore);
+        return this;
+    }
+
+    public ResourceManager addTool(Tool tool) {
+        toolArrayList.add(tool);
+        return this;
+    }
+
+    public ResourceManager removeTool(Tool tool) {
+        toolArrayList.remove(tool);
+        return this;
+    }
+
+    public ResourceManager addTree(Tree tree) {
+        this.treesArrayList.add(tree);
+        return this;
+    }
+
+    public ResourceManager removeTree(Tree tree) {
+        this.treesArrayList.remove(tree);
+        return this;
+    }
+
+    public ResourceManager addFish(Fish fish) {
+        this.fishArrayList.add(fish);
+        return this;
+    }
+
+    public ResourceManager removeFish(Fish fish) {
+        this.fishArrayList.remove(fish);
+        return this;
+    }
+
+    public ResourceManager addCrop(Crop crop) {
+        this.cropsArrayList.add(crop);
+        return this;
+    }
+
+    public ResourceManager removeCrop(Crop crop) {
+        this.cropsArrayList.remove(crop);
+        return this;
+    }
+
+    public ArrayList<Fish> getFishArrayList() {
+        return fishArrayList;
+    }
+
+    public ArrayList<Crop> getCropsArrayList() {
+        return cropsArrayList;
+    }
+
+    public ArrayList<Tree> getTreesArrayList() {
+        return treesArrayList;
+    }
+
+    public ArrayList<Ore> getOreArrayList() {
+        return oreArrayList;
+    }
+
+    public ArrayList<Tool> getToolArrayList() {
+        return toolArrayList;
+    }
+
+    public static ResourceManager getInstance() {
+        return instance;
+    }
 }
