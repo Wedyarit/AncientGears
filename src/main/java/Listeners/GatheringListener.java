@@ -5,6 +5,7 @@ import Gathering.Ore.OreItems;
 import AncientGears.AncientGears;
 import Gathering.ResourceManager;
 import Gathering.Tool;
+import Utilities.GameTimer;
 import com.google.common.base.Strings;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -161,7 +162,8 @@ public class GatheringListener extends BaseListener {
             @Override
             public void run() {
                 time--;
-                String timeLeft = ChatColor.RED + "" + (time-1) + " до постановления " + name;
+                String timeString = String.format("%02d:%02d", time / 60, time % 60);
+                String timeLeft = ChatColor.RED + "" + timeString + " до появления " + name;
                 armorStand.setCustomName(timeLeft);
                 armorStand.setCustomNameVisible(true);
                 if (time <= 0) {
