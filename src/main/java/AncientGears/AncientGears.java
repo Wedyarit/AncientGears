@@ -2,6 +2,7 @@ package AncientGears;
 
 import Commands.CommandKit;
 import Commands.CommandRegenAll;
+import Commands.CommandTest;
 import Gathering.ResourceManager;
 import Listeners.*;
 import Locations.InitializeLocations;
@@ -25,6 +26,7 @@ public final class AncientGears extends JavaPlugin {
 
         this.getCommand("kit").setExecutor(new CommandKit());
         this.getCommand("regenAll").setExecutor(new CommandRegenAll());
+        this.getCommand("test").setExecutor(new CommandTest());
 
         InitializeOreItems();
         InitializeOre();
