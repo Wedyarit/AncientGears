@@ -15,10 +15,6 @@ public class ResourceManager {
     private final ArrayList<Tool> toolArrayList = new ArrayList<>();
     private static ResourceManager instance;
 
-    public ResourceManager() {
-
-    }
-
     public void addOre(Ore ore) {
         oreArrayList.add(ore);
     }
@@ -90,7 +86,7 @@ public class ResourceManager {
     public static ResourceManager getInstance() {
         ResourceManager localInstance = instance;
         if (localInstance == null) {
-            synchronized (ItemStackManager.class) {
+            synchronized (ResourceManager.class) {
                 localInstance = instance;
                 if (localInstance == null) {
                     instance = localInstance = new ResourceManager();

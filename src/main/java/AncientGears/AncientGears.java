@@ -3,10 +3,8 @@ package AncientGears;
 import Commands.CommandKit;
 import Commands.CommandRegenAll;
 import Gathering.ResourceManager;
-import Listeners.DropListener;
-import Listeners.GatheringListener;
-import Listeners.GuiListener;
-import Listeners.InventoryListener;
+import Listeners.*;
+import Locations.InitializeLocations;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -14,6 +12,7 @@ import static Gathering.InitializeGathering.InitializeOre;
 import static Gathering.InitializeGathering.InitializeTools;
 import static Gathering.Ore.OreItems.InitializeOreItems;
 import static Listeners.GuiListener.InitializeInventoryItems;
+import static Locations.InitializeLocations.InitializeAllLocations;
 
 public final class AncientGears extends JavaPlugin {
     private static AncientGears instance;
@@ -31,6 +30,7 @@ public final class AncientGears extends JavaPlugin {
         InitializeOre();
         InitializeTools();
         InitializeInventoryItems();
+        InitializeAllLocations();
         registerListeners();
     }
 
@@ -50,5 +50,6 @@ public final class AncientGears extends JavaPlugin {
         new ResourceManager();
         new GuiListener();
         new DropListener();
+        new MoveListener();
     }
 }
