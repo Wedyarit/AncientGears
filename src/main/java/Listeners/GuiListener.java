@@ -134,7 +134,7 @@ public class GuiListener extends BaseListener {
         for (Ore ore : oreArrayList) {
             if (clickedItem.equals(ore.getDrop()))
             as = new ResourceConstructor(as)
-                    .setName(ore.getName())
+                    .setName(ChatColor.GOLD + "[" + ore.getTier() + "] " + ore.getName())
                     .setType(ResourceConstructor.ResourceType.ORE)
                     .setMaterial(ore.getDrop())
                     .build();

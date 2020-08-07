@@ -44,7 +44,7 @@ public class GatheringListener extends BaseListener {
         if (resource.getCustomName() != null)
             for (Ore ore : oreArrayList)
                 if (isContains(toolArrayList, player.getInventory().getItemInMainHand()) != -1)
-                    if (resource.getCustomName().equals(ore.getName())) {
+                    if (resource.getCustomName().equals(ChatColor.GOLD + "[" + ore.getTier() + "] " + ore.getName())) {
                         int tier = toolArrayList.get(isContains(toolArrayList, player.getInventory().getItemInMainHand())).getTier();
                         if (tier >= ore.getTier()) {
                             gather(resource, toolArrayList.get(isContains(toolArrayList, player.getInventory().getItemInMainHand())), player, ore);
