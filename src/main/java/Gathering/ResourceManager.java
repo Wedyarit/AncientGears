@@ -8,11 +8,11 @@ import Gathering.Tree.Tree;
 import java.util.ArrayList;
 
 public class ResourceManager {
-    private ArrayList<Ore> oreArrayList = new ArrayList<>();
-    private ArrayList<Tree> treesArrayList = new ArrayList<>();
-    private ArrayList<Fish> fishArrayList = new ArrayList<>();
-    private ArrayList<Crop> cropsArrayList = new ArrayList<>();
-    private ArrayList<Tool> toolArrayList = new ArrayList<>();
+    private final ArrayList<Ore> oreArrayList = new ArrayList<>();
+    private final ArrayList<Tree> treesArrayList = new ArrayList<>();
+    private final ArrayList<Fish> fishArrayList = new ArrayList<>();
+    private final ArrayList<Crop> cropsArrayList = new ArrayList<>();
+    private final ArrayList<Tool> toolArrayList = new ArrayList<>();
     private static ResourceManager instance;
 
     public ResourceManager() {

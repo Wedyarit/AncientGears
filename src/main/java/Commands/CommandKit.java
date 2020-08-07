@@ -1,4 +1,4 @@
-package Utilities;
+package Commands;
 
 import Gathering.ItemStackManager;
 import Gathering.Ore.Ore;
@@ -12,7 +12,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-public class Command implements CommandExecutor {
+public class CommandKit implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, org.bukkit.command.Command cmd, String label, String[] args) {

@@ -1,14 +1,12 @@
 package AncientGears;
 
-import Gathering.ItemStackManager;
-import Gathering.Ore.OreItems;
+import Commands.CommandKit;
+import Commands.CommandRegenAll;
 import Gathering.ResourceManager;
 import Listeners.DropListener;
 import Listeners.GatheringListener;
 import Listeners.GuiListener;
 import Listeners.InventoryListener;
-import Utilities.Command;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -26,7 +24,8 @@ public final class AncientGears extends JavaPlugin {
         AncientGears.instance = this;
         getLogger().info("Plugin is enabled!");
 
-        this.getCommand("kit").setExecutor(new Command());
+        this.getCommand("kit").setExecutor(new CommandKit());
+        this.getCommand("regenAll").setExecutor(new CommandRegenAll());
 
         InitializeOreItems();
         InitializeOre();
