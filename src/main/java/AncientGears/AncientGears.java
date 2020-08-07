@@ -28,10 +28,11 @@ public final class AncientGears extends JavaPlugin {
 
         this.getCommand("kit").setExecutor(new Command());
 
-        InitializeItemStackManager();
+        InitializeOreItems();
+        InitializeOre();
+        InitializeTools();
         InitializeInventoryItems();
         registerListeners();
-        InitializeResourceSystem();
     }
 
     @Override
@@ -41,20 +42,6 @@ public final class AncientGears extends JavaPlugin {
 
     public static AncientGears getInstance() {
         return AncientGears.instance;
-    }
-
-    public void InitializeItemStackManager() {
-        new ItemStackManager();
-
-        InitializeOreItems();
-
-    }
-
-    public void InitializeResourceSystem() {
-        new ResourceManager();
-
-        InitializeOre();
-        InitializeTools();
     }
 
     public void registerListeners() {

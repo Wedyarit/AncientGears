@@ -92,6 +92,15 @@ public class ResourceManager {
     }
 
     public static ResourceManager getInstance() {
-        return instance;
+        ResourceManager localInstance = instance;
+        if (localInstance == null) {
+            synchronized (ItemStackManager.class) {
+                localInstance = instance;
+                if (localInstance == null) {
+                    instance = localInstance = new ResourceManager();
+                }
+            }
+        }
+        return localInstance;
     }
 }

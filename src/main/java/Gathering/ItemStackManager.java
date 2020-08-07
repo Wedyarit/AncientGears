@@ -10,7 +10,7 @@ import java.util.Map;
 
 public class ItemStackManager {
     private HashMap<String,ItemStack> itemStackHashMap;
-    private static ItemStackManager instance;
+    private static volatile ItemStackManager instance;
 
     public ItemStackManager() {
 
@@ -29,7 +29,16 @@ public class ItemStackManager {
     }
 
     public static ItemStackManager getInstance() {
-        return instance;
+        ItemStackManager localInstance = instance;
+        if (localInstance == null) {
+            synchronized (ItemStackManager.class) {
+                localInstance = instance;
+                if (localInstance == null) {
+                    instance = localInstance = new ItemStackManager();
+                }
+            }
+        }
+        return localInstance;
     }
 
     public ArrayList<ItemStack> getAllItems() {

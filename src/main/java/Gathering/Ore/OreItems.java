@@ -1,5 +1,6 @@
 package Gathering.Ore;
 
+import AncientGears.AncientGears;
 import Gathering.ItemStackManager;
 import Gathering.ResourceManager;
 import Utilities.ItemConstructor;
@@ -36,6 +37,7 @@ public class OreItems {
     }
 
     public static void InitializeOreItems() {
+        AncientGears.getInstance().getLogger().info("БЛЯ");
         ItemStackManager.getInstance().addItem(OreItemNames.STONE_ORE.name(),new ItemConstructor(Material.COBBLESTONE)
                 .amount(1)
                 .displayName(ChatColor.GRAY + "Булыжник")
