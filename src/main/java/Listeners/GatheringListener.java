@@ -37,8 +37,6 @@ public class GatheringListener extends BaseListener {
         Player player = (Player) e.getDamager();
         if (!(e.getEntity() instanceof ArmorStand)) return;
         ArmorStand resource = (ArmorStand) e.getEntity();
-        int maxcount = 3;
-
         ArrayList<Ore> oreArrayList = ResourceManager.getInstance().getOreArrayList();
         ArrayList<Tool> toolArrayList =  ResourceManager.getInstance().getToolArrayList();
         if (resource.getCustomName() != null)
