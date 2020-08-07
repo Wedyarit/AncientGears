@@ -61,7 +61,13 @@ public class GuiListener extends BaseListener {
                         ItemStackManager.getInstance().getItem(OreItems.OreItemNames.IRON_ORE.name()),
                         ItemStackManager.getInstance().getItem(OreItems.OreItemNames.GOLD_ORE.name()),
                         ItemStackManager.getInstance().getItem(OreItems.OreItemNames.ZINC_ORE.name()),
-                        ItemStackManager.getInstance().getItem(OreItems.OreItemNames.TITAN_ORE.name()))
+                        ItemStackManager.getInstance().getItem(OreItems.OreItemNames.TITAN_ORE.name()),
+                        ItemStackManager.getInstance().getItem(OreItems.OreItemNames.MITHRIL_ORE.name()),
+                        ItemStackManager.getInstance().getItem(OreItems.OreItemNames.ADAMANTITE_ORE.name()),
+                        ItemStackManager.getInstance().getItem(OreItems.OreItemNames.QUARTZ_ORE.name()),
+                        ItemStackManager.getInstance().getItem(OreItems.OreItemNames.ETERNAL_FLAME_ORE.name()),
+                        ItemStackManager.getInstance().getItem(OreItems.OreItemNames.AETHERELITE_ORE.name()),
+                        ItemStackManager.getInstance().getItem(OreItems.OreItemNames.TENEBRIS_ORE.name()))
                 .bulid());
 
         itemStackInventoryHashMap.put(ItemStackManager.getInstance().getItem(OreItems.OreItemNames.MENU_LUMBER.name()), new GuiConstructor(27,
@@ -109,9 +115,10 @@ public class GuiListener extends BaseListener {
 
         ArrayList<Tool> toolArrayList = ResourceManager.getInstance().getToolArrayList();
         for (Tool tool : toolArrayList) {
-            if (clickedItem.equals(tool.getTool()))
+            if (clickedItem.equals(tool.getTool())) {
                 player.getInventory().addItem(tool.getTool());
-            break;
+                break;
+            }
         }
         player.closeInventory();
     }
@@ -131,7 +138,7 @@ public class GuiListener extends BaseListener {
         for (Ore ore : oreArrayList) {
             if (clickedItem.equals(ore.getDrop())) {
                 as = new ResourceConstructor(as)
-                        .setName(ChatColor.GOLD + "[" + ore.getTier() + "] " + ore.getName())
+                        .setName(ChatColor.GOLD + "[T" + ore.getTier() + "] " + ore.getName())
                         .setType(ResourceConstructor.ResourceType.ORE)
                         .setMaterial(ore.getDrop())
                         .build();
@@ -154,7 +161,9 @@ public class GuiListener extends BaseListener {
         player.closeInventory();
 
         for (ItemStack itemStack : itemStackInventoryHashMap.keySet())
-            if (clickedItem.equals(itemStack))
+            if (clickedItem.equals(itemStack)) {
                 player.openInventory(itemStackInventoryHashMap.get(itemStack));
+                break;
+            }
     }
 }

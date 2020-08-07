@@ -160,7 +160,7 @@ public class GatheringListener extends BaseListener {
             public void run() {
                 time--;
                 String timeString = String.format("%02d:%02d", time / 60, time % 60);
-                String timeLeft = ChatColor.RED + "[T" + timeString + "] " + ChatColor.WHITE + "Восстановление " + name;
+                String timeLeft = ChatColor.RED + "[" + timeString + "] " + ChatColor.WHITE + "Восстановление " + name;
                 armorStand.setCustomName(timeLeft);
                 armorStand.setCustomNameVisible(true);
                 if (time <= 0) {

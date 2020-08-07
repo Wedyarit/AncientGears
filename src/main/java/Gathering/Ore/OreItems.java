@@ -91,7 +91,7 @@ public class OreItems {
 
         ItemStackManager.getInstance().addItem(OreItemNames.QUARTZ_ORE.name(),new ItemConstructor(Material.NETHER_QUARTZ_ORE)
                 .amount(1)
-                .displayName(ChatColor.GRAY + "Кварцовая руда")
+                .displayName(ChatColor.GRAY + "Кварцeвая руда")
                 .lore(ChatColor.GRAY + "[★★⭒⭒⭒] Материал")
                 .build());
 
