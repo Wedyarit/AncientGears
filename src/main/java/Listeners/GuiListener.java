@@ -129,13 +129,14 @@ public class GuiListener extends BaseListener {
         ArrayList<Ore> oreArrayList = ResourceManager.getInstance().getOreArrayList();
         ArmorStand as = (ArmorStand) world.spawnEntity(player.getLocation(), EntityType.ARMOR_STAND);
         for (Ore ore : oreArrayList) {
-            if (clickedItem.equals(ore.getDrop()))
+            if (clickedItem.equals(ore.getDrop())) {
                 as = new ResourceConstructor(as)
                         .setName(ChatColor.GOLD + "[" + ore.getTier() + "] " + ore.getName())
                         .setType(ResourceConstructor.ResourceType.ORE)
                         .setMaterial(ore.getDrop())
                         .build();
-            break;
+                break;
+            }
         }
         player.closeInventory();
     }
