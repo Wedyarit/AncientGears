@@ -1,5 +1,6 @@
 package Listeners;
 
+import AncientGears.AncientGears;
 import Gathering.ItemStackManager;
 import Gathering.Ore.Ore;
 import Gathering.Ore.OreItems;
@@ -27,6 +28,8 @@ public class GuiListener extends BaseListener {
     private static final HashMap<ItemStack, Inventory> itemStackInventoryHashMap = new HashMap<>();
 
     public static void InitializeInventoryItems() {
+        AncientGears.getInstance().getLogger().info("InventoryItems Initialization");
+
         itemStackInventoryHashMap.put(ItemStackManager.getInstance().getItem(OreItems.OreItemNames.MENU_TOOLS.name()), new GuiConstructor(27,
                 ChatColor.RED + "Меню Инструментов")
                 .setItems(
@@ -83,28 +86,22 @@ public class GuiListener extends BaseListener {
     public void onInteract(PlayerInteractEvent e) {
         if (e.getItem() == null) return;
         if (!e.getItem().equals(ItemStackManager.getInstance().getItem(OreItems.OreItemNames.MENU_PROF.name()))) return;
-        e.getPlayer().openInventory(itemStackInventoryHashMap.get(OreItems.OreItemNames.MENU_LUMBER));
+        e.getPlayer().openInventory(itemStackInventoryHashMap.get(e.getItem()));
     }
 
     @EventHandler
     public void onInventoryDrag(final InventoryDragEvent e) {
         Inventory inv = e.getInventory();
-        if (inv == itemStackInventoryHashMap.get(OreItems.OreItemNames.MENU_PROF) ||
-                inv == itemStackInventoryHashMap.get(OreItems.OreItemNames.MENU_MINING) ||
-                inv == itemStackInventoryHashMap.get(OreItems.OreItemNames.MENU_LUMBER) ||
-                inv == itemStackInventoryHashMap.get(OreItems.OreItemNames.MENU_FARMING) ||
-                inv == itemStackInventoryHashMap.get(OreItems.OreItemNames.MENU_FISHING) ||
-                inv == itemStackInventoryHashMap.get(OreItems.OreItemNames.MENU_TOOLS)
-
-        )
-            e.setCancelled(true);
+        for (ItemStack item : itemStackInventoryHashMap.keySet())
+            if (inv == itemStackInventoryHashMap.get(item))
+                e.setCancelled(true);
     }
 
     @EventHandler
     public void onToolGuiClick(final InventoryClickEvent e) {
         Inventory inv = e.getInventory();
-        if (inv != itemStackInventoryHashMap.get(OreItems.OreItemNames.MENU_TOOLS)) return;
-            e.setCancelled(true);
+        if (inv != itemStackInventoryHashMap.get(ItemStackManager.getInstance().getItem(OreItems.OreItemNames.MENU_TOOLS.name()))) return;
+        e.setCancelled(true);
 
         final ItemStack clickedItem = e.getCurrentItem();
         if (clickedItem == null || clickedItem.getType() == Material.AIR) return;
@@ -122,7 +119,7 @@ public class GuiListener extends BaseListener {
     @EventHandler
     public void onOreGuiClick(final InventoryClickEvent e) {
         Inventory inv = e.getInventory();
-        if (inv != itemStackInventoryHashMap.get(OreItems.OreItemNames.MENU_MINING)) return;
+        if (inv != itemStackInventoryHashMap.get(ItemStackManager.getInstance().getItem(OreItems.OreItemNames.MENU_MINING.name()))) return;
         e.setCancelled(true);
 
         final ItemStack clickedItem = e.getCurrentItem();
@@ -133,11 +130,11 @@ public class GuiListener extends BaseListener {
         ArmorStand as = (ArmorStand) world.spawnEntity(player.getLocation(), EntityType.ARMOR_STAND);
         for (Ore ore : oreArrayList) {
             if (clickedItem.equals(ore.getDrop()))
-            as = new ResourceConstructor(as)
-                    .setName(ChatColor.GOLD + "[" + ore.getTier() + "] " + ore.getName())
-                    .setType(ResourceConstructor.ResourceType.ORE)
-                    .setMaterial(ore.getDrop())
-                    .build();
+                as = new ResourceConstructor(as)
+                        .setName(ChatColor.GOLD + "[" + ore.getTier() + "] " + ore.getName())
+                        .setType(ResourceConstructor.ResourceType.ORE)
+                        .setMaterial(ore.getDrop())
+                        .build();
             break;
         }
         player.closeInventory();
@@ -147,8 +144,8 @@ public class GuiListener extends BaseListener {
     @EventHandler
     public void onGatheringGuiClick(final InventoryClickEvent e) {
         Inventory inv = e.getInventory();
-        if (inv != itemStackInventoryHashMap.get(OreItems.OreItemNames.MENU_PROF)) return;
-            e.setCancelled(true);
+        if (inv != itemStackInventoryHashMap.get(ItemStackManager.getInstance().getItem(OreItems.OreItemNames.MENU_PROF.name()))) return;
+        e.setCancelled(true);
 
         final ItemStack clickedItem = e.getCurrentItem();
         if (clickedItem == null || clickedItem.getType() == Material.AIR) return;

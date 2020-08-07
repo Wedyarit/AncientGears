@@ -4,6 +4,7 @@ import AncientGears.AncientGears;
 import Gathering.ItemStackManager;
 import Gathering.ResourceManager;
 import Utilities.ItemConstructor;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -38,6 +39,9 @@ public class OreItems {
 
     public static void InitializeOreItems() {
         AncientGears.getInstance().getLogger().info("БЛЯ");
+        AncientGears.getInstance().getLogger().info((ItemStackManager.getInstance() == null) + "");
+        ItemStackManager.getInstance().addItem("test", new ItemStack(Material.OAK_LOG, 1));
+
         ItemStackManager.getInstance().addItem(OreItemNames.STONE_ORE.name(),new ItemConstructor(Material.COBBLESTONE)
                 .amount(1)
                 .displayName(ChatColor.GRAY + "Булыжник")

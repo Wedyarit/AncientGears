@@ -2,23 +2,19 @@ package Gathering;
 
 import org.bukkit.inventory.ItemStack;
 
-import java.security.Key;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
-import java.util.Map;
 
 public class ItemStackManager {
-    private HashMap<String,ItemStack> itemStackHashMap;
+    private HashMap<String,ItemStack> itemStackHashMap = new HashMap<>();
     private static volatile ItemStackManager instance;
 
     public ItemStackManager() {
 
     }
 
-    public ItemStackManager addItem(String name, ItemStack item) {
+    public void addItem(String name, ItemStack item) {
         itemStackHashMap.put(name, item);
-        return this;
     }
 
 

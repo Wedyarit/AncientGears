@@ -24,7 +24,7 @@ public final class AncientGears extends JavaPlugin {
     @Override
     public void onEnable() {
         AncientGears.instance = this;
-        getLogger().info("[AncientGears] Plugin is enabled!");
+        getLogger().info("Plugin is enabled!");
 
         this.getCommand("kit").setExecutor(new Command());
 
@@ -37,7 +37,7 @@ public final class AncientGears extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        System.out.println("[AncientGears] Plugin was disabled!");
+        getLogger().info("Plugin is disabled!");
     }
 
     public static AncientGears getInstance() {
@@ -45,6 +45,7 @@ public final class AncientGears extends JavaPlugin {
     }
 
     public void registerListeners() {
+        AncientGears.getInstance().getLogger().info("Listeners Initialization");
         new InventoryListener();
         new GatheringListener();
         new ResourceManager();

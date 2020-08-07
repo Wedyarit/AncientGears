@@ -3,27 +3,24 @@ package Gathering;
 import Gathering.Crop.Crop;
 import Gathering.Fish.Fish;
 import Gathering.Ore.Ore;
-import Gathering.Ore.OreItems;
 import Gathering.Tree.Tree;
-import org.bukkit.ChatColor;
 
 import java.util.ArrayList;
 
 public class ResourceManager {
-    private ArrayList<Ore> oreArrayList;
-    private ArrayList<Tree> treesArrayList;
-    private ArrayList<Fish> fishArrayList;
-    private ArrayList<Crop> cropsArrayList;
-    private ArrayList<Tool> toolArrayList;
+    private ArrayList<Ore> oreArrayList = new ArrayList<>();
+    private ArrayList<Tree> treesArrayList = new ArrayList<>();
+    private ArrayList<Fish> fishArrayList = new ArrayList<>();
+    private ArrayList<Crop> cropsArrayList = new ArrayList<>();
+    private ArrayList<Tool> toolArrayList = new ArrayList<>();
     private static ResourceManager instance;
 
     public ResourceManager() {
 
     }
 
-    public ResourceManager addOre(Ore ore) {
+    public void addOre(Ore ore) {
         oreArrayList.add(ore);
-        return this;
     }
 
     public ResourceManager removeOre(Ore ore) {
@@ -31,9 +28,8 @@ public class ResourceManager {
         return this;
     }
 
-    public ResourceManager addTool(Tool tool) {
+    public void addTool(Tool tool) {
         toolArrayList.add(tool);
-        return this;
     }
 
     public ResourceManager removeTool(Tool tool) {
