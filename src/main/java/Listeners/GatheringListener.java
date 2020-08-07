@@ -42,7 +42,7 @@ public class GatheringListener extends BaseListener {
         if (resource.getCustomName() != null)
             for (Ore ore : oreArrayList)
                 if (isContains(toolArrayList, player.getInventory().getItemInMainHand()) != -1)
-                    if (resource.getCustomName().equals(ChatColor.GOLD + "[" + ore.getTier() + "] " + ore.getName())) {
+                    if (resource.getCustomName().equals(ChatColor.GOLD + "[T" + ore.getTier() + "] " + ore.getName())) {
                         int tier = toolArrayList.get(isContains(toolArrayList, player.getInventory().getItemInMainHand())).getTier();
                         if (tier >= ore.getTier()) {
                             gather(resource, toolArrayList.get(isContains(toolArrayList, player.getInventory().getItemInMainHand())), player, ore);
@@ -160,7 +160,7 @@ public class GatheringListener extends BaseListener {
             public void run() {
                 time--;
                 String timeString = String.format("%02d:%02d", time / 60, time % 60);
-                String timeLeft = ChatColor.RED + "[" + timeString + "] " + ChatColor.WHITE + "Восстановление " + name;
+                String timeLeft = ChatColor.RED + "[T" + timeString + "] " + ChatColor.WHITE + "Восстановление " + name;
                 armorStand.setCustomName(timeLeft);
                 armorStand.setCustomNameVisible(true);
                 if (time <= 0) {

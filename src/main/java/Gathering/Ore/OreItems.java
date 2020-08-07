@@ -19,6 +19,15 @@ public class OreItems {
         ZINC_ORE,
         GOLD_ORE,
         TITAN_ORE,
+        PLATINUM_ORE,
+        MITHRIL_ORE,
+        ADAMANTITE_ORE,
+        QUARTZ_ORE,
+        ETERNAL_FLAME_ORE,
+        AETHERELITE_ORE,
+        TENEBRIS_ORE,
+
+        COAL,
 
         T1_PICKAXE,
         T2_PICKAXE,
@@ -38,19 +47,15 @@ public class OreItems {
     }
 
     public static void InitializeOreItems() {
-        AncientGears.getInstance().getLogger().info("БЛЯ");
-        AncientGears.getInstance().getLogger().info((ItemStackManager.getInstance() == null) + "");
-        ItemStackManager.getInstance().addItem("test", new ItemStack(Material.OAK_LOG, 1));
-
         ItemStackManager.getInstance().addItem(OreItemNames.STONE_ORE.name(),new ItemConstructor(Material.COBBLESTONE)
                 .amount(1)
                 .displayName(ChatColor.GRAY + "Булыжник")
                 .lore(ChatColor.GRAY + "[⭒⭒⭒⭒⭒] Материал")
                 .build());
 
-        ItemStackManager.getInstance().addItem(OreItemNames.COAL_ORE.name(),new ItemConstructor(Material.COAL)
+        ItemStackManager.getInstance().addItem(OreItemNames.COAL_ORE.name(),new ItemConstructor(Material.COAL_ORE)
                 .amount(1)
-                .displayName(ChatColor.GRAY + "Уголь")
+                .displayName(ChatColor.GRAY + "Угольная руда")
                 .lore(ChatColor.GRAY + "[★⭒⭒⭒⭒] Материал")
                 .build());
 
@@ -84,17 +89,56 @@ public class OreItems {
                 .lore(ChatColor.GRAY + "[★⭒⭒⭒⭒] Материал")
                 .build());
 
+        ItemStackManager.getInstance().addItem(OreItemNames.QUARTZ_ORE.name(),new ItemConstructor(Material.NETHER_QUARTZ_ORE)
+                .amount(1)
+                .displayName(ChatColor.GRAY + "Кварцовая руда")
+                .lore(ChatColor.GRAY + "[★★⭒⭒⭒] Материал")
+                .build());
+
         ItemStackManager.getInstance().addItem(OreItemNames.TITAN_ORE.name(),new ItemConstructor(Material.BLUE_STAINED_GLASS)
                 .amount(1)
                 .displayName(ChatColor.GRAY + "Титановая руда")
                 .lore(ChatColor.GRAY + "[★★★★⭒] Материал")
                 .build());
 
-        ItemStackManager.getInstance().addItem(OreItemNames.BRASS_INGOT.name(), new ItemConstructor(Material.GOLD_INGOT)
+        ItemStackManager.getInstance().addItem(OreItemNames.PLATINUM_ORE.name(),new ItemConstructor(Material.IRON_ORE)
                 .amount(1)
-                .displayName(ChatColor.GRAY + "Слиток Латуни")
-                .lore(ChatColor.GRAY + "[★★⭒⭒⭒] Материал")
+                .displayName(ChatColor.GRAY + "Платинавоя руда")
+                .lore(ChatColor.GRAY + "[★★★★⭒] Материал")
                 .build());
+
+        ItemStackManager.getInstance().addItem(OreItemNames.ETERNAL_FLAME_ORE.name(),new ItemConstructor(Material.MAGMA_BLOCK)
+                .amount(1)
+                .displayName(ChatColor.GRAY + "Руда вечного пламени")
+                .lore(ChatColor.GRAY + "[★★★★★] Материал")
+                .build());
+
+        ItemStackManager.getInstance().addItem(OreItemNames.AETHERELITE_ORE.name(),new ItemConstructor(Material.SNOW_BLOCK)
+                .amount(1)
+                .displayName(ChatColor.GRAY + "Аезерелитовая руда")
+                .lore(ChatColor.GRAY + "[★★★★★] Материал")
+                .build());
+
+        ItemStackManager.getInstance().addItem(OreItemNames.MITHRIL_ORE.name(),new ItemConstructor(Material.DIAMOND_ORE)
+                .amount(1)
+                .displayName(ChatColor.GRAY + "Мифриловая руда")
+                .lore(ChatColor.GRAY + "[★★★★★] Материал")
+                .build());
+
+        ItemStackManager.getInstance().addItem(OreItemNames.ADAMANTITE_ORE.name(),new ItemConstructor(Material.REDSTONE_ORE)
+                .amount(1)
+                .displayName(ChatColor.GRAY + "Адамантитовая руда")
+                .lore(ChatColor.GRAY + "[✬★★★★] Материал")
+                .build());
+
+        ItemStackManager.getInstance().addItem(OreItemNames.TENEBRIS_ORE.name(),new ItemConstructor(Material.OBSIDIAN)
+                .amount(1)
+                .displayName(ChatColor.GRAY + "Тенебрис")
+                .lore(ChatColor.GRAY + "[✬✬★★★] Материал")
+                .build());
+
+
+
 
         ItemStackManager.getInstance().addItem(OreItemNames.T1_PICKAXE.name(),new ItemConstructor(Material.WOODEN_PICKAXE)
                 .amount(1)
@@ -126,7 +170,7 @@ public class OreItems {
                 .lore(ChatColor.GRAY + "[★★★★⭒] Кирка","",ChatColor.GRAY + "Скорость добычи: " + ChatColor.GOLD + "80","",ChatColor.GRAY + "Фактор удачи: " + ChatColor.GOLD + "2")
                 .build());
 
-        ItemStackManager.getInstance().addItem(OreItemNames.T6_PICKAXE.name(),new ItemConstructor(Material.DIAMOND_PICKAXE)
+        ItemStackManager.getInstance().addItem(OreItemNames.T6_PICKAXE.name(),new ItemConstructor(Material.NETHERITE_PICKAXE)
                 .amount(1)
                 .displayName(ChatColor.GRAY + "Незеритовая кирка")
                 .lore(ChatColor.GRAY + "[★★★★★] Кирка","",ChatColor.GRAY + "Скорость добычи: " + ChatColor.GOLD + "160","",ChatColor.GRAY + "Фактор удачи: " + ChatColor.GOLD + "2")
@@ -166,6 +210,18 @@ public class OreItems {
                 .amount(1)
                 .displayName(ChatColor.RED + "Меню Профессий")
                 .lore(ChatColor.GRAY + "[★★★★★] Меню")
+                .build());
+// Ресы
+        ItemStackManager.getInstance().addItem(OreItemNames.COAL.name(),new ItemConstructor(Material.COAL)
+                .amount(1)
+                .displayName(ChatColor.GRAY + "Уголь")
+                .lore(ChatColor.GRAY + "[★⭒⭒⭒⭒] Материал")
+                .build());
+
+        ItemStackManager.getInstance().addItem(OreItemNames.BRASS_INGOT.name(), new ItemConstructor(Material.GOLD_INGOT)
+                .amount(1)
+                .displayName(ChatColor.GRAY + "Слиток Латуни")
+                .lore(ChatColor.GRAY + "[★★⭒⭒⭒] Материал")
                 .build());
 
     }

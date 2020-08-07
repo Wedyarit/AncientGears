@@ -1,6 +1,7 @@
 package Gathering.Ore;
 
 import org.bukkit.entity.ArmorStand;
+import org.bukkit.entity.Item;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
@@ -8,6 +9,7 @@ import java.util.ArrayList;
 public class Ore {
     private final String name;
     private final Integer tier;
+    private final ItemStack material;
     private final ItemStack drop;
     private final Double chance;
     private final Integer durability;
@@ -15,13 +17,14 @@ public class Ore {
 
 
 
-    public Ore(String name, Integer tier, ItemStack drop, Double chance, Integer cooldown, Integer durability) {
+    public Ore(String name, Integer tier, ItemStack material, ItemStack drop, Double chance, Integer cooldown, Integer durability) {
         this.name = name;
         this.tier = tier;
         this.drop = drop;
         this.chance = chance;
         this.cooldown = cooldown;
         this.durability = durability;
+        this.material = material;
     }
 
     public String getName() {
@@ -35,6 +38,8 @@ public class Ore {
     public ItemStack getDrop() {
         return this.drop;
     }
+
+    public ItemStack getMaterial() {return this.material;}
 
     public Double getChance() {
         return this.chance;
