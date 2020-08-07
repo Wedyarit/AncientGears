@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class ItemStackManager {
-    private HashMap<String,ItemStack> itemStackHashMap = new HashMap<>();
+    private final HashMap<String,ItemStack> itemStackHashMap = new HashMap<>();
     private static volatile ItemStackManager instance;
 
     public ItemStackManager() {

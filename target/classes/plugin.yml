@@ -7,5 +7,8 @@ authors: [bob302, Doggy4]
 description: BestLife Clan Event (Excalibur-Craft)
 commands:
   kit:
-    description: Sas
+    description: Kit command
+    usage: /<command>
+  regenAll:
+    description: RegenAll command
     usage: /<command>

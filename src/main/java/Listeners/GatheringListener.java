@@ -21,6 +21,8 @@ import java.util.ArrayList;
 
 
 public class GatheringListener extends BaseListener {
+    public static boolean regenOre = false;
+
     private int isContains(ArrayList<Tool> arrayList, ItemStack tool1) {
         for (Tool tool : arrayList)
             if (tool.getTool().equals(tool1)) return arrayList.indexOf(tool);
@@ -90,9 +92,8 @@ public class GatheringListener extends BaseListener {
                 if (current > 0) current -= power;
 
                 player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText("Вы добываете " + ore.getName()));
-                if (current < 0)  as.setCustomName(name + ": " + getProgressBar(0, ore.getDurability(), 20, symbol, ChatColor.RESET, ChatColor.GOLD));
+                if (current < 0) as.setCustomName(name + ": " + getProgressBar(0, ore.getDurability(), 20, symbol, ChatColor.RESET, ChatColor.GOLD));
                 else as.setCustomName(name + ": " + getProgressBar(current, ore.getDurability(), 20, symbol, ChatColor.RESET, ChatColor.GOLD));
-                player.attack(as);
 
                 Location pLoc = player.getLocation();
                 Location oLoc = as.getLocation();
@@ -159,7 +160,7 @@ public class GatheringListener extends BaseListener {
                 String timeLeft = ChatColor.RED + "[" + timeString + "] " + ChatColor.WHITE + "Восстановление " + name;
                 armorStand.setCustomName(timeLeft);
                 armorStand.setCustomNameVisible(true);
-                if (time <= 0) {
+                if (time <= 0 || regenOre) {
                     armorStand.getEquipment().setItemInMainHand(rightArm);
                     armorStand.getEquipment().setItemInOffHand(leftArm);
                     armorStand.getEquipment().setHelmet(head);
