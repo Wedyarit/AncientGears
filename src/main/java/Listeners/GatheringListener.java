@@ -38,7 +38,7 @@ public class GatheringListener extends BaseListener {
         if (!(e.getEntity() instanceof ArmorStand)) return;
         ArmorStand resource = (ArmorStand) e.getEntity();
         ArrayList<Ore> oreArrayList = ResourceManager.getInstance().getOreArrayList();
-        ArrayList<Tool> toolArrayList =  ResourceManager.getInstance().getToolArrayList();
+        ArrayList<Tool> toolArrayList = ResourceManager.getInstance().getToolArrayList();
         if (resource.getCustomName() != null)
             for (Ore ore : oreArrayList)
                 if (isContains(toolArrayList, player.getInventory().getItemInMainHand()) != -1)
@@ -85,18 +85,19 @@ public class GatheringListener extends BaseListener {
         new BukkitRunnable() {
             final String name = as.getCustomName();
             final int power = tool.getSpeed();
-            int current = ore.getDurability();
+            int current = ore.getDurability() + power;
             final char symbol = '|';
             final int maxDistance = 4;
 
             @Override
             public void run() {
+                if (current > 0) current -= power;
+
                 player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText("Вы добываете " + ore.getName()));
-                as.setCustomName(name + ": " + getProgressBar(current, ore.getDurability(), 20, symbol, ChatColor.RESET, ChatColor.GOLD));
-                if (current - power <= 0)
-                    current = 0;
-                current -= power;
+                if (current < 0)  as.setCustomName(name + ": " + getProgressBar(0, ore.getDurability(), 20, symbol, ChatColor.RESET, ChatColor.GOLD));
+                else as.setCustomName(name + ": " + getProgressBar(current, ore.getDurability(), 20, symbol, ChatColor.RESET, ChatColor.GOLD));
                 player.attack(as);
+
                 Location pLoc = player.getLocation();
                 Location oLoc = as.getLocation();
                 World world = oLoc.getWorld();
@@ -121,15 +122,19 @@ public class GatheringListener extends BaseListener {
                     this.cancel();
                     return;
                 }
-                if (current < 0) {
+                if (current == 0) {
                     as.setCustomName(name);
                     setCD(as, ore.getCooldown());
                     addItemsByChance(ore.getDrop(), ore.getChance(), tool.getLuckFactor(), player);
                     this.cancel();
                     return;
                 }
+
+                if (current < 0) current = 0;
+
                 world.spawnParticle(Particle.SMOKE_NORMAL, oLoc, 80, 0.5, 2, 0.5, 0);
                 world.playSound(oLoc, Sound.BLOCK_ANVIL_PLACE, 2, 2);
+
             }
         }.runTaskTimer(AncientGears.getInstance(), 0, 20);
 
