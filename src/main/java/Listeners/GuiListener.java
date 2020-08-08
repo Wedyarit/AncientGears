@@ -17,6 +17,7 @@ import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -112,16 +113,20 @@ public class GuiListener extends BaseListener {
 
     @EventHandler
     public void onBlastFurnaceInteract(PlayerInteractEvent e) {
-        if (e.getClickedBlock().getType().equals(Material.BLAST_FURNACE)) {
-            e.setCancelled(true);
-            e.getPlayer().openInventory(GUIManager.GUIs.get(GUIEnums.GUIType.BLAST_FURNACE));
-        }
+        if (e.getClickedBlock() != null)
+            if (e.getClickedBlock().getType().equals(Material.BLAST_FURNACE))
+                if (e.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
+                    e.setCancelled(true);
+                    e.getPlayer().openInventory(GUIManager.GUIs.get(GUIEnums.GUIType.BLAST_FURNACE));
+                }
+
     }
 
     @EventHandler
     public void onBlastFurnaceClick(InventoryClickEvent e) {
         if (e.getClickedInventory().equals(GUIManager.GUIs.get(GUIEnums.GUIType.BLAST_FURNACE)))
-            if (e.getCurrentItem().getType().equals(Material.WHITE_STAINED_GLASS_PANE))
-                e.setCancelled(true);
+            if (e.getCurrentItem() != null)
+                if (e.getCurrentItem().getType().equals(Material.WHITE_STAINED_GLASS_PANE))
+                    e.setCancelled(true);
     }
 }
