@@ -34,6 +34,7 @@ public final class AncientGears extends JavaPlugin {
         InitializeInventoryItems();
         InitializeAllLocations();
         registerListeners();
+
     }
 
     @Override
