@@ -1,9 +1,7 @@
 package Commands;
 
-import Event.Events.ArmorType;
 import Player.Modifier;
 import Utilities.ItemConstructor;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.CommandExecutor;
@@ -25,10 +23,10 @@ public class CommandTest implements CommandExecutor {
             Player player = (Player) sender;
             for (int i = 0; i < 10; i++) {
                 int randomNum = ThreadLocalRandom.current().nextInt(1, 60);
-                ItemStack item = new ItemConstructor(getRandomPiece(randomNum))
+                ItemEnum randomPieceType = randomValue(ItemEnum.values());
+                ItemStack item = new ItemConstructor(getRandomPiece(randomPieceType, randomNum))
                         .amount(1)
-                        .displayName("TEST")
-                        .loreAsList(getRandomLore(randomNum, 2))
+                        .loreAsList(getRandomLore(ItemEnum.CHESTPLATE, randomNum, 2))
                         .build();
                 player.getInventory().addItem(item);
             }
@@ -40,12 +38,10 @@ public class CommandTest implements CommandExecutor {
         return values[ThreadLocalRandom.current().nextInt(values.length)];
     }
 
-    private Material getRandomPiece(Integer itemLevel) {
+    private Material getRandomPiece(ItemEnum type, Integer itemLevel) {
         Material item = null;
-        ItemEnum randomPieceType = randomValue(ItemEnum.values());
-        Bukkit.broadcastMessage(randomPieceType.name());
 
-        switch (randomPieceType) {
+        switch (type) {
             case HELMET: {
                 if (itemLevel < 10)
                     item = Material.LEATHER_HELMET;
@@ -150,30 +146,57 @@ public class CommandTest implements CommandExecutor {
         return item;
     }
 
-    private List<String> getRandomLore(Integer itemLevel, Integer itemRarity) {
+    private List<String> getRandomLore(ItemEnum type, Integer itemLevel, Integer itemRarity) {
         List<String> lore = new ArrayList<>();
-        int min = itemLevel * 4;
-        int max = itemLevel * 8;
+        int min = itemLevel;
+        int max = itemLevel * 2;
         int randomNum = ThreadLocalRandom.current().nextInt(min, max);
         String itemLevelString = ChatColor.GRAY + "Уровень предмета: " + ChatColor.GOLD + itemLevel;
 
+        boolean isArmor = false;
+        boolean isMelee = false;
+        boolean isRanged = false;
+
         Modifier modifier = new Modifier();
+        switch (type) {
+            case HELMET:
+            case CHESTPLATE:
+            case LEGGINGS:
+            case BOOTS:
+                isArmor = true;
+                break;
+
+            case SWORD:
+            case AXE:
+                isMelee = true;
+                break;
+
+            case BOW:
+            case CROSSBOW:
+                isRanged = true;
+                break;
+        }
+
         for (int i = 0; i < itemRarity; i++) {
             int random = ThreadLocalRandom.current().nextInt(1, 5);
             switch (random) {
                 case 1: {
+                    if (!isMelee && !isRanged)
                     modifier.addAdditionalHealth(randomNum);
                     break;
                 }
                 case 2: {
+                    if (!isMelee && !isRanged)
                     modifier.addAdditionalArmor(randomNum);
                     break;
                 }
                 case 3: {
+                    if (!isArmor)
                     modifier.addAdditionalAttackDamage(randomNum);
                     break;
                 }
                 case 4: {
+                    if (!isRanged)
                     modifier.addAdditionalAttackSpeed(randomNum);
                     break;
                 }
