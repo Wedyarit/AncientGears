@@ -11,6 +11,6 @@ public class InitializeLocations {
         AncientGears.getInstance().getLogger().info("Locations Initialization");
         LocationsManager locationsManager = LocationsManager.getInstance();
 
-        locationsManager.addLocation(new CustomLocation("Лобби", new Location(Bukkit.getWorld("world"), 30, 100, -80), new Location(Bukkit.getWorld("world"), -30, -100, 80), Sound.MUSIC_DISC_11));
+        locationsManager.addLocation(new CustomLocation("Лобби", new Location(Bukkit.getWorld("world"), 100, 100, -100), new Location(Bukkit.getWorld("world"), -100, -100, 100), Sound.MUSIC_DISC_11));
     }
 }
