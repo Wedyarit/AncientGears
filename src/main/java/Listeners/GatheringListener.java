@@ -5,7 +5,6 @@ import Gathering.Ore.OreItems;
 import AncientGears.AncientGears;
 import Gathering.ResourceManager;
 import Gathering.Tool;
-import Utilities.GameTimer;
 import com.google.common.base.Strings;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;

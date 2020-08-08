@@ -22,7 +22,7 @@ public class Modifier {
     }
 
     public String getAdditionalMovementSpeed() {
-       return this.additionalMovementSpeed;
+        return this.additionalMovementSpeed;
     }
 
     public String getAdditionalHealth() {
@@ -42,25 +42,23 @@ public class Modifier {
     }
 
     public void setAdditionalHealth(Integer additionalHealth) {
-        int percentIndex = this.additionalHealth.indexOf('%') -1;
-        StringBuilder sb = new StringBuilder(this.additionalHealth);
-        this.additionalHealth = sb.replace(percentIndex, percentIndex, additionalHealth.toString()).toString();
+        this.additionalHealth = this.additionalHealth.replace(ChatColor.GOLD + "%", ChatColor.GOLD + additionalHealth.toString() + "%");
     }
 
     public void setAdditionalArmor(Integer additionalArmor) {
-        int percentIndex = this.additionalArmor.indexOf('%') -1;
+        int percentIndex = this.additionalArmor.indexOf('%') - 1;
         StringBuilder sb = new StringBuilder(this.additionalHealth);
         this.additionalArmor = sb.replace(percentIndex, percentIndex, additionalArmor.toString()).toString();
     }
 
     public void setAdditionalAttackSpeed(Integer additionalAttackSpeed) {
-        int percentIndex = this.additionalAttackSpeed.indexOf('%') -1;
+        int percentIndex = this.additionalAttackSpeed.indexOf('%') - 1;
         StringBuilder sb = new StringBuilder(this.additionalAttackSpeed);
         this.additionalAttackSpeed = sb.replace(percentIndex, percentIndex, additionalAttackSpeed.toString()).toString();
     }
 
     public void setAdditionalAttackDamage(Integer additionalAttackDamage) {
-        int percentIndex = this.additionalAttackDamage.indexOf('%') -1;
+        int percentIndex = this.additionalAttackDamage.indexOf('%') - 1;
         StringBuilder sb = new StringBuilder(this.additionalAttackDamage);
         this.additionalAttackDamage = sb.replace(percentIndex, percentIndex, additionalAttackDamage.toString()).toString();
     }

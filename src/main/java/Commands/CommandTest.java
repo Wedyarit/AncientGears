@@ -13,10 +13,10 @@ public class CommandTest implements CommandExecutor {
     public boolean onCommand(CommandSender sender, org.bukkit.command.Command cmd, String label, String[] args) {
         if (sender instanceof Player) {
             Player player = (Player) sender;
-            Modifier dick = new Modifier();
-            AncientGears.getInstance().getLogger().info(dick.getAdditionalHealth());
-            dick.setAdditionalHealth(100);
-            AncientGears.getInstance().getLogger().info(dick.getAdditionalHealth());
+            Modifier modifier = new Modifier();
+            AncientGears.getInstance().getLogger().info(modifier.getAdditionalHealth());
+            modifier.setAdditionalHealth(100);
+            AncientGears.getInstance().getLogger().info(modifier.getAdditionalHealth());
             }
         return true;
     }

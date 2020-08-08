@@ -12,3 +12,6 @@ commands:
   regenAll:
     description: RegenAll command
     usage: /<command>
+  test:
+    description: CommandTest command
+    usage: /<command>
