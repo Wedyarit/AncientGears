@@ -26,7 +26,7 @@ public class CommandTest implements CommandExecutor {
                 ItemEnum randomPieceType = randomValue(ItemEnum.values());
                 ItemStack item = new ItemConstructor(getRandomPiece(randomPieceType, randomNum))
                         .amount(1)
-                        .loreAsList(getRandomLore(ItemEnum.CHESTPLATE, randomNum, 2))
+                        .loreAsList(getRandomLore(randomPieceType, randomNum, 2))
                         .build();
                 player.getInventory().addItem(item);
             }
@@ -181,26 +181,27 @@ public class CommandTest implements CommandExecutor {
             int random = ThreadLocalRandom.current().nextInt(1, 5);
             switch (random) {
                 case 1: {
-                    if (!isMelee && !isRanged)
+                    if (isArmor)
                     modifier.addAdditionalHealth(randomNum);
                     break;
                 }
                 case 2: {
-                    if (!isMelee && !isRanged)
+                    if (isArmor)
                     modifier.addAdditionalArmor(randomNum);
                     break;
                 }
                 case 3: {
-                    if (!isArmor)
+                    if (isMelee || isRanged)
                     modifier.addAdditionalAttackDamage(randomNum);
                     break;
                 }
                 case 4: {
-                    if (!isRanged)
+                    if (isMelee || isRanged)
                     modifier.addAdditionalAttackSpeed(randomNum);
                     break;
                 }
                 case 5: {
+                    if (isArmor)
                     modifier.addAdditionalMovementSpeed(randomNum);
                     break;
                 }
