@@ -14,27 +14,27 @@ public class Modifier {
     }
 
     public String getAdditionalMovementSpeedString() {
-        return ChatColor.WHITE + "[≈] + " + ChatColor.GOLD + additionalMovementSpeed + "% " + ChatColor.GRAY + "скорости передвижения";
+        return ChatColor.GOLD + "" + additionalMovementSpeed + "% " + ChatColor.GRAY + "к скорости передвижения";
     }
 
     public String getAdditionalHealthString() {
-        return ChatColor.RED + "[♥] + " + ChatColor.GOLD + additionalAttackDamage + "% " + ChatColor.GRAY + "максимальному здоровью";
+        return ChatColor.GOLD + "" + additionalHealth + "% " + ChatColor.GRAY + "к максимальному здоровью";
     }
 
     public String getAdditionalArmorString() {
-        return ChatColor.AQUA + "[⛨] + " + ChatColor.GOLD + additionalArmor + "% " + ChatColor.GRAY + "физической защите";
+        return ChatColor.GOLD + "" +  additionalArmor + "% " + ChatColor.GRAY + "к физической защите";
     }
 
     public String getAdditionalAttackSpeedString() {
-        return ChatColor.YELLOW + "[⋙] + " + ChatColor.GOLD + additionalAttackSpeed + "% " + ChatColor.GRAY + "скорости атаки";
+        return ChatColor.GOLD + "" +  additionalAttackSpeed + "% " + ChatColor.GRAY + "к скорости атаки";
     }
 
     public String getAdditionalAttackDamageString() {
-        return ChatColor.RED + "[⚔] + " + ChatColor.GOLD + additionalAttackDamage + "% " + ChatColor.GRAY + "физическому урону";
+        return ChatColor.GOLD + "" +  additionalAttackDamage + "% " + ChatColor.GRAY + "к физическому урону";
     }
 
     public Integer getAdditionalMovementSpeed() {
-        return this.additionalMovementSpeed;
+        return additionalMovementSpeed;
     }
 
     public Integer getAdditionalHealth() {
