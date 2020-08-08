@@ -3,6 +3,7 @@ package Commands;
 import Event.Events.ArmorType;
 import Player.Modifier;
 import Utilities.ItemConstructor;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.CommandExecutor;
@@ -35,14 +36,14 @@ public class CommandTest implements CommandExecutor {
         return true;
     }
 
-    public static <T extends Enum<?>> T randomEnum(Class<T> clazz) {
-        int x = random.nextInt(clazz.getEnumConstants().length);
-        return clazz.getEnumConstants()[x];
+    <T> T randomValue(T[] values) {
+        return values[ThreadLocalRandom.current().nextInt(values.length)];
     }
 
     private Material getRandomPiece(Integer itemLevel) {
         Material item = null;
-        ItemEnum randomPieceType = randomEnum(ItemEnum.class);
+        ItemEnum randomPieceType = randomValue(ItemEnum.values());
+        Bukkit.broadcastMessage(randomPieceType.name());
 
         switch (randomPieceType) {
             case HELMET: {
@@ -58,6 +59,7 @@ public class CommandTest implements CommandExecutor {
                     item = Material.DIAMOND_HELMET;
                 else if (itemLevel > 50)
                     item = Material.NETHERITE_HELMET;
+                break;
             }
             case CHESTPLATE: {
                 if (itemLevel < 10)
@@ -72,6 +74,7 @@ public class CommandTest implements CommandExecutor {
                     item = Material.DIAMOND_CHESTPLATE;
                 else if (itemLevel > 50)
                     item = Material.NETHERITE_CHESTPLATE;
+                break;
             }
             case LEGGINGS: {
                 if (itemLevel < 10)
@@ -86,6 +89,7 @@ public class CommandTest implements CommandExecutor {
                     item = Material.DIAMOND_LEGGINGS;
                 else if (itemLevel > 50)
                     item = Material.NETHERITE_LEGGINGS;
+                break;
 
             }
             case BOOTS: {
@@ -101,6 +105,7 @@ public class CommandTest implements CommandExecutor {
                     item = Material.DIAMOND_BOOTS;
                 else if (itemLevel > 50)
                     item = Material.NETHERITE_BOOTS;
+                break;
 
             }
             case SWORD: {
@@ -116,6 +121,7 @@ public class CommandTest implements CommandExecutor {
                     item = Material.DIAMOND_SWORD;
                 else if (itemLevel > 50)
                     item = Material.NETHERITE_SWORD;
+                break;
             }
             case AXE: {
                 if (itemLevel < 10)
@@ -130,12 +136,15 @@ public class CommandTest implements CommandExecutor {
                     item = Material.DIAMOND_AXE;
                 else if (itemLevel > 50)
                     item = Material.NETHERITE_AXE;
+                break;
             }
             case BOW: {
                 item = Material.BOW;
+                break;
             }
             case CROSSBOW: {
                 item = Material.CROSSBOW;
+                break;
             }
         }
         return item;
