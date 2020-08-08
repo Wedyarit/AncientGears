@@ -7,10 +7,12 @@ import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.inventory.EquipmentSlot;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
@@ -19,6 +21,8 @@ public class CustomItemStack {
     private final Modifier modifiers;
     private final int itemLevel;
     private final int itemRarity;
+    private Material material;
+    private HashMap<Material, Double> materialStats;
 
     public CustomItemStack(Modifier modifiers, int itemLevel, int itemRarity) {
         this.itemLevel = itemLevel;
@@ -31,51 +35,13 @@ public class CustomItemStack {
     public ItemStack getItem() {
         ItemEnum type = randomValue(ItemEnum.values());
         Material material = getRandomPiece(type, this.itemLevel);
+        this.material = material;
         ItemStack item = new ItemConstructor(material)
                 .amount(1)
                 .loreAsList(getRandomLore(type, this.itemLevel, this.itemRarity))
+                .flags(ItemFlag.HIDE_ATTRIBUTES)
                 .build();
         ItemMeta meta = item.getItemMeta();
-        double bat = 0.0D;
-        double damage = 0.0;
-
-        if (material.equals(Material.WOODEN_AXE)) {
-            damage = 7.0D;
-            bat = 0.8D;
-        } else if (material.equals(Material.STONE_AXE)) {
-            damage = 9.0D;
-            bat = 0.8D;
-        } else if (material.equals(Material.GOLDEN_AXE)) {
-            damage = 7.0D;
-            bat = 1.0D;
-        } else if (material.equals(Material.IRON_AXE)) {
-            damage = 9.0D;
-            bat = 0.9D;
-        } else if (material.equals(Material.DIAMOND_AXE)) {
-            damage = 9.0D;
-            bat = 1.0D;
-        } else if (material.equals(Material.NETHERITE_AXE)) {
-            damage = 10.0D;
-            bat = 1.0D;
-        } else if (material.equals(Material.WOODEN_SWORD)) {
-            damage = 4.0D;
-            bat = 1.6D;
-        } else if (material.equals(Material.STONE_SWORD)) {
-            damage = 5.0D;
-            bat = 1.6D;
-        } else if (material.equals(Material.GOLDEN_SWORD)) {
-            damage = 4.0D;
-            bat = 1.6D;
-        } else if (material.equals(Material.IRON_SWORD)) {
-            damage = 6.0D;
-            bat = 1.6D;
-        } else if (material.equals(Material.DIAMOND_SWORD)) {
-            damage = 7.0D;
-            bat = 1.6D;
-        } else if (material.equals(Material.NETHERITE_SWORD)) {
-            damage = 8.0D;
-            bat = 1.6D;
-        }
 
         AttributeModifier modifierMovementSpeed = new AttributeModifier(UUID.randomUUID(), "generic.movement_speed",  (this.modifiers.getAdditionalMovementSpeed() / 100.D), AttributeModifier.Operation.ADD_SCALAR, getSlot(type));
         AttributeModifier modifierHealth = new AttributeModifier(UUID.randomUUID(), "generic.max_health",  (this.modifiers.getAdditionalHealth() / 100.D), AttributeModifier.Operation.ADD_SCALAR, getSlot(type));
@@ -123,15 +89,29 @@ public class CustomItemStack {
 
     private List<String> getRandomLore(ItemEnum type, Integer itemLevel, Integer itemRarity) {
         List<String> lore = new ArrayList<>();
-        int min = itemLevel;
-        int max = itemLevel * 2;
+        int minHP = itemLevel / 8;
+        int maxHP = itemLevel / 4;
+
+        int minMS = itemLevel / 4;
+        int maxMS = itemLevel / 2;
+
+        int minAS = itemLevel / 4;
+        int maxAS = itemLevel / 2;
+
+        int minAD = itemLevel / 2;
+        int maxAD = itemLevel;
+
+        int minAR = itemLevel / 2;
+        int maxAR = itemLevel * 2;
         String itemLevelString = ChatColor.GRAY + "Уровень предмета: " + ChatColor.GOLD + itemLevel;
+        String itemArmorString = "";
+        String itemDamageString = "";
 
         boolean isArmor = false;
         boolean isMelee = false;
         boolean isRanged = false;
 
-        Modifier modifier = new Modifier();
+
         switch (type) {
             case HELMET:
             case CHESTPLATE:
@@ -152,53 +132,73 @@ public class CustomItemStack {
         }
 
         for (int i = 0; i < itemRarity; i++) {
-            int randomNum = ThreadLocalRandom.current().nextInt(min, max);
+            int randomMS = ThreadLocalRandom.current().nextInt(minMS, maxMS);
+            int randomHP = ThreadLocalRandom.current().nextInt(minHP, maxHP);
+            int randomAR = ThreadLocalRandom.current().nextInt(minAR, maxAR);
+            int randomAD = ThreadLocalRandom.current().nextInt(minAD, maxAD);
+            int randomAS = ThreadLocalRandom.current().nextInt(minAS, maxAS);
+
             int random = ThreadLocalRandom.current().nextInt(1, 5);
             switch (random) {
                 case 1: {
                     if (isArmor) {
-                        modifier.addAdditionalHealth(randomNum);
+                         itemArmorString = ChatColor.GRAY + "Защита: " + ChatColor.GOLD + materialStats.get(this.material) * (modifiers.getAdditionalArmor() / 100);
+                        modifiers.addAdditionalHealth(randomHP);
                         break;
                     }
                 }
                 case 2: {
                     if (isArmor) {
-                        modifier.addAdditionalArmor(randomNum);
+                        modifiers.addAdditionalArmor(randomAR);
+                         itemArmorString = ChatColor.GRAY + "Защита: " + ChatColor.GOLD + materialStats.get(this.material) * (modifiers.getAdditionalArmor() / 100);
                         break;
                     }
                 }
                 case 3: {
                     if (isMelee || isRanged) {
-                        modifier.addAdditionalAttackDamage(randomNum);
+                         itemDamageString = ChatColor.GRAY + "Урон: " + ChatColor.GOLD + materialStats.get(this.material) * (modifiers.getAdditionalAttackDamage() / 100);
+                        modifiers.addAdditionalAttackDamage(randomAD);
                         break;
                     }
                 }
                 case 4: {
                     if (isMelee || isRanged) {
-                        modifier.addAdditionalAttackSpeed(randomNum);
+                         itemDamageString = ChatColor.GRAY + "Урон: " + ChatColor.GOLD + materialStats.get(this.material) * (modifiers.getAdditionalAttackDamage() / 100);
+                        modifiers.addAdditionalAttackSpeed(randomAS);
                         break;
                     }
                 }
                 case 5: {
                     if (isArmor) {
-                        modifier.addAdditionalMovementSpeed(randomNum);
+                         itemArmorString = ChatColor.GRAY + "Защита: " + ChatColor.GOLD + materialStats.get(this.material) * (modifiers.getAdditionalArmor() / 100);
+                        modifiers.addAdditionalMovementSpeed(randomMS);
                         break;
                     }
                 }
             }
         }
-        if (modifier.getAdditionalMovementSpeed() != 0)
-            lore.add(modifier.getAdditionalMovementSpeedString());
-        if (modifier.getAdditionalHealth() != 0)
-            lore.add(modifier.getAdditionalHealthString());
-        if (modifier.getAdditionalArmor() != 0)
-            lore.add(modifier.getAdditionalArmorString());
-        if (modifier.getAdditionalAttackSpeed() != 0)
-            lore.add(modifier.getAdditionalAttackSpeedString());
-        if (modifier.getAdditionalAttackDamage() != 0)
-            lore.add(modifier.getAdditionalAttackDamageString());
+
+        if (modifiers.getAdditionalMovementSpeed() != 0)
+            lore.add(modifiers.getAdditionalMovementSpeedString());
+        if (modifiers.getAdditionalHealth() != 0)
+            lore.add(modifiers.getAdditionalHealthString());
+        if (modifiers.getAdditionalArmor() != 0)
+            lore.add(modifiers.getAdditionalArmorString());
+        if (modifiers.getAdditionalAttackSpeed() != 0)
+            lore.add(modifiers.getAdditionalAttackSpeedString());
+        if (modifiers.getAdditionalAttackDamage() != 0)
+            lore.add(modifiers.getAdditionalAttackDamageString());
+
         lore.add("");
         lore.add(itemLevelString);
+        lore.add("");
+        if (isArmor) {
+            lore.add(itemArmorString);
+        } else if (isMelee) {
+            lore.add("");
+            lore.add(itemDamageString);
+        }
+
         return lore;
     }
 
@@ -207,95 +207,137 @@ public class CustomItemStack {
 
         switch (type) {
             case HELMET: {
-                if (itemLevel <= 10)
+                if (itemLevel <= 10) {
                     item = Material.LEATHER_HELMET;
-                else if (itemLevel <= 20)
+                    materialStats.put(item, 1.0D);
+                } else if (itemLevel <= 20) {
                     item = Material.GOLDEN_HELMET;
-                else if (itemLevel <= 30)
+                    materialStats.put(item, 2.0D);
+                } else if (itemLevel <= 30) {
                     item = Material.CHAINMAIL_HELMET;
-                else if (itemLevel <= 40)
+                    materialStats.put(item, 2.0D);
+                } else if (itemLevel <= 40) {
                     item = Material.IRON_HELMET;
-                else if (itemLevel <= 50)
+                    materialStats.put(item, 2.0D);
+                } else if (itemLevel <= 50) {
                     item = Material.DIAMOND_HELMET;
-                else
+                    materialStats.put(item, 3.0D);
+                } else {
                     item = Material.NETHERITE_HELMET;
+                    materialStats.put(item, 3.0D);
+                }
                 break;
             }
             case CHESTPLATE: {
-                if (itemLevel <= 10)
+                if (itemLevel <= 10) {
                     item = Material.LEATHER_CHESTPLATE;
-                else if (itemLevel <= 20)
+                    materialStats.put(item, 3.0D);
+                } else if (itemLevel <= 20) {
                     item = Material.GOLDEN_CHESTPLATE;
-                else if (itemLevel <= 30)
+                    materialStats.put(item, 5.0D);
+                } else if (itemLevel <= 30) {
                     item = Material.CHAINMAIL_CHESTPLATE;
-                else if (itemLevel <= 40)
+                    materialStats.put(item, 5.0D);
+                } else if (itemLevel <= 40) {
                     item = Material.IRON_CHESTPLATE;
-                else if (itemLevel <= 50)
+                    materialStats.put(item, 6.0D);
+                } else if (itemLevel <= 50) {
                     item = Material.DIAMOND_CHESTPLATE;
-                else
+                    materialStats.put(item, 8.0D);
+                } else {
                     item = Material.NETHERITE_CHESTPLATE;
+                    materialStats.put(item, 8.0D);
+                }
                 break;
             }
             case LEGGINGS: {
-                if (itemLevel <= 10)
+                if (itemLevel <= 10) {
                     item = Material.LEATHER_LEGGINGS;
-                else if (itemLevel <= 20)
+                    materialStats.put(item, 2.0D);
+                } else if (itemLevel <= 20) {
                     item = Material.GOLDEN_LEGGINGS;
-                else if (itemLevel <= 30)
+                    materialStats.put(item, 3.0D);
+                } else if (itemLevel <= 30) {
                     item = Material.CHAINMAIL_LEGGINGS;
-                else if (itemLevel <= 40)
+                    materialStats.put(item, 4.0D);
+                } else if (itemLevel <= 40) {
                     item = Material.IRON_LEGGINGS;
-                else if (itemLevel <= 50)
+                    materialStats.put(item, 5.0D);
+                } else if (itemLevel <= 50) {
                     item = Material.DIAMOND_LEGGINGS;
-                else
+                    materialStats.put(item, 6.0D);
+                } else {
                     item = Material.NETHERITE_LEGGINGS;
+                    materialStats.put(item, 6.0D);
+                }
                 break;
 
             }
             case BOOTS: {
-                if (itemLevel <= 10)
+                if (itemLevel <= 10) {
                     item = Material.LEATHER_BOOTS;
-                else if (itemLevel <= 20)
+                    materialStats.put(item, 1.0D);
+                } else if (itemLevel <= 20) {
                     item = Material.GOLDEN_BOOTS;
-                else if (itemLevel <= 30)
+                    materialStats.put(item, 1.0D);
+                } else if (itemLevel <= 30) {
                     item = Material.CHAINMAIL_BOOTS;
-                else if (itemLevel <= 40)
+                    materialStats.put(item, 1.0D);
+                } else if (itemLevel <= 40) {
                     item = Material.IRON_BOOTS;
-                else if (itemLevel <= 50)
+                    materialStats.put(item, 2.0D);
+                } else if (itemLevel <= 50) {
                     item = Material.DIAMOND_BOOTS;
-                else
+                    materialStats.put(item, 3.0D);
+                } else {
                     item = Material.NETHERITE_BOOTS;
+                    materialStats.put(item, 3.0D);
+                }
                 break;
 
             }
             case SWORD: {
-                if (itemLevel <= 10)
+                if (itemLevel <= 10) {
                     item = Material.WOODEN_SWORD;
-                else if (itemLevel <= 20)
+                    materialStats.put(item, 4.0D);
+                } else if (itemLevel <= 20) {
                     item = Material.STONE_SWORD;
-                else if (itemLevel <= 30)
+                    materialStats.put(item, 5.0D);
+                } else if (itemLevel <= 30) {
                     item = Material.GOLDEN_SWORD;
-                else if (itemLevel <= 40)
+                    materialStats.put(item, 4.0D);
+                } else if (itemLevel <= 40) {
                     item = Material.IRON_SWORD;
-                else if (itemLevel <= 50)
+                    materialStats.put(item, 6.0D);
+                } else if (itemLevel <= 50) {
                     item = Material.DIAMOND_SWORD;
-                else
+                    materialStats.put(item, 7.0D);
+                } else {
                     item = Material.NETHERITE_SWORD;
+                    materialStats.put(item, 8.0D);
+                }
                 break;
             }
             case AXE: {
-                if (itemLevel <= 10)
+                if (itemLevel <= 10) {
                     item = Material.WOODEN_AXE;
-                else if (itemLevel <= 20)
+                    materialStats.put(item, 7.0D);
+                } else if (itemLevel <= 20) {
                     item = Material.STONE_AXE;
-                else if (itemLevel <= 30)
+                    materialStats.put(item, 9.0D);
+                } else if (itemLevel <= 30) {
                     item = Material.GOLDEN_AXE;
-                else if (itemLevel <= 40)
+                    materialStats.put(item, 7.0D);
+                } else if (itemLevel <= 40) {
                     item = Material.IRON_AXE;
-                else if (itemLevel <= 50)
+                    materialStats.put(item, 9.0D);
+                } else if (itemLevel <= 50) {
                     item = Material.DIAMOND_AXE;
-                else
+                    materialStats.put(item, 9.0D);
+                } else {
                     item = Material.NETHERITE_AXE;
+                    materialStats.put(item, 9.0D);
+                }
                 break;
             }
             case BOW: {

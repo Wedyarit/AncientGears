@@ -27,7 +27,7 @@ public class CommandTest implements CommandExecutor {
                 int random2 = ThreadLocalRandom.current().nextInt(1,5);
 
                 Modifier modifier = new Modifier();
-                ItemStack item = new CustomItemStack(modifier, random,random2).getItem();
+                ItemStack item = new CustomItemStack(modifier, random, random2).getItem();
                 player.getInventory().addItem(item);
             }
         }
