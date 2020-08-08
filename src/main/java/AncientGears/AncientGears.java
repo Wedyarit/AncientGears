@@ -54,5 +54,6 @@ public final class AncientGears extends JavaPlugin {
         new GuiListener();
         new DropListener();
         new MoveListener();
+        new ArmorEquip();
     }
 }
