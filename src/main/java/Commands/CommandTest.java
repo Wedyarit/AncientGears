@@ -43,94 +43,94 @@ public class CommandTest implements CommandExecutor {
 
         switch (type) {
             case HELMET: {
-                if (itemLevel < 10)
+                if (itemLevel <= 10)
                     item = Material.LEATHER_HELMET;
-                else if (itemLevel > 10 && itemLevel < 20)
+                else if (itemLevel <= 20)
                     item = Material.GOLDEN_HELMET;
-                else if (itemLevel > 20 && itemLevel < 30)
+                else if (itemLevel <= 30)
                     item = Material.CHAINMAIL_HELMET;
-                else if (itemLevel > 30 && itemLevel < 40)
+                else if (itemLevel <= 40)
                     item = Material.IRON_HELMET;
-                else if (itemLevel > 40 && itemLevel < 50)
+                else if (itemLevel <= 50)
                     item = Material.DIAMOND_HELMET;
-                else if (itemLevel > 50)
+                else
                     item = Material.NETHERITE_HELMET;
                 break;
             }
             case CHESTPLATE: {
-                if (itemLevel < 10)
+                if (itemLevel <= 10)
                     item = Material.LEATHER_CHESTPLATE;
-                else if (itemLevel > 10 && itemLevel < 20)
+                else if (itemLevel <= 20)
                     item = Material.GOLDEN_CHESTPLATE;
-                else if (itemLevel > 20 && itemLevel < 30)
+                else if (itemLevel <= 30)
                     item = Material.CHAINMAIL_CHESTPLATE;
-                else if (itemLevel > 30 && itemLevel < 40)
+                else if (itemLevel <= 40)
                     item = Material.IRON_CHESTPLATE;
-                else if (itemLevel > 40 && itemLevel < 50)
+                else if (itemLevel <= 50)
                     item = Material.DIAMOND_CHESTPLATE;
-                else if (itemLevel > 50)
+                else
                     item = Material.NETHERITE_CHESTPLATE;
                 break;
             }
             case LEGGINGS: {
-                if (itemLevel < 10)
+                if (itemLevel <= 10)
                     item = Material.LEATHER_LEGGINGS;
-                else if (itemLevel > 10 && itemLevel < 20)
+                else if (itemLevel <= 20)
                     item = Material.GOLDEN_LEGGINGS;
-                else if (itemLevel > 20 && itemLevel < 30)
+                else if (itemLevel <= 30)
                     item = Material.CHAINMAIL_LEGGINGS;
-                else if (itemLevel > 30 && itemLevel < 40)
+                else if (itemLevel <= 40)
                     item = Material.IRON_LEGGINGS;
-                else if (itemLevel > 40 && itemLevel < 50)
+                else if (itemLevel <= 50)
                     item = Material.DIAMOND_LEGGINGS;
-                else if (itemLevel > 50)
+                else
                     item = Material.NETHERITE_LEGGINGS;
                 break;
 
             }
             case BOOTS: {
-                if (itemLevel < 10)
+                if (itemLevel <= 10)
                     item = Material.LEATHER_BOOTS;
-                else if (itemLevel > 10 && itemLevel < 20)
+                else if (itemLevel <= 20)
                     item = Material.GOLDEN_BOOTS;
-                else if (itemLevel > 20 && itemLevel < 30)
+                else if (itemLevel <= 30)
                     item = Material.CHAINMAIL_BOOTS;
-                else if (itemLevel > 30 && itemLevel < 40)
+                else if (itemLevel <= 40)
                     item = Material.IRON_BOOTS;
-                else if (itemLevel > 40 && itemLevel < 50)
+                else if (itemLevel <= 50)
                     item = Material.DIAMOND_BOOTS;
-                else if (itemLevel > 50)
+                else
                     item = Material.NETHERITE_BOOTS;
                 break;
 
             }
             case SWORD: {
-                if (itemLevel < 10)
+                if (itemLevel <= 10)
                     item = Material.WOODEN_SWORD;
-                else if (itemLevel > 10 && itemLevel < 20)
+                else if (itemLevel <= 20)
                     item = Material.STONE_SWORD;
-                else if (itemLevel > 20 && itemLevel < 30)
+                else if (itemLevel <= 30)
                     item = Material.GOLDEN_SWORD;
-                else if (itemLevel > 30 && itemLevel < 40)
+                else if (itemLevel <= 40)
                     item = Material.IRON_SWORD;
-                else if (itemLevel > 40 && itemLevel < 50)
+                else if (itemLevel <= 50)
                     item = Material.DIAMOND_SWORD;
-                else if (itemLevel > 50)
+                else
                     item = Material.NETHERITE_SWORD;
                 break;
             }
             case AXE: {
-                if (itemLevel < 10)
+                if (itemLevel <= 10)
                     item = Material.WOODEN_AXE;
-                else if (itemLevel > 10 && itemLevel < 20)
+                else if (itemLevel <= 20)
                     item = Material.STONE_AXE;
-                else if (itemLevel > 20 && itemLevel < 30)
+                else if (itemLevel <= 30)
                     item = Material.GOLDEN_AXE;
-                else if (itemLevel > 30 && itemLevel < 40)
+                else if (itemLevel <= 40)
                     item = Material.IRON_AXE;
-                else if (itemLevel > 40 && itemLevel < 50)
+                else if (itemLevel <= 50)
                     item = Material.DIAMOND_AXE;
-                else if (itemLevel > 50)
+                else
                     item = Material.NETHERITE_AXE;
                 break;
             }
@@ -150,7 +150,6 @@ public class CommandTest implements CommandExecutor {
         List<String> lore = new ArrayList<>();
         int min = itemLevel;
         int max = itemLevel * 2;
-        int randomNum = ThreadLocalRandom.current().nextInt(min, max);
         String itemLevelString = ChatColor.GRAY + "Уровень предмета: " + ChatColor.GOLD + itemLevel;
 
         boolean isArmor = false;
@@ -178,32 +177,38 @@ public class CommandTest implements CommandExecutor {
         }
 
         for (int i = 0; i < itemRarity; i++) {
+            int randomNum = ThreadLocalRandom.current().nextInt(min, max);
             int random = ThreadLocalRandom.current().nextInt(1, 5);
             switch (random) {
                 case 1: {
-                    if (isArmor)
-                    modifier.addAdditionalHealth(randomNum);
-                    break;
+                    if (isArmor) {
+                        modifier.addAdditionalHealth(randomNum);
+                        break;
+                    }
                 }
                 case 2: {
-                    if (isArmor)
-                    modifier.addAdditionalArmor(randomNum);
-                    break;
+                    if (isArmor) {
+                        modifier.addAdditionalArmor(randomNum);
+                        break;
+                    }
                 }
                 case 3: {
-                    if (isMelee || isRanged)
-                    modifier.addAdditionalAttackDamage(randomNum);
-                    break;
+                    if (isMelee || isRanged) {
+                        modifier.addAdditionalAttackDamage(randomNum);
+                        break;
+                    }
                 }
                 case 4: {
-                    if (isMelee || isRanged)
-                    modifier.addAdditionalAttackSpeed(randomNum);
-                    break;
+                    if (isMelee || isRanged) {
+                        modifier.addAdditionalAttackSpeed(randomNum);
+                        break;
+                    }
                 }
                 case 5: {
-                    if (isArmor)
-                    modifier.addAdditionalMovementSpeed(randomNum);
-                    break;
+                    if (isArmor) {
+                        modifier.addAdditionalMovementSpeed(randomNum);
+                        break;
+                    }
                 }
             }
         }
