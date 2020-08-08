@@ -50,7 +50,7 @@ public class GatheringListener extends BaseListener {
                             break;
                         } else {
                             player.sendMessage(AncientGears.prefix + player.getInventory().getItemInMainHand().getItemMeta().getDisplayName() + ChatColor.RED + " не может добыть " + ore.getName() + ChatColor.RED + ", нужна кирка минимум " + ChatColor.GRAY + ore.getTier() + ChatColor.RED + " тира!");
-                            player.playSound(player.getLocation(), Sound.ENTITY_VILLAGER_NO, 2, 5);
+                            player.playSound(player.getLocation(), Sound.ENTITY_VILLAGER_NO, 2, 1);
                         }
                     }
     }

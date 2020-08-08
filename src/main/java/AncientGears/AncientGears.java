@@ -12,7 +12,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import static Gathering.InitializeGathering.InitializeOre;
 import static Gathering.InitializeGathering.InitializeTools;
 import static Gathering.Ore.OreItems.InitializeOreItems;
-import static Listeners.GuiListener.InitializeInventoryItems;
+import static GUI.GUIManager.InitializeInventoryItems;
 import static Locations.InitializeLocations.InitializeAllLocations;
 
 public final class AncientGears extends JavaPlugin {

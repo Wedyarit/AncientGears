@@ -2,6 +2,7 @@ package Player;
 
 import Commands.ItemEnum;
 import Utilities.ItemConstructor;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
@@ -41,22 +42,22 @@ public class CustomItemStack {
                 .build();
         ItemMeta meta = item.getItemMeta();
 
-        AttributeModifier modifierMovementSpeed = new AttributeModifier(UUID.randomUUID(), "generic.movement_speed",  (this.modifiers.getAdditionalMovementSpeed() / 100.D), AttributeModifier.Operation.ADD_SCALAR, getSlot(type));
-        AttributeModifier modifierHealth = new AttributeModifier(UUID.randomUUID(), "generic.max_health",  (this.modifiers.getAdditionalHealth() / 100.D), AttributeModifier.Operation.ADD_SCALAR, getSlot(type));
-        AttributeModifier modifierArmor = new AttributeModifier(UUID.randomUUID(), "generic.armor",  (this.modifiers.getAdditionalArmor() / 100.D), AttributeModifier.Operation.ADD_SCALAR, getSlot(type));
-        AttributeModifier modifierAttackSpeed = new AttributeModifier(UUID.randomUUID(), "generic.attack_speed",  (this.modifiers.getAdditionalMovementSpeed() / 100.D), AttributeModifier.Operation.ADD_SCALAR, getSlot(type));
-        AttributeModifier modifierAttackDamage = new AttributeModifier(UUID.randomUUID(), "generic.attack_damage",  (this.modifiers.getAdditionalAttackDamage() / 100.D), AttributeModifier.Operation.ADD_SCALAR, getSlot(type));
+        AttributeModifier modifierMovementSpeed = new AttributeModifier(UUID.randomUUID(), "generic.movement_speed", (this.modifiers.getAdditionalMovementSpeed() / 100.D), AttributeModifier.Operation.ADD_SCALAR, getSlot(type));
+        AttributeModifier modifierHealth = new AttributeModifier(UUID.randomUUID(), "generic.max_health", (this.modifiers.getAdditionalHealth() / 100.D), AttributeModifier.Operation.ADD_SCALAR, getSlot(type));
+        AttributeModifier modifierArmor = new AttributeModifier(UUID.randomUUID(), "generic.armor", (this.modifiers.getAdditionalArmor() / 100.D), AttributeModifier.Operation.ADD_SCALAR, getSlot(type));
+        AttributeModifier modifierAttackSpeed = new AttributeModifier(UUID.randomUUID(), "generic.attack_speed", (this.modifiers.getAdditionalMovementSpeed() / 100.D), AttributeModifier.Operation.ADD_SCALAR, getSlot(type));
+        AttributeModifier modifierAttackDamage = new AttributeModifier(UUID.randomUUID(), "generic.attack_damage", (this.modifiers.getAdditionalAttackDamage() / 100.D), AttributeModifier.Operation.ADD_SCALAR, getSlot(type));
 
         if (modifiers.getAdditionalMovementSpeed() != 0)
-        meta.addAttributeModifier(Attribute.GENERIC_MOVEMENT_SPEED,modifierMovementSpeed);
+            meta.addAttributeModifier(Attribute.GENERIC_MOVEMENT_SPEED, modifierMovementSpeed);
         if (modifiers.getAdditionalHealth() != 0)
-        meta.addAttributeModifier(Attribute.GENERIC_MAX_HEALTH,modifierHealth);
+            meta.addAttributeModifier(Attribute.GENERIC_MAX_HEALTH, modifierHealth);
         if (modifiers.getAdditionalArmor() != 0)
-        meta.addAttributeModifier(Attribute.GENERIC_ARMOR,modifierArmor);
+            meta.addAttributeModifier(Attribute.GENERIC_ARMOR, modifierArmor);
         if (modifiers.getAdditionalAttackSpeed() != 0)
-        meta.addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED,modifierAttackSpeed);
+            meta.addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED, modifierAttackSpeed);
         if (modifiers.getAdditionalAttackDamage() != 0)
-        meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,modifierAttackDamage);
+            meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, modifierAttackDamage);
 
         item.setItemMeta(meta);
         return item;
@@ -81,6 +82,7 @@ public class CustomItemStack {
         }
         return null;
     }
+
     <T> T randomValue(T[] values) {
         return values[ThreadLocalRandom.current().nextInt(values.length)];
     }
@@ -104,15 +106,15 @@ public class CustomItemStack {
 
         // Да, тут нужно столько if'ов
         if (minMS == 0) minMS = 1;
-        if (maxMS == 0) maxMS = 1;
+        if (maxMS == 0 || maxMS == 1) maxMS = 2;
         if (minHP == 0) minHP = 1;
-        if (maxHP == 0) maxHP = 1;
+        if (maxHP == 0 || maxHP == 1) maxHP = 2;
         if (minAR == 0) minAR = 1;
-        if (maxAR == 0) maxAR = 1;
+        if (maxAR == 0 || maxAR == 1) maxAR = 2;
         if (minAD == 0) minAD = 1;
-        if (maxAD == 0) maxAD = 1;
+        if (maxAD == 0 || maxAD == 1) maxAD = 2;
         if (minAS == 0) minAS = 1;
-        if (maxAS == 0) maxAS = 1;
+        if (maxAS == 0 || maxAS == 1) maxAS = 2;
 
         String itemLevelString = ChatColor.GRAY + "Уровень предмета: " + ChatColor.GOLD + itemLevel;
         String itemArmorString = "";
@@ -150,10 +152,11 @@ public class CustomItemStack {
             int randomAS = ThreadLocalRandom.current().nextInt(minAS, maxAS);
 
             int random = ThreadLocalRandom.current().nextInt(1, 5);
+
             switch (random) {
                 case 1: {
                     if (isArmor) {
-                         itemArmorString = ChatColor.GRAY + "Защита: " + ChatColor.GOLD + materialStats.get(this.material) * (modifiers.getAdditionalArmor() / 100);
+                        itemArmorString = ChatColor.GRAY + "Защита: " + ChatColor.GOLD + materialStats.get(this.material) * (modifiers.getAdditionalArmor() / 100);
                         modifiers.addAdditionalHealth(randomHP);
                         break;
                     }
@@ -161,27 +164,27 @@ public class CustomItemStack {
                 case 2: {
                     if (isArmor) {
                         modifiers.addAdditionalArmor(randomAR);
-                         itemArmorString = ChatColor.GRAY + "Защита: " + ChatColor.GOLD + materialStats.get(this.material) * (modifiers.getAdditionalArmor() / 100);
+                        itemArmorString = ChatColor.GRAY + "Защита: " + ChatColor.GOLD + materialStats.get(this.material) * (modifiers.getAdditionalArmor() / 100);
                         break;
                     }
                 }
                 case 3: {
                     if (isMelee || isRanged) {
-                         itemDamageString = ChatColor.GRAY + "Урон: " + ChatColor.GOLD + materialStats.get(this.material) * (modifiers.getAdditionalAttackDamage() / 100);
+                        itemDamageString = ChatColor.GRAY + "Урон: " + ChatColor.GOLD + materialStats.get(this.material) * (modifiers.getAdditionalAttackDamage() / 100);
                         modifiers.addAdditionalAttackDamage(randomAD);
                         break;
                     }
                 }
                 case 4: {
                     if (isMelee || isRanged) {
-                         itemDamageString = ChatColor.GRAY + "Урон: " + ChatColor.GOLD + materialStats.get(this.material) * (modifiers.getAdditionalAttackDamage() / 100);
+                        itemDamageString = ChatColor.GRAY + "Урон: " + ChatColor.GOLD + materialStats.get(this.material) * (modifiers.getAdditionalAttackDamage() / 100);
                         modifiers.addAdditionalAttackSpeed(randomAS);
                         break;
                     }
                 }
                 case 5: {
                     if (isArmor) {
-                         itemArmorString = ChatColor.GRAY + "Защита: " + ChatColor.GOLD + materialStats.get(this.material) * (modifiers.getAdditionalArmor() / 100);
+                        itemArmorString = ChatColor.GRAY + "Защита: " + ChatColor.GOLD + materialStats.get(this.material) * (modifiers.getAdditionalArmor() / 100);
                         modifiers.addAdditionalMovementSpeed(randomMS);
                         break;
                     }
@@ -353,9 +356,11 @@ public class CustomItemStack {
             }
             case BOW: {
                 item = Material.BOW;
+                materialStats.put(item, 9.0D);
                 break;
             }
             case CROSSBOW: {
+                materialStats.put(item, 9.0D);
                 item = Material.CROSSBOW;
                 break;
             }

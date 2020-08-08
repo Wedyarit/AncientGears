@@ -2,7 +2,6 @@ package Listeners;
 
 import Event.ClassesNOTWORKING.RpgPlayer;
 import Event.ClassesNOTWORKING.RpgPlayerManager;
-import Event.Events.ArmorEquipEvent;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
@@ -41,18 +40,4 @@ public class PlayerListener extends BaseListener {
         }
     }
 
-    @EventHandler
-    public void equip(ArmorEquipEvent e) {
-        System.out.println("ArmorEquipEvent - " + e.getMethod());
-        System.out.println("Type: " + e.getType());
-        System.out.println("New: " + ((e.getNewArmorPiece() != null) ? (String) e.getNewArmorPiece().getType().name() : "null"));
-        System.out.println("Old: " + ((e.getOldArmorPiece() != null) ? (String) e.getOldArmorPiece().getType().name() : "null"));
-        boolean test = true;
-        if (test) {
-            if (e.getOldArmorPiece() != null && e.getOldArmorPiece().getType().equals(Material.DIAMOND_HELMET))
-                e.getPlayer().setGameMode(e.getPlayer().getGameMode().equals(GameMode.ADVENTURE) ? GameMode.SURVIVAL : GameMode.ADVENTURE);
-            if (e.getNewArmorPiece() != null && e.getNewArmorPiece().getType().equals(Material.DIAMOND_HELMET))
-                e.getPlayer().setGameMode(e.getPlayer().getGameMode().equals(GameMode.ADVENTURE) ? GameMode.SURVIVAL : GameMode.ADVENTURE);
-        }
-    }
 }
