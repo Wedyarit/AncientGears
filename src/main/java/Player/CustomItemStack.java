@@ -16,10 +16,10 @@ import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class CustomItemStack {
-    private Modifier modifiers;
+    private final Modifier modifiers;
     private Material material;
-    private int itemLevel;
-    private int itemRarity;
+    private final int itemLevel;
+    private final int itemRarity;
 
     public CustomItemStack(Modifier modifiers, int itemLevel, int itemRarity) {
         this.itemLevel = itemLevel;
@@ -36,16 +36,35 @@ public class CustomItemStack {
                 .loreAsList(getRandomLore(type, this.itemLevel, this.itemRarity))
                 .build();
         ItemMeta meta = item.getItemMeta();
+        double bat = 4.0D;
+        double damage = 1.0;
+        if (type == ItemEnum.AXE) {
+            damage = 6.0D;
+            bat = 1.0D;
+        }
+        if (type == ItemEnum.SWORD) {
+            damage = 9.0D;
+            bat = 1.6D;
+        }
+
+
         AttributeModifier modifierMovementSpeed = new AttributeModifier(UUID.randomUUID(), "generic.movement_speed", 0.1D * (this.modifiers.getAdditionalMovementSpeed() / 100.D), AttributeModifier.Operation.ADD_NUMBER, getSlot(type));
         AttributeModifier modifierHealth = new AttributeModifier(UUID.randomUUID(), "generic.max_health", 20.0D * (this.modifiers.getAdditionalHealth() / 100.D), AttributeModifier.Operation.ADD_NUMBER, getSlot(type));
         AttributeModifier modifierArmor = new AttributeModifier(UUID.randomUUID(), "generic.armor", 0.1D * (this.modifiers.getAdditionalArmor() / 100.D), AttributeModifier.Operation.ADD_NUMBER, getSlot(type));
-        AttributeModifier modifierAttackSpeed = new AttributeModifier(UUID.randomUUID(), "generic.attack_speed", 4.0D * (this.modifiers.getAdditionalMovementSpeed() / 100.D), AttributeModifier.Operation.ADD_NUMBER, getSlot(type));
-        AttributeModifier modifierAttackDamage = new AttributeModifier(UUID.randomUUID(), "generic.attack_damage", 1.0D * (this.modifiers.getAdditionalAttackDamage() / 100.D), AttributeModifier.Operation.ADD_NUMBER, getSlot(type));
+        AttributeModifier modifierAttackSpeed = new AttributeModifier(UUID.randomUUID(), "generic.attack_speed", bat * (this.modifiers.getAdditionalMovementSpeed() / 100.D), AttributeModifier.Operation.ADD_NUMBER, getSlot(type));
+        AttributeModifier modifierAttackDamage = new AttributeModifier(UUID.randomUUID(), "generic.attack_damage", damage * (this.modifiers.getAdditionalAttackDamage() / 100.D), AttributeModifier.Operation.ADD_NUMBER, getSlot(type));
+
+        if (modifiers.getAdditionalMovementSpeed() != 0)
         meta.addAttributeModifier(Attribute.GENERIC_MOVEMENT_SPEED,modifierMovementSpeed);
+        if (modifiers.getAdditionalHealth() != 0)
         meta.addAttributeModifier(Attribute.GENERIC_MAX_HEALTH,modifierHealth);
+        if (modifiers.getAdditionalArmor() != 0)
         meta.addAttributeModifier(Attribute.GENERIC_ARMOR,modifierArmor);
+        if (modifiers.getAdditionalAttackSpeed() != 0)
         meta.addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED,modifierAttackSpeed);
+        if (modifiers.getAdditionalAttackDamage() != 0)
         meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,modifierAttackDamage);
+
         item.setItemMeta(meta);
         return item;
     }
