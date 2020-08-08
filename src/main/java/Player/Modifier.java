@@ -1,6 +1,9 @@
 package Player;
 
 import org.bukkit.ChatColor;
+import org.bukkit.inventory.ItemStack;
+
+import java.util.List;
 
 public class Modifier {
     private Integer additionalMovementSpeed = 0;
