@@ -5,13 +5,16 @@ import Gathering.ItemStackManager;
 import Gathering.Ore.OreItems;
 import Utilities.GuiConstructor;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class GUIManager {
     public static final HashMap<ItemStack, Inventory> itemStackInventoryHashMap = new HashMap<>();
+    public static final HashMap<GUIEnums.GUIType, Inventory> GUIs = new HashMap<>();
 
     public static void InitializeInventoryItems() {
         AncientGears.getInstance().getLogger().info("InventoryItems Initialization");
@@ -69,6 +72,25 @@ public class GUIManager {
         itemStackInventoryHashMap.put(ItemStackManager.getInstance().getItem(OreItems.OreItemNames.MENU_FISHING.name()), new GuiConstructor(27,
                 ChatColor.RED + "Рыболовство")
 
+                .bulid());
+
+    }
+
+    public static void InitializeGUIs() {
+        AncientGears.getInstance().getLogger().info("GUIs Initialization");
+
+        GUIs.put(GUIEnums.GUIType.BLAST_FURNACE, new GuiConstructor(45,
+                ChatColor.RED + "Доменная печь")
+                .fillSlots(new ItemStack(Material.WHITE_STAINED_GLASS_PANE))
+                .setItem(new HashMap<Integer, ItemStack>() {{
+                    put(10, new ItemStack(Material.AIR));
+                    put(11, new ItemStack(Material.AIR));
+                    put(19, new ItemStack(Material.AIR));
+                    put(20, new ItemStack(Material.AIR));
+                    put(24, new ItemStack(Material.AIR));
+                    put(28, new ItemStack(Material.AIR));
+                    put(29, new ItemStack(Material.AIR));
+                }})
                 .bulid());
     }
 }

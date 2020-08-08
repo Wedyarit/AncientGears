@@ -1,6 +1,7 @@
 package Listeners;
 
 import AncientGears.AncientGears;
+import GUI.GUIEnums;
 import GUI.GUIManager;
 import Gathering.ItemStackManager;
 import Gathering.Ore.Ore;
@@ -89,7 +90,6 @@ public class GuiListener extends BaseListener {
         player.closeInventory();
     }
 
-
     @EventHandler
     public void onGatheringGuiClick(final InventoryClickEvent e) {
         Inventory inv = e.getInventory();
@@ -106,5 +106,22 @@ public class GuiListener extends BaseListener {
                 player.openInventory(itemStackInventoryHashMap.get(itemStack));
                 break;
             }
+    }
+
+    // Players:
+
+    @EventHandler
+    public void onBlastFurnaceInteract(PlayerInteractEvent e) {
+        if (e.getClickedBlock().getType().equals(Material.BLAST_FURNACE)) {
+            e.setCancelled(true);
+            e.getPlayer().openInventory(GUIManager.GUIs.get(GUIEnums.GUIType.BLAST_FURNACE));
+        }
+    }
+
+    @EventHandler
+    public void onBlastFurnaceClick(InventoryClickEvent e) {
+        if (e.getClickedInventory().equals(GUIManager.GUIs.get(GUIEnums.GUIType.BLAST_FURNACE)))
+            if (e.getCurrentItem().getType().equals(Material.WHITE_STAINED_GLASS_PANE))
+                e.setCancelled(true);
     }
 }
