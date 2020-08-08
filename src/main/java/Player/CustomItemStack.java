@@ -17,7 +17,6 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class CustomItemStack {
     private final Modifier modifiers;
-    private Material material;
     private final int itemLevel;
     private final int itemRarity;
 
@@ -31,28 +30,58 @@ public class CustomItemStack {
 
     public ItemStack getItem() {
         ItemEnum type = randomValue(ItemEnum.values());
-        ItemStack item = new ItemConstructor(getRandomPiece(type, this.itemLevel))
+        Material material = getRandomPiece(type, this.itemLevel);
+        ItemStack item = new ItemConstructor(material)
                 .amount(1)
                 .loreAsList(getRandomLore(type, this.itemLevel, this.itemRarity))
                 .build();
         ItemMeta meta = item.getItemMeta();
-        double bat = 4.0D;
-        double damage = 1.0;
-        if (type == ItemEnum.AXE) {
-            damage = 6.0D;
-            bat = 1.0D;
-        }
-        if (type == ItemEnum.SWORD) {
+        double bat = 0.0D;
+        double damage = 0.0;
+
+        if (material.equals(Material.WOODEN_AXE)) {
+            damage = 7.0D;
+            bat = 0.8D;
+        } else if (material.equals(Material.STONE_AXE)) {
             damage = 9.0D;
+            bat = 0.8D;
+        } else if (material.equals(Material.GOLDEN_AXE)) {
+            damage = 7.0D;
+            bat = 1.0D;
+        } else if (material.equals(Material.IRON_AXE)) {
+            damage = 9.0D;
+            bat = 0.9D;
+        } else if (material.equals(Material.DIAMOND_AXE)) {
+            damage = 9.0D;
+            bat = 1.0D;
+        } else if (material.equals(Material.NETHERITE_AXE)) {
+            damage = 10.0D;
+            bat = 1.0D;
+        } else if (material.equals(Material.WOODEN_SWORD)) {
+            damage = 4.0D;
+            bat = 1.6D;
+        } else if (material.equals(Material.STONE_SWORD)) {
+            damage = 5.0D;
+            bat = 1.6D;
+        } else if (material.equals(Material.GOLDEN_SWORD)) {
+            damage = 4.0D;
+            bat = 1.6D;
+        } else if (material.equals(Material.IRON_SWORD)) {
+            damage = 6.0D;
+            bat = 1.6D;
+        } else if (material.equals(Material.DIAMOND_SWORD)) {
+            damage = 7.0D;
+            bat = 1.6D;
+        } else if (material.equals(Material.NETHERITE_SWORD)) {
+            damage = 8.0D;
             bat = 1.6D;
         }
 
-
-        AttributeModifier modifierMovementSpeed = new AttributeModifier(UUID.randomUUID(), "generic.movement_speed", 0.1D * (this.modifiers.getAdditionalMovementSpeed() / 100.D), AttributeModifier.Operation.ADD_NUMBER, getSlot(type));
-        AttributeModifier modifierHealth = new AttributeModifier(UUID.randomUUID(), "generic.max_health", 20.0D * (this.modifiers.getAdditionalHealth() / 100.D), AttributeModifier.Operation.ADD_NUMBER, getSlot(type));
-        AttributeModifier modifierArmor = new AttributeModifier(UUID.randomUUID(), "generic.armor", 0.1D * (this.modifiers.getAdditionalArmor() / 100.D), AttributeModifier.Operation.ADD_NUMBER, getSlot(type));
-        AttributeModifier modifierAttackSpeed = new AttributeModifier(UUID.randomUUID(), "generic.attack_speed", bat * (this.modifiers.getAdditionalMovementSpeed() / 100.D), AttributeModifier.Operation.ADD_NUMBER, getSlot(type));
-        AttributeModifier modifierAttackDamage = new AttributeModifier(UUID.randomUUID(), "generic.attack_damage", damage * (this.modifiers.getAdditionalAttackDamage() / 100.D), AttributeModifier.Operation.ADD_NUMBER, getSlot(type));
+        AttributeModifier modifierMovementSpeed = new AttributeModifier(UUID.randomUUID(), "generic.movement_speed",  (this.modifiers.getAdditionalMovementSpeed() / 100.D), AttributeModifier.Operation.ADD_SCALAR, getSlot(type));
+        AttributeModifier modifierHealth = new AttributeModifier(UUID.randomUUID(), "generic.max_health",  (this.modifiers.getAdditionalHealth() / 100.D), AttributeModifier.Operation.ADD_SCALAR, getSlot(type));
+        AttributeModifier modifierArmor = new AttributeModifier(UUID.randomUUID(), "generic.armor",  (this.modifiers.getAdditionalArmor() / 100.D), AttributeModifier.Operation.ADD_SCALAR, getSlot(type));
+        AttributeModifier modifierAttackSpeed = new AttributeModifier(UUID.randomUUID(), "generic.attack_speed",  (this.modifiers.getAdditionalMovementSpeed() / 100.D), AttributeModifier.Operation.ADD_SCALAR, getSlot(type));
+        AttributeModifier modifierAttackDamage = new AttributeModifier(UUID.randomUUID(), "generic.attack_damage",  (this.modifiers.getAdditionalAttackDamage() / 100.D), AttributeModifier.Operation.ADD_SCALAR, getSlot(type));
 
         if (modifiers.getAdditionalMovementSpeed() != 0)
         meta.addAttributeModifier(Attribute.GENERIC_MOVEMENT_SPEED,modifierMovementSpeed);
