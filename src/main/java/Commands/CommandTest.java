@@ -1,9 +1,7 @@
 package Commands;
 
-import AncientGears.AncientGears;
 import Player.Modifier;
 import Utilities.ItemConstructor;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
