@@ -10,15 +10,11 @@ public class Modifier {
     private String additionalAttackDamage;
 
     public Modifier() {
-        this.additionalMovementSpeed = ChatColor.GRAY + "[≈] + " + ChatColor.GOLD + "% " + ChatColor.GRAY + "скорости передвижения";
-        this.additionalHealth = ChatColor.GRAY + "[♥] + " + ChatColor.GOLD + "% " + ChatColor.GRAY + "максимальному здоровью";
-        this.additionalArmor = ChatColor.GRAY + "[⛨] + " + ChatColor.GOLD + "% " + ChatColor.GRAY + "физической защите";
-        this.additionalAttackSpeed = ChatColor.GRAY + "[⋙] + " + ChatColor.GOLD + "% " + ChatColor.GRAY + "скорости атаки";
-        this.additionalAttackDamage = ChatColor.GRAY + "[⚔] + " + ChatColor.GOLD + "% " + ChatColor.GRAY + "физическому урону";
-    }
-
-    public void setAdditionalMovementSpeed(String additionalMovementSpeed) {
-        this.additionalMovementSpeed = additionalMovementSpeed;
+        this.additionalMovementSpeed = ChatColor.WHITE + "[≈] + " + ChatColor.GOLD + "% " + ChatColor.GRAY + "скорости передвижения";
+        this.additionalHealth = ChatColor.RED + "[♥] + " + ChatColor.GOLD + "% " + ChatColor.GRAY + "максимальному здоровью";
+        this.additionalArmor = ChatColor.AQUA + "[⛨] + " + ChatColor.GOLD + "% " + ChatColor.GRAY + "физической защите";
+        this.additionalAttackSpeed = ChatColor.YELLOW + "[⋙] + " + ChatColor.GOLD + "% " + ChatColor.GRAY + "скорости атаки";
+        this.additionalAttackDamage = ChatColor.RED + "[⚔] + " + ChatColor.GOLD + "% " + ChatColor.GRAY + "физическому урону";
     }
 
     public String getAdditionalMovementSpeed() {
@@ -41,25 +37,26 @@ public class Modifier {
         return additionalAttackSpeed;
     }
 
+    public void setAdditionalMovementSpeed(Integer additionalMovementSpeed) {
+        this.additionalMovementSpeed = this.additionalMovementSpeed.replace(ChatColor.GOLD + "%", ChatColor.GRAY + additionalMovementSpeed.toString() + ChatColor.GOLD + "%");
+    }
+
     public void setAdditionalHealth(Integer additionalHealth) {
-        this.additionalHealth = this.additionalHealth.replace(ChatColor.GOLD + "%", ChatColor.GOLD + additionalHealth.toString() + "%");
+        this.additionalHealth = this.additionalHealth.replace(ChatColor.GOLD + "%", ChatColor.GRAY + additionalHealth.toString() + ChatColor.GOLD + "%");
     }
 
     public void setAdditionalArmor(Integer additionalArmor) {
-        int percentIndex = this.additionalArmor.indexOf('%') - 1;
-        StringBuilder sb = new StringBuilder(this.additionalHealth);
-        this.additionalArmor = sb.replace(percentIndex, percentIndex, additionalArmor.toString()).toString();
+        this.additionalArmor = this.additionalArmor.replace(ChatColor.GOLD + "%", ChatColor.GRAY + additionalArmor.toString() + ChatColor.GOLD + "%");
+
     }
 
     public void setAdditionalAttackSpeed(Integer additionalAttackSpeed) {
-        int percentIndex = this.additionalAttackSpeed.indexOf('%') - 1;
-        StringBuilder sb = new StringBuilder(this.additionalAttackSpeed);
-        this.additionalAttackSpeed = sb.replace(percentIndex, percentIndex, additionalAttackSpeed.toString()).toString();
+        this.additionalAttackSpeed = this.additionalAttackSpeed.replace(ChatColor.GOLD + "%", ChatColor.GRAY + additionalAttackSpeed.toString() + ChatColor.GOLD + "%");
+
     }
 
     public void setAdditionalAttackDamage(Integer additionalAttackDamage) {
-        int percentIndex = this.additionalAttackDamage.indexOf('%') - 1;
-        StringBuilder sb = new StringBuilder(this.additionalAttackDamage);
-        this.additionalAttackDamage = sb.replace(percentIndex, percentIndex, additionalAttackDamage.toString()).toString();
+        this.additionalAttackDamage = this.additionalAttackDamage.replace(ChatColor.GOLD + "%", ChatColor.GRAY + additionalAttackDamage.toString() + ChatColor.GOLD + "%");
+
     }
 }

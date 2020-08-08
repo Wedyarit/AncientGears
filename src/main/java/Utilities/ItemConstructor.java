@@ -10,15 +10,15 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.*;
 
 public class ItemConstructor {
-    protected Material material;
-    protected int amount = 1;
-    protected short durability = 0;
+    private Material material;
+    private int amount = 1;
+    private short durability = 0;
 
-    protected String displayName;
-    protected ChatColor color;
-    protected List<String> lore;
-    protected ItemFlag[] flags;
-    protected Map<Enchantment, Integer> enchantments = new HashMap<>();
+    private String displayName;
+    private ChatColor color;
+    private List<String> lore;
+    private ItemFlag[] flags;
+    private Map<Enchantment, Integer> enchantments = new HashMap<>();
 
     public ItemConstructor(Material material) {
         this.material = material;
@@ -45,6 +45,11 @@ public class ItemConstructor {
     public ItemConstructor lore(String... lore) {
         this.lore = new ArrayList<>(Arrays.asList(lore));
 
+        return this;
+    }
+
+    public ItemConstructor loreAsList(List<String> lore) {
+        this.lore = lore;
         return this;
     }
 
