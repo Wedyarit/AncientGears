@@ -6,6 +6,8 @@ import Commands.CommandTest;
 import Gathering.ResourceManager;
 import Listeners.*;
 import Locations.InitializeLocations;
+import com.comphenix.protocol.ProtocolLibrary;
+import com.comphenix.protocol.ProtocolManager;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -18,6 +20,7 @@ import static Locations.InitializeLocations.InitializeAllLocations;
 public final class AncientGears extends JavaPlugin {
     private static AncientGears instance;
     public static String prefix = ChatColor.GOLD + "[AncientGears] " + ChatColor.WHITE;
+    public static ProtocolManager protocolManager;
 
     @Override
     public void onEnable() {
@@ -27,6 +30,8 @@ public final class AncientGears extends JavaPlugin {
         this.getCommand("kit").setExecutor(new CommandKit());
         this.getCommand("regenAll").setExecutor(new CommandRegenAll());
         this.getCommand("test").setExecutor(new CommandTest());
+
+        protocolManager = ProtocolLibrary.getProtocolManager();
 
         InitializeOreItems();
         InitializeOre();

@@ -18,7 +18,7 @@ public class MoveListener extends BaseListener {
             if (location.isInLocation(player)) {
                 if (!location.isAlreadyBeenInLocation(player)) {
                     player.sendTitle("Локация обновлена", ChatColor.GOLD + location.getName(), 20, 25, 20);
-                    player.playSound(player.getLocation(), Sound.BLOCK_BELL_USE, 10, 1);
+                    player.playSound(player.getLocation(), location.getRecord(), 10, 1);
                     location.addPlayer(player);
                     return;
                 }
@@ -28,7 +28,7 @@ public class MoveListener extends BaseListener {
             if (!location.isInLocation(player)) {
                 if (location.isAlreadyBeenInLocation(player)) {
                     player.sendTitle("Локация обновлена", ChatColor.GOLD + "Неизведованные земли", 20, 25, 20);
-                    player.playSound(player.getLocation(), Sound.BLOCK_BELL_USE, 10, 1);
+                    player.stopSound(location.getRecord());
                     location.removePlayer(player);
                     return;
                 }

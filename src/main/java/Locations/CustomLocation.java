@@ -1,6 +1,7 @@
 package Locations;
 
 import org.bukkit.Location;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -10,9 +11,9 @@ public class CustomLocation {
     protected Location pos1;
     protected Location pos2;
     protected ArrayList<Player> playersInLocation = new ArrayList<>();
-    protected int recordID;
+    protected Sound record;
 
-    public CustomLocation(String name, Location pos1, Location pos2, int id) {
+    public CustomLocation(String name, Location pos1, Location pos2, Sound record) {
 
         int x1 = Math.min(pos1.getBlockX(), pos2.getBlockX());
         int y1 = Math.min(pos1.getBlockY(), pos2.getBlockY());
@@ -24,7 +25,7 @@ public class CustomLocation {
         this.pos2 = new Location(pos2.getWorld(), x2, y2, z2);
 
         this.name = name;
-        this.recordID = id;
+        this.record = record;
 
     }
 
@@ -42,6 +43,10 @@ public class CustomLocation {
 
     public String getName() {
         return name;
+    }
+
+    public Sound getRecord() {
+        return record;
     }
 
     public boolean isInLocation(Player player) {

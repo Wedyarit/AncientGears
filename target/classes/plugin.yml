@@ -5,6 +5,7 @@ api-version: 1.13
 prefix: Ancient Gear
 authors: [bob302, Doggy4]
 description: BestLife Clan Event (Excalibur-Craft)
+depend: [ProtocolLib]
 commands:
   kit:
     description: Kit command
