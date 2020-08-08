@@ -10,6 +10,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -31,36 +32,46 @@ public class CommandTest implements CommandExecutor {
     }
 
     private List<String> getRandomLore(Integer itemLevel, Integer itemRarity) {
-        List<String> lore = null;
+        List<String> lore = new ArrayList<>();
         int min = itemLevel * 4;
         int max = itemLevel * 8;
         int randomNum = ThreadLocalRandom.current().nextInt(min, max);
-        int random = ThreadLocalRandom.current().nextInt(1, 5);
+
         Modifier modifier = new Modifier();
         for (int i = 0; i < itemRarity; i++) {
+            int random = ThreadLocalRandom.current().nextInt(1, 5);
             switch (random) {
                 case 1: {
-                    modifier.setAdditionalHealth(randomNum);
-                    lore.add(modifier.getAdditionalHealth());
+                    modifier.addAdditionalHealth(randomNum);
                     break;
                 }
                 case 2: {
-                    modifier.setAdditionalArmor(randomNum);
-                    lore.add(modifier.getAdditionalArmor());
+                    modifier.addAdditionalArmor(randomNum);
+                    break;
                 }
                 case 3: {
-                    modifier.setAdditionalAttackDamage(randomNum);
-                    lore.add(modifier.getAdditionalAttackDamage());
+                    modifier.addAdditionalAttackDamage(randomNum);
+                    break;
                 }
                 case 4: {
-                    modifier.setAdditionalAttackSpeed(randomNum);
-                    lore.add(modifier.getAdditionalAttackSpeed());
+                    modifier.addAdditionalAttackSpeed(randomNum);
+                    break;
                 }
                 case 5: {
-                    modifier.setAdditionalMovementSpeed(randomNum);
-                    lore.add(modifier.getAdditionalMovementSpeed());
+                    modifier.addAdditionalMovementSpeed(randomNum);
+                    break;
                 }
             }
+            if (modifier.getAdditionalMovementSpeed() != 0)
+                lore.add(modifier.getAdditionalMovementSpeedString());
+            if (modifier.getAdditionalHealth() != 0)
+                lore.add(modifier.getAdditionalHealthString());
+            if (modifier.getAdditionalArmor() != 0)
+                lore.add(modifier.getAdditionalArmorString());
+            if (modifier.getAdditionalAttackSpeed() != 0)
+                lore.add(modifier.getAdditionalAttackSpeedString());
+            if (modifier.getAdditionalAttackDamage() != 0)
+                lore.add(modifier.getAdditionalAttackDamageString());
         }
 
         return lore;
