@@ -21,11 +21,8 @@ public class CommandKit implements CommandExecutor {
     public boolean onCommand(CommandSender sender, org.bukkit.command.Command cmd, String label, String[] args) {
         if (sender instanceof Player) {
             Player player = (Player) sender;
-
-            player.getInventory().addItem(ItemStackManager.getInstance().getItem(OreItems.OreItemNames.MENU_PROF.name()));
-            player.getInventory().addItem(ItemStackManager.getInstance().getItem(OreItems.OreItemNames.T1_PICKAXE.name()));
-            player.getInventory().addItem(ItemStackManager.getInstance().getItem(OreItems.OreItemNames.T6_PICKAXE.name()));
-            player.getInventory().addItem(ItemStackManager.getInstance().getItem(OreItems.OreItemNames.T3_PICKAXE.name()));
+            if (player.isOp())
+                player.getInventory().addItem(ItemStackManager.getInstance().getItem(OreItems.OreItemNames.MENU_PROF.name()));
         }
         return true;
     }
