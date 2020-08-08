@@ -2,11 +2,13 @@ package Commands;
 
 import Player.Modifier;
 import Utilities.ItemConstructor;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.scheduler.BukkitTask;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,11 +35,12 @@ public class CommandTest implements CommandExecutor {
         List<String> lore = new ArrayList<>();
         int min = itemLevel * 4;
         int max = itemLevel * 8;
-        int randomNum = ThreadLocalRandom.current().nextInt(min, max);
 
         Modifier modifier = new Modifier();
+
         for (int i = 0; i < itemRarity; i++) {
             int random = ThreadLocalRandom.current().nextInt(1, 5);
+            int randomNum = ThreadLocalRandom.current().nextInt(min, max);
             switch (random) {
                 case 1: {
                     modifier.addAdditionalHealth(randomNum);

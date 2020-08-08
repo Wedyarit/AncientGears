@@ -9,16 +9,13 @@ public class Modifier {
     private Integer additionalAttackSpeed = 0;
     private Integer additionalAttackDamage = 0;
 
-    public Modifier() {
-
-    }
 
     public String getAdditionalMovementSpeedString() {
         return ChatColor.WHITE + "[≈] + " + ChatColor.GOLD + additionalMovementSpeed + "% " + ChatColor.GRAY + "скорости передвижения";
     }
 
     public String getAdditionalHealthString() {
-        return ChatColor.RED + "[♥] + " + ChatColor.GOLD + additionalAttackDamage + "% " + ChatColor.GRAY + "максимальному здоровью";
+        return ChatColor.RED + "[♥] + " + ChatColor.GOLD + additionalHealth + "% " + ChatColor.GRAY + "максимальному здоровью";
     }
 
     public String getAdditionalArmorString() {
