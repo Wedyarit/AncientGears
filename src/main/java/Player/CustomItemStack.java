@@ -22,15 +22,13 @@ public class CustomItemStack {
     private final int itemLevel;
     private final int itemRarity;
     private Material material;
-    private HashMap<Material, Double> materialStats;
+    private final HashMap<Material, Double> materialStats = new HashMap<>();
 
     public CustomItemStack(Modifier modifiers, int itemLevel, int itemRarity) {
         this.itemLevel = itemLevel;
         this.itemRarity = itemRarity;
         this.modifiers = modifiers;
     }
-
-
 
     public ItemStack getItem() {
         ItemEnum type = randomValue(ItemEnum.values());
@@ -103,6 +101,19 @@ public class CustomItemStack {
 
         int minAR = itemLevel / 2;
         int maxAR = itemLevel * 2;
+
+        // Да, тут нужно столько if'ов
+        if (minMS == 0) minMS = 1;
+        if (maxMS == 0) maxMS = 1;
+        if (minHP == 0) minHP = 1;
+        if (maxHP == 0) maxHP = 1;
+        if (minAR == 0) minAR = 1;
+        if (maxAR == 0) maxAR = 1;
+        if (minAD == 0) minAD = 1;
+        if (maxAD == 0) maxAD = 1;
+        if (minAS == 0) minAS = 1;
+        if (maxAS == 0) maxAS = 1;
+
         String itemLevelString = ChatColor.GRAY + "Уровень предмета: " + ChatColor.GOLD + itemLevel;
         String itemArmorString = "";
         String itemDamageString = "";
