@@ -8,11 +8,14 @@ import Gathering.Ore.Ore;
 import Gathering.Ore.OreItems;
 import Gathering.ResourceManager;
 import Gathering.Tool;
+import Recipes.BlastFurnaceRecipesManager;
 import Utilities.GuiConstructor;
 import Utilities.ResourceConstructor;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.block.BlastFurnace;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -124,9 +127,12 @@ public class GuiListener extends BaseListener {
 
     @EventHandler
     public void onBlastFurnaceClick(InventoryClickEvent e) {
-        if (e.getClickedInventory().equals(GUIManager.GUIs.get(GUIEnums.GUIType.BLAST_FURNACE)))
-            if (e.getCurrentItem() != null)
-                if (e.getCurrentItem().getType().equals(Material.WHITE_STAINED_GLASS_PANE))
-                    e.setCancelled(true);
+        if (e.getClickedInventory() != null)
+            if (e.getView().getTitle().equals(ChatColor.RED + "Доменная печь")) {
+                if (e.getCurrentItem() != null)
+                    if (e.getCurrentItem().getType().equals(Material.WHITE_STAINED_GLASS_PANE))
+                        e.setCancelled(true);
+                BlastFurnaceRecipesManager.craft(e.getView().getTopInventory());
+            }
     }
 }

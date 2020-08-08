@@ -5,18 +5,18 @@ import org.bukkit.inventory.ItemStack;
 import java.util.HashMap;
 
 public class BlastFurnaceRecipe {
-    private HashMap<Integer, ItemStack> integerItemStackHashMap = new HashMap<>();
+    private HashMap<ItemStack, Integer> itemStackHashMap = new HashMap<>();
     private final ItemStack result;
     private final Integer time;
 
-    public BlastFurnaceRecipe(HashMap<Integer, ItemStack> integerItemStackHashMap, ItemStack result, Integer time) {
-        this.integerItemStackHashMap = integerItemStackHashMap;
+    public BlastFurnaceRecipe(HashMap<ItemStack, Integer> itemStackHashMap, ItemStack result, Integer time) {
+        this.itemStackHashMap = itemStackHashMap;
         this.result = result;
         this.time = time;
     }
 
-    public HashMap<Integer, ItemStack> getCraftItems() {
-        return integerItemStackHashMap;
+    public HashMap<ItemStack, Integer> getCraftItems() {
+        return itemStackHashMap;
     }
 
     public ItemStack getResultItem() {
