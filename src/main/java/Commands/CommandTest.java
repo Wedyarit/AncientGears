@@ -23,11 +23,11 @@ public class CommandTest implements CommandExecutor {
             ItemStack item = new ItemConstructor(Material.LEATHER_BOOTS)
                     .amount(1)
                     .displayName("TEST")
-                    .loreAsList(getRandomLore(3,2))
+                    .loreAsList(getRandomLore(3, 2))
                     .build();
             player.getInventory().addItem(item);
 
-            }
+        }
         return true;
     }
 
@@ -62,18 +62,17 @@ public class CommandTest implements CommandExecutor {
                     break;
                 }
             }
-            if (modifier.getAdditionalMovementSpeed() != 0)
-                lore.add(modifier.getAdditionalMovementSpeedString());
-            if (modifier.getAdditionalHealth() != 0)
-                lore.add(modifier.getAdditionalHealthString());
-            if (modifier.getAdditionalArmor() != 0)
-                lore.add(modifier.getAdditionalArmorString());
-            if (modifier.getAdditionalAttackSpeed() != 0)
-                lore.add(modifier.getAdditionalAttackSpeedString());
-            if (modifier.getAdditionalAttackDamage() != 0)
-                lore.add(modifier.getAdditionalAttackDamageString());
         }
-
+        if (modifier.getAdditionalMovementSpeed() != 0)
+            lore.add(modifier.getAdditionalMovementSpeedString());
+        if (modifier.getAdditionalHealth() != 0)
+            lore.add(modifier.getAdditionalHealthString());
+        if (modifier.getAdditionalArmor() != 0)
+            lore.add(modifier.getAdditionalArmorString());
+        if (modifier.getAdditionalAttackSpeed() != 0)
+            lore.add(modifier.getAdditionalAttackSpeedString());
+        if (modifier.getAdditionalAttackDamage() != 0)
+            lore.add(modifier.getAdditionalAttackDamageString());
         return lore;
     }
 }
