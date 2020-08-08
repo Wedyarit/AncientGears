@@ -14,13 +14,9 @@ public class CommandTest implements CommandExecutor {
         if (sender instanceof Player) {
             Player player = (Player) sender;
             Modifier dick = new Modifier();
-            int s1 = dick.getAdditionalArmor().length();
-            int s2 = dick.getAdditionalAttackDamage().length();
-            int s3 = dick.getAdditionalHealth().length();
-            int s4 = dick.getAdditionalMovementSpeed().length();
-            int s5 = dick.getAdditionalAttackSpeed().length();
-            int c = (ChatColor.GRAY + "").length();
-            AncientGears.getInstance().getLogger().info(s1 + " " + s2 + " " + s3 + " " + s4 + " " + s5 + " " + c);
+            AncientGears.getInstance().getLogger().info(dick.getAdditionalHealth());
+            dick.setAdditionalHealth(100);
+            AncientGears.getInstance().getLogger().info(dick.getAdditionalHealth());
             }
         return true;
     }
