@@ -1,5 +1,6 @@
 package Player;
 
+import AncientGears.AncientGears;
 import Commands.ItemEnum;
 import Utilities.ItemConstructor;
 import org.bukkit.Bukkit;
@@ -12,6 +13,7 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -46,7 +48,7 @@ public class CustomItemStack {
         AttributeModifier modifierHealth = new AttributeModifier(UUID.randomUUID(), "generic.max_health", (this.modifiers.getAdditionalHealth() / 100.D), AttributeModifier.Operation.ADD_SCALAR, getSlot(type));
         AttributeModifier modifierArmor = new AttributeModifier(UUID.randomUUID(), "generic.armor", (this.modifiers.getAdditionalArmor() / 100.D), AttributeModifier.Operation.ADD_SCALAR, getSlot(type));
         AttributeModifier modifierAttackSpeed = new AttributeModifier(UUID.randomUUID(), "generic.attack_speed", (this.modifiers.getAdditionalMovementSpeed() / 100.D), AttributeModifier.Operation.ADD_SCALAR, getSlot(type));
-        AttributeModifier modifierAttackDamage = new AttributeModifier(UUID.randomUUID(), "generic.attack_damage", (this.modifiers.getAdditionalAttackDamage() / 100.D), AttributeModifier.Operation.ADD_SCALAR, getSlot(type));
+        AttributeModifier modifierAttackDamage = new AttributeModifier(UUID.randomUUID(), "generic.attack_damage", materialStats.get(this.material) * (1 + this.modifiers.getAdditionalAttackDamage() / 100.D), AttributeModifier.Operation.ADD_NUMBER, getSlot(type));
 
         if (modifiers.getAdditionalMovementSpeed() != 0)
             meta.addAttributeModifier(Attribute.GENERIC_MOVEMENT_SPEED, modifierMovementSpeed);
@@ -89,6 +91,9 @@ public class CustomItemStack {
 
     private List<String> getRandomLore(ItemEnum type, Integer itemLevel, Integer itemRarity) {
         List<String> lore = new ArrayList<>();
+        double randomMS = 0, randomHP = 0, randomAR = 0, randomAD = 0, randomAS = 0, randomRD = 0;
+        int random = 0;
+
         int minHP = itemLevel / 8;
         int maxHP = itemLevel / 4;
 
@@ -104,21 +109,27 @@ public class CustomItemStack {
         int minAR = itemLevel / 2;
         int maxAR = itemLevel * 2;
 
+        int minRD = itemLevel / 2;
+        int maxRD = itemLevel;
+
         // Да, тут нужно столько if'ов
         if (minMS == 0) minMS = 1;
-        if (maxMS == 0 || maxMS == 1) maxMS = 2;
+        if (maxMS <= minMS) maxMS = minMS + 1;
         if (minHP == 0) minHP = 1;
-        if (maxHP == 0 || maxHP == 1) maxHP = 2;
+        if (maxHP <= minHP) maxHP = minHP + 1;
         if (minAR == 0) minAR = 1;
-        if (maxAR == 0 || maxAR == 1) maxAR = 2;
+        if (maxAR <= minAR) maxAR = minAR + 1;
         if (minAD == 0) minAD = 1;
-        if (maxAD == 0 || maxAD == 1) maxAD = 2;
+        if (maxAD <= minAD) maxAD = minAD + 1;
         if (minAS == 0) minAS = 1;
-        if (maxAS == 0 || maxAS == 1) maxAS = 2;
+        if (maxAS <= minAS) maxAS = minAS + 1;
+        if (minRD == 0) minRD = 1;
+        if (maxRD <= minRD) maxRD = minRD + 1;
 
         String itemLevelString = ChatColor.GRAY + "Уровень предмета: " + ChatColor.GOLD + itemLevel;
         String itemArmorString = "";
         String itemDamageString = "";
+        String itemRangedDamageString = "";
 
         boolean isArmor = false;
         boolean isMelee = false;
@@ -144,50 +155,49 @@ public class CustomItemStack {
                 break;
         }
 
-        for (int i = 0; i < itemRarity; i++) {
-            int randomMS = ThreadLocalRandom.current().nextInt(minMS, maxMS);
-            int randomHP = ThreadLocalRandom.current().nextInt(minHP, maxHP);
-            int randomAR = ThreadLocalRandom.current().nextInt(minAR, maxAR);
-            int randomAD = ThreadLocalRandom.current().nextInt(minAD, maxAD);
-            int randomAS = ThreadLocalRandom.current().nextInt(minAS, maxAS);
+        if (isArmor) itemArmorString = ChatColor.GRAY + "Защита: " + ChatColor.GOLD + materialStats.get(this.material);
+        if (isMelee) itemDamageString = ChatColor.GRAY + "Урон: " + ChatColor.GOLD + materialStats.get(this.material);
+        if (isRanged) itemRangedDamageString = ChatColor.GRAY + "Дистанционный урон: " + ChatColor.GOLD + materialStats.get(this.material);
 
-            int random = ThreadLocalRandom.current().nextInt(1, 5);
+        for (int i = 0; i < itemRarity; i++) {
+
+
+            if (isArmor) {
+                randomMS = ThreadLocalRandom.current().nextInt(minMS, maxMS);
+                randomHP = ThreadLocalRandom.current().nextInt(minHP, maxHP);
+                randomAR = ThreadLocalRandom.current().nextInt(minAR, maxAR);
+                random = ThreadLocalRandom.current().nextInt(1, 4);
+            }
+            if (isMelee) {
+                randomAD = ThreadLocalRandom.current().nextInt(minAD, maxAD);
+                randomAS = ThreadLocalRandom.current().nextInt(minAS, maxAS);
+                random = ThreadLocalRandom.current().nextInt(4, 6);
+            }
+            if (isRanged) {
+                randomRD = ThreadLocalRandom.current().nextInt(minRD, maxRD);
+                random = 6;
+            }
 
             switch (random) {
                 case 1: {
-                    if (isArmor) {
-                        itemArmorString = ChatColor.GRAY + "Защита: " + ChatColor.GOLD + materialStats.get(this.material) * (modifiers.getAdditionalArmor() / 100);
-                        modifiers.addAdditionalHealth(randomHP);
-                        break;
-                    }
-                }
-                case 2: {
-                    if (isArmor) {
-                        modifiers.addAdditionalArmor(randomAR);
-                        itemArmorString = ChatColor.GRAY + "Защита: " + ChatColor.GOLD + materialStats.get(this.material) * (modifiers.getAdditionalArmor() / 100);
-                        break;
-                    }
-                }
-                case 3: {
-                    if (isMelee || isRanged) {
-                        itemDamageString = ChatColor.GRAY + "Урон: " + ChatColor.GOLD + materialStats.get(this.material) * (modifiers.getAdditionalAttackDamage() / 100);
-                        modifiers.addAdditionalAttackDamage(randomAD);
-                        break;
-                    }
-                }
-                case 4: {
-                    if (isMelee || isRanged) {
-                        itemDamageString = ChatColor.GRAY + "Урон: " + ChatColor.GOLD + materialStats.get(this.material) * (modifiers.getAdditionalAttackDamage() / 100);
-                        modifiers.addAdditionalAttackSpeed(randomAS);
-                        break;
-                    }
-                }
-                case 5: {
-                    if (isArmor) {
-                        itemArmorString = ChatColor.GRAY + "Защита: " + ChatColor.GOLD + materialStats.get(this.material) * (modifiers.getAdditionalArmor() / 100);
-                        modifiers.addAdditionalMovementSpeed(randomMS);
-                        break;
-                    }
+                    modifiers.addAdditionalHealth(randomHP);
+                    break;
+                } case 2: {
+                    modifiers.addAdditionalArmor(randomAR);
+                    itemArmorString = ChatColor.GRAY + "Защита: " + ChatColor.GOLD + new DecimalFormat("#0.0").format(materialStats.get(this.material) * (1 + (modifiers.getAdditionalArmor() / 100)));
+                    break;
+                } case 3: {
+                    modifiers.addAdditionalMovementSpeed(randomMS); break;
+                } case 4: {
+                    modifiers.addAdditionalAttackDamage(randomAD);
+                    itemDamageString = ChatColor.GRAY + "Урон: " + ChatColor.GOLD + new DecimalFormat("#0.0").format(materialStats.get(this.material) * (1 + (modifiers.getAdditionalAttackDamage() / 100)));
+                    break;
+                } case 5: {
+                    modifiers.addAdditionalAttackSpeed(randomAS); break;
+                } case 6: {
+                    modifiers.addAdditionalRangedDamage(randomRD);
+                    itemRangedDamageString = ChatColor.GRAY + "Дистанционный урон: " + ChatColor.GOLD + new DecimalFormat("#0.0").format(materialStats.get(this.material) * (1 + (modifiers.getAdditionalRangedDamage() / 100)));
+                    break;
                 }
             }
         }
@@ -202,15 +212,19 @@ public class CustomItemStack {
             lore.add(modifiers.getAdditionalAttackSpeedString());
         if (modifiers.getAdditionalAttackDamage() != 0)
             lore.add(modifiers.getAdditionalAttackDamageString());
+        if (modifiers.getAdditionalRangedDamage() != 0)
+            lore.add(modifiers.getAdditionalRangedDamageString());
 
         lore.add("");
         lore.add(itemLevelString);
         lore.add("");
-        if (isArmor) {
-            lore.add(itemArmorString);
-        } else if (isMelee) {
+        if (isArmor) lore.add(itemArmorString);
+        else if (isMelee) {
             lore.add("");
             lore.add(itemDamageString);
+        } else if (isRanged) {
+            lore.add("");
+            lore.add(itemRangedDamageString);
         }
 
         return lore;
@@ -360,8 +374,8 @@ public class CustomItemStack {
                 break;
             }
             case CROSSBOW: {
-                materialStats.put(item, 9.0D);
                 item = Material.CROSSBOW;
+                materialStats.put(item, 9.0D);
                 break;
             }
         }
