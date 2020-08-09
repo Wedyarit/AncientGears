@@ -1,6 +1,7 @@
 package GUI;
 
 import AncientGears.AncientGears;
+import GUI.GUIEnums.GUIType;
 import Gathering.ItemStackManager;
 import Gathering.Ore.OreItems;
 import Utilities.GuiConstructor;
@@ -76,22 +77,25 @@ public class GUIManager {
 
     }
 
-    public static void InitializeGUIs() {
-        AncientGears.getInstance().getLogger().info("GUIs Initialization");
+    public static Inventory InitializeGUI(GUIType type) {
+        switch (type) {
+            case BLAST_FURNACE:
+                return new GuiConstructor(54,
+                        ChatColor.RED + "Доменная печь")
+                        .fillSlots(new ItemStack(Material.WHITE_STAINED_GLASS_PANE))
+                        .setItem(new HashMap<Integer, ItemStack>() {{
+                            put(10, new ItemStack(Material.AIR));
+                            put(11, new ItemStack(Material.AIR));
+                            put(19, new ItemStack(Material.AIR));
+                            put(20, new ItemStack(Material.AIR));
+                            put(24, new ItemStack(Material.AIR));
+                            put(28, new ItemStack(Material.AIR));
+                            put(29, new ItemStack(Material.AIR));
+                            put(49, new ItemStack(Material.BLAST_FURNACE));
+                        }})
+                        .bulid();
 
-        GUIs.put(GUIEnums.GUIType.BLAST_FURNACE, new GuiConstructor(54,
-                ChatColor.RED + "Доменная печь")
-                .fillSlots(new ItemStack(Material.WHITE_STAINED_GLASS_PANE))
-                .setItem(new HashMap<Integer, ItemStack>() {{
-                    put(10, new ItemStack(Material.AIR));
-                    put(11, new ItemStack(Material.AIR));
-                    put(19, new ItemStack(Material.AIR));
-                    put(20, new ItemStack(Material.AIR));
-                    put(24, new ItemStack(Material.AIR));
-                    put(28, new ItemStack(Material.AIR));
-                    put(29, new ItemStack(Material.AIR));
-                    put(49, new ItemStack(Material.BLAST_FURNACE));
-                }})
-                .bulid());
+        }
+        return null;
     }
 }

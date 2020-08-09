@@ -120,7 +120,7 @@ public class GuiListener extends BaseListener {
             if (e.getClickedBlock().getType().equals(Material.BLAST_FURNACE))
                 if (e.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
                     e.setCancelled(true);
-                    e.getPlayer().openInventory(GUIManager.GUIs.get(GUIEnums.GUIType.BLAST_FURNACE));
+                    e.getPlayer().openInventory(GUIManager.InitializeGUI(GUIEnums.GUIType.BLAST_FURNACE));
                 }
 
     }

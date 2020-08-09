@@ -14,7 +14,6 @@ import static Gathering.InitializeGathering.InitializeTools;
 import static Gathering.Ore.OreItems.InitializeOreItems;
 import static Recipes.BlastFurnaceRecipesManager.InitializeBlastFurnaceRecipes;
 import static GUI.GUIManager.InitializeInventoryItems;
-import static GUI.GUIManager.InitializeGUIs;
 import static Locations.InitializeLocations.InitializeAllLocations;
 
 public final class AncientGears extends JavaPlugin {
@@ -31,7 +30,6 @@ public final class AncientGears extends JavaPlugin {
         this.getCommand("test").setExecutor(new CommandTest());
 
         InitializeOreItems();
-        InitializeGUIs();
         InitializeOre();
         InitializeTools();
         InitializeInventoryItems();
