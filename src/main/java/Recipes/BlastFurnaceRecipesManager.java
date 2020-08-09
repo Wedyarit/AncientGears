@@ -20,11 +20,10 @@ public class BlastFurnaceRecipesManager {
         }}, new ItemStack(Material.IRON_INGOT), 10));
     }
 
-    private static boolean isContains(ArrayList<ItemStack> craftingItems, HashMap<ItemStack, Integer> itemStackIntegerHashMap) {
-        for (ItemStack itemStack : craftingItems)
-            for (ItemStack itemStack1 : itemStackIntegerHashMap.keySet())
-                if (itemStack1.equals(itemStack))
-                    return true;
+    private static boolean isContains(ItemStack itemStack, HashMap<ItemStack, Integer> itemStackIntegerHashMap) {
+        for (ItemStack itemStack1 : itemStackIntegerHashMap.keySet())
+            if (itemStack1.equals(itemStack))
+                return true;
 
         return false;
     }
@@ -44,18 +43,18 @@ public class BlastFurnaceRecipesManager {
         for (ItemStack itemStack : craftingItems) {
             if (itemStack != null) {
                 ItemStack item = new ItemStack(itemStack);
-                item.setAmount(0);
-                if (isContains(craftingItems, itemStackIntegerHashMap)) {
-                    itemStackIntegerHashMap.put(itemStack, itemStackIntegerHashMap.get(itemStack) + itemStack.getAmount());
+                item.setAmount(1);
+                if (isContains(item, itemStackIntegerHashMap)) {
+                    itemStackIntegerHashMap.put(item, itemStackIntegerHashMap.get(item) + itemStack.getAmount());
                 } else {
-                    itemStackIntegerHashMap.put(itemStack, itemStack.getAmount());
+                    itemStackIntegerHashMap.put(item, itemStack.getAmount());
                 }
             }
         }
 
         for (BlastFurnaceRecipe recipe : blastFurnaceRecipes) {
             if (itemStackIntegerHashMap.equals(recipe.getCraftItems())) {
-                Bukkit.broadcastMessage("Yay");
+                inventory.setItem(24, recipe.getResultItem());
             }
         }
     }

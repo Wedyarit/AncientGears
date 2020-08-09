@@ -129,10 +129,15 @@ public class GuiListener extends BaseListener {
     public void onBlastFurnaceClick(InventoryClickEvent e) {
         if (e.getClickedInventory() != null)
             if (e.getView().getTitle().equals(ChatColor.RED + "Доменная печь")) {
-                if (e.getCurrentItem() != null)
+                if (e.getCurrentItem() != null) {
+                    if (e.getCurrentItem().getType().equals(Material.BLAST_FURNACE)) {
+                        BlastFurnaceRecipesManager.craft(e.getView().getTopInventory());
+                        e.setCancelled(true);
+                    }
                     if (e.getCurrentItem().getType().equals(Material.WHITE_STAINED_GLASS_PANE))
                         e.setCancelled(true);
-                BlastFurnaceRecipesManager.craft(e.getView().getTopInventory());
+                }
+
             }
     }
 }

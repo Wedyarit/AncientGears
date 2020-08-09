@@ -79,7 +79,7 @@ public class GUIManager {
     public static void InitializeGUIs() {
         AncientGears.getInstance().getLogger().info("GUIs Initialization");
 
-        GUIs.put(GUIEnums.GUIType.BLAST_FURNACE, new GuiConstructor(45,
+        GUIs.put(GUIEnums.GUIType.BLAST_FURNACE, new GuiConstructor(54,
                 ChatColor.RED + "Доменная печь")
                 .fillSlots(new ItemStack(Material.WHITE_STAINED_GLASS_PANE))
                 .setItem(new HashMap<Integer, ItemStack>() {{
@@ -90,6 +90,7 @@ public class GUIManager {
                     put(24, new ItemStack(Material.AIR));
                     put(28, new ItemStack(Material.AIR));
                     put(29, new ItemStack(Material.AIR));
+                    put(49, new ItemStack(Material.BLAST_FURNACE));
                 }})
                 .bulid());
     }
