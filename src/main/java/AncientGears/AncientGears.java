@@ -57,5 +57,6 @@ public final class AncientGears extends JavaPlugin {
         new DropListener();
         new MoveListener();
         new PlayerListener();
+        new MobListener();
     }
 }
