@@ -1,11 +1,14 @@
 package Recipes;
 
+import AncientGears.AncientGears;
+import GUI.GUIManager;
 import Gathering.ItemStackManager;
 import Gathering.Ore.OreItems;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -88,23 +91,46 @@ public class BlastFurnaceRecipesManager {
                 if (inventory.getItem(24) != null)
                     if (inventory.getItem(24).getAmount() + recipe.getResultItem().getAmount() > 64)
                         return;
-                result.setAmount(inventory.getItem(24).getAmount() + recipe.getResultItem().getAmount());
-                inventory.setItem(24, result);
 
-                HashMap<String, Integer> removeItemsDisplayNames = getRemoveItemsDisplayNames(recipe.getCraftItems(), itemStackIntegerHashMap);
-                for (String displayName : removeItemsDisplayNames.keySet())
-                    for (ItemStack itemStack : craftingItems)
-                        if (itemStack != null)
-                            if (itemStack.getItemMeta() != null)
-                                if (itemStack.getItemMeta().getDisplayName().equals(displayName)) {
-                                    if (itemStack.getAmount() - removeItemsDisplayNames.get(displayName) < 0) {
-                                        removeItemsDisplayNames.put(displayName, removeItemsDisplayNames.get(displayName) - itemStack.getAmount());
-                                        itemStack.setAmount(0);
-                                        continue;
-                                    }
-                                    itemStack.setAmount(itemStack.getAmount() - removeItemsDisplayNames.get(displayName));
-                                    break;
-                                }
+                new BukkitRunnable() {
+                    double time = recipe.getTime();
+
+                    @Override
+                    public void run() {
+                        if (time == 0) {
+                            GUIManager.replaceItemStacks(inventory, new ItemStack(Material.YELLOW_STAINED_GLASS_PANE), new ItemStack(Material.RED_STAINED_GLASS_PANE));
+
+                            if (inventory.getItem(24) == null)
+                                result.setAmount(recipe.getResultItem().getAmount());
+                            else
+                                result.setAmount(inventory.getItem(24).getAmount() + recipe.getResultItem().getAmount());
+                            inventory.setItem(24, result);
+
+                            HashMap<String, Integer> removeItemsDisplayNames = getRemoveItemsDisplayNames(recipe.getCraftItems(), itemStackIntegerHashMap);
+                            for (String displayName : removeItemsDisplayNames.keySet())
+                                for (ItemStack itemStack : craftingItems)
+                                    if (itemStack != null)
+                                        if (itemStack.getItemMeta() != null)
+                                            if (itemStack.getItemMeta().getDisplayName().equals(displayName)) {
+                                                if (itemStack.getAmount() - removeItemsDisplayNames.get(displayName) < 0) {
+                                                    removeItemsDisplayNames.put(displayName, removeItemsDisplayNames.get(displayName) - itemStack.getAmount());
+                                                    itemStack.setAmount(0);
+                                                    continue;
+                                                }
+                                                itemStack.setAmount(itemStack.getAmount() - removeItemsDisplayNames.get(displayName));
+                                                break;
+                                            }
+                            this.cancel();
+                        } else if (time <= Math.round(recipe.getTime() / 3) * 2) {
+                            GUIManager.replaceItemStacks(inventory, new ItemStack(Material.WHITE_STAINED_GLASS_PANE), new ItemStack(Material.YELLOW_STAINED_GLASS_PANE));
+                        } else {
+                            GUIManager.replaceItemStacks(inventory, new ItemStack(Material.YELLOW_STAINED_GLASS_PANE), new ItemStack(Material.WHITE_STAINED_GLASS_PANE));
+                            GUIManager.replaceItemStacks(inventory, new ItemStack(Material.RED_STAINED_GLASS_PANE), new ItemStack(Material.WHITE_STAINED_GLASS_PANE));
+                        }
+
+                        time--;
+                    }
+                }.runTaskTimer(AncientGears.getInstance(), 0, 20);
 
             }
         }

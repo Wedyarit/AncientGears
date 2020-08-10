@@ -10,7 +10,6 @@ import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class GUIManager {
@@ -75,6 +74,13 @@ public class GUIManager {
 
                 .bulid());
 
+    }
+
+    public static void replaceItemStacks(Inventory inventory, ItemStack from, ItemStack to) {
+        for (int i = 0; i < inventory.getSize(); i++)
+            if (inventory.getItem(i) != null)
+                if (inventory.getItem(i).equals(from))
+                    inventory.setItem(i, to);
     }
 
     public static Inventory InitializeGUI(GUIType type) {

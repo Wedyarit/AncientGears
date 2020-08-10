@@ -7,9 +7,9 @@ import java.util.HashMap;
 public class BlastFurnaceRecipe {
     private HashMap<ItemStack, Integer> itemStackHashMap = new HashMap<>();
     private final ItemStack result;
-    private final Integer time;
+    private final double time;
 
-    public BlastFurnaceRecipe(HashMap<ItemStack, Integer> itemStackHashMap, ItemStack result, Integer time) {
+    public BlastFurnaceRecipe(HashMap<ItemStack, Integer> itemStackHashMap, ItemStack result, double time) {
         this.itemStackHashMap = itemStackHashMap;
         this.result = result;
         this.time = time;
@@ -23,7 +23,7 @@ public class BlastFurnaceRecipe {
         return result;
     }
 
-    public Integer getTime() {
+    public double getTime() {
         return time;
     }
 }

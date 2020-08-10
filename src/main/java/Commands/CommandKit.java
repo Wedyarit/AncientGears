@@ -29,8 +29,6 @@ public class CommandKit implements CommandExecutor {
     public boolean onCommand(CommandSender sender, org.bukkit.command.Command cmd, String label, String[] args) {
         if (sender instanceof Player) {
             Player player = (Player) sender;
-            player.openInventory(GUIManager.GUIs.get(GUIEnums.GUIType.BLAST_FURNACE));
-
             if (player.isOp())
                 player.getInventory().addItem(ItemStackManager.getInstance().getItem(OreItems.OreItemNames.MENU_PROF.name()));
         }
