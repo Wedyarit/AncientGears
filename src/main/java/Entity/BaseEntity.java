@@ -1,5 +1,6 @@
 package Entity;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
@@ -15,16 +16,17 @@ import java.util.UUID;
 
 public class BaseEntity {
     private final LivingEntity entity;
-    private String name;
+    private final String name;
     private final int level;
-    private boolean isBoss = false;
+    private boolean isBoss;
     private final ArrayList<ItemStack> specialDrop = new ArrayList<>();
     private final UUID uuid;
 
     public BaseEntity(EntityType type, String name, int level, boolean isBoss, Location location) {
         this.level = level;
-        this.name = name;
         this.isBoss = isBoss;
+        if (!isBoss) this.name = ChatColor.GOLD +  "[" + level + "] " + ChatColor.GRAY + name;
+        else this.name = ChatColor.GOLD +  "[" + level + "] " + ChatColor.RED + name;
         this.entity = (LivingEntity) location.getWorld().spawnEntity(location, type);
         this.uuid = entity.getUniqueId();
         entity.setCustomName(this.name);
@@ -36,11 +38,13 @@ public class BaseEntity {
         return this;
     }
 
-    public void setStats(double health, double damage, double armor, double speed) {
+    public BaseEntity setStats(double health, double damage, double armor, double speed) {
         entity.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(health);
         entity.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(damage);
         entity.getAttribute(Attribute.GENERIC_ARMOR).setBaseValue(armor);
         entity.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(speed);
+
+        return this;
     }
 
     public static boolean isEnraged(double percent, LivingEntity entity, boolean isBoss, double damage, double armor, double speed, boolean isEnraged) {
