@@ -8,7 +8,7 @@ import java.util.HashMap;
 
 
 public class GuiConstructor {
-    private Inventory gui;
+    private final Inventory gui;
     private int slot = 0;
 
     public GuiConstructor(Integer size, String name) {
