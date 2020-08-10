@@ -44,7 +44,7 @@ public class CommandTest implements CommandExecutor, Listener {
                 angle += 0.1;
                 BaseEntity entity = new BaseEntity(EntityType.ZOMBIE, "Печка доггича херня", random, rd.nextBoolean(), player.getLocation())
                         .addDrop(instance.getItem(OreItems.OreItemNames.ADAMANTITE_ORE.name()), instance.getItem(OreItems.OreItemNames.TIN_ORE.name()))
-                        .setStats(random * 10, random * 0.5, random, 0.1 + random * 0.02);
+                        .setStats(random * 3, random * 0.3, random, 0.1 + random * 0.005);
 
                 EntityManager.getInstance().addToList(entity);
             }
