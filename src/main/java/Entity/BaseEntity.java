@@ -18,7 +18,7 @@ public class BaseEntity {
     private String name;
     private final int level;
     private boolean isBoss = false;
-    private final ArrayList<ItemStack> specialDrop = null;
+    private final ArrayList<ItemStack> specialDrop = new ArrayList<>();
     private final UUID uuid;
 
     public BaseEntity(EntityType type, String name, int level, boolean isBoss, Location location) {

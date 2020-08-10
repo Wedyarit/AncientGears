@@ -20,7 +20,7 @@ public class MobListener extends BaseListener {
         UUID uuid = e.getEntity().getUniqueId();
         BaseEntity baseEntity = em.getEntity(uuid);
 
-        if (uuid.equals(baseEntity.getEntity())) {
+        if (uuid.equals(baseEntity.getEntity().getUniqueId())) {
             em.removeFromList(uuid);
             int level = baseEntity.getLevel();
             int rarity = (int) (level / 10);
