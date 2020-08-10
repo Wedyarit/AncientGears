@@ -6,6 +6,8 @@ import Gathering.ItemStackManager;
 import Gathering.Ore.OreItems;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.Sound;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -15,12 +17,13 @@ import java.util.HashMap;
 
 public class BlastFurnaceRecipesManager {
     public static ArrayList<BlastFurnaceRecipe> blastFurnaceRecipes = new ArrayList<>();
+    public static ArrayList<Player> craftingPlayers = new ArrayList<>();
 
     public static void InitializeBlastFurnaceRecipes() {
         blastFurnaceRecipes.add(new BlastFurnaceRecipe(new HashMap<ItemStack, Integer>() {{
             put(ItemStackManager.getInstance().getItem(OreItems.OreItemNames.COAL_ORE.name()), 3);
             put(ItemStackManager.getInstance().getItem(OreItems.OreItemNames.IRON_ORE.name()), 1);
-        }}, new ItemStack(Material.IRON_INGOT, 2), 10));
+        }}, new ItemStack(Material.IRON_INGOT, 2), 2));
     }
 
     private static boolean isContains(ItemStack itemStack, HashMap<ItemStack, Integer> itemStackIntegerHashMap) {
@@ -40,7 +43,6 @@ public class BlastFurnaceRecipesManager {
                     if (itemStackIntegerHashMap1.get(itemStack1) <= itemStackIntegerHashMap2.get(itemStack2))
                         i++;
 
-
         return i == itemStackIntegerHashMap1.keySet().size();
     }
 
@@ -57,7 +59,7 @@ public class BlastFurnaceRecipesManager {
         return removeItemsDisplayNames;
     }
 
-    public static void craft(Inventory inventory) {
+    public static void craft(Inventory inventory, Player player) {
         ArrayList<ItemStack> craftingItems = new ArrayList<ItemStack>() {{
             add(inventory.getItem(10));
             add(inventory.getItem(11));
@@ -85,6 +87,9 @@ public class BlastFurnaceRecipesManager {
             if (isContainsMap(recipe.getCraftItems(), itemStackIntegerHashMap)) {
                 if (inventory.getItem(24) != null && !inventory.getItem(24).getItemMeta().getDisplayName().equals(recipe.getResultItem().getItemMeta().getDisplayName()))
                     return;
+                if (craftingPlayers.contains(player)) return;
+
+                craftingPlayers.add(player);
 
                 ItemStack result = new ItemStack(recipe.getResultItem());
 
@@ -98,8 +103,6 @@ public class BlastFurnaceRecipesManager {
                     @Override
                     public void run() {
                         if (time == 0) {
-                            GUIManager.replaceItemStacks(inventory, new ItemStack(Material.YELLOW_STAINED_GLASS_PANE), new ItemStack(Material.RED_STAINED_GLASS_PANE));
-
                             if (inventory.getItem(24) == null)
                                 result.setAmount(recipe.getResultItem().getAmount());
                             else
@@ -120,13 +123,21 @@ public class BlastFurnaceRecipesManager {
                                                 itemStack.setAmount(itemStack.getAmount() - removeItemsDisplayNames.get(displayName));
                                                 break;
                                             }
+                            craftingPlayers.remove(player);
+                            player.playSound(player.getLocation(), Sound.BLOCK_ANVIL_LAND, 2, 1);
                             this.cancel();
-                        } else if (time <= Math.round(recipe.getTime() / 3) * 2) {
-                            GUIManager.replaceItemStacks(inventory, new ItemStack(Material.WHITE_STAINED_GLASS_PANE), new ItemStack(Material.YELLOW_STAINED_GLASS_PANE));
-                        } else {
+                        } else if (time == Math.round(recipe.getTime())) {
                             GUIManager.replaceItemStacks(inventory, new ItemStack(Material.YELLOW_STAINED_GLASS_PANE), new ItemStack(Material.WHITE_STAINED_GLASS_PANE));
                             GUIManager.replaceItemStacks(inventory, new ItemStack(Material.RED_STAINED_GLASS_PANE), new ItemStack(Material.WHITE_STAINED_GLASS_PANE));
+                        } else if (time == Math.round(recipe.getTime() / 3) * 2) {
+                            GUIManager.replaceItemStacks(inventory, new ItemStack(Material.WHITE_STAINED_GLASS_PANE), new ItemStack(Material.YELLOW_STAINED_GLASS_PANE));
+                            GUIManager.replaceItemStacks(inventory, new ItemStack(Material.RED_STAINED_GLASS_PANE), new ItemStack(Material.YELLOW_STAINED_GLASS_PANE));
+                        } else {
+                            GUIManager.replaceItemStacks(inventory, new ItemStack(Material.YELLOW_STAINED_GLASS_PANE), new ItemStack(Material.RED_STAINED_GLASS_PANE));
+                            GUIManager.replaceItemStacks(inventory, new ItemStack(Material.WHITE_STAINED_GLASS_PANE), new ItemStack(Material.RED_STAINED_GLASS_PANE));
                         }
+
+                        player.playSound(player.getLocation(), Sound.BLOCK_FIRE_EXTINGUISH, 10, 1);
 
                         time--;
                     }

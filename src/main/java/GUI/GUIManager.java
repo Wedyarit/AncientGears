@@ -86,7 +86,7 @@ public class GUIManager {
     public static Inventory InitializeGUI(GUIType type) {
         switch (type) {
             case BLAST_FURNACE:
-                return new GuiConstructor(54,
+                return new GuiConstructor(45,
                         ChatColor.RED + "Доменная печь")
                         .fillSlots(new ItemStack(Material.WHITE_STAINED_GLASS_PANE))
                         .setItem(new HashMap<Integer, ItemStack>() {{
@@ -94,10 +94,10 @@ public class GUIManager {
                             put(11, new ItemStack(Material.AIR));
                             put(19, new ItemStack(Material.AIR));
                             put(20, new ItemStack(Material.AIR));
+                            put(22, new ItemStack(Material.BLAST_FURNACE));
                             put(24, new ItemStack(Material.AIR));
                             put(28, new ItemStack(Material.AIR));
                             put(29, new ItemStack(Material.AIR));
-                            put(49, new ItemStack(Material.BLAST_FURNACE));
                         }})
                         .bulid();
 
