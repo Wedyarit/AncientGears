@@ -1,6 +1,5 @@
 package Entity;
 
-import com.sun.istack.internal.Nullable;
 import org.bukkit.Location;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
