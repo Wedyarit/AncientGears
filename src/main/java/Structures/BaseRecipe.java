@@ -1,9 +1,8 @@
-package Gathering.Structures;
+package Structures;
 
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
-import java.util.Collection;
 
 public class BaseRecipe {
     private final ArrayList<ItemStack> need;

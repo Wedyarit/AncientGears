@@ -2,8 +2,9 @@ package GUI;
 
 import AncientGears.AncientGears;
 import GUI.GUIEnums.GUIType;
-import Gathering.ItemStackManager;
-import Gathering.Ore.OreItems;
+import Gather.GatherEnum;
+import Gather.ItemStackManager;
+import Gather.GatherItems;
 import Utilities.GuiConstructor;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -15,61 +16,84 @@ import java.util.HashMap;
 public class GUIManager {
     public static final HashMap<ItemStack, Inventory> itemStackInventoryHashMap = new HashMap<>();
     public static final HashMap<GUIEnums.GUIType, Inventory> GUIs = new HashMap<>();
+    public static final ItemStackManager manager = ItemStackManager.getInstance();
 
     public static void InitializeInventoryItems() {
         AncientGears.getInstance().getLogger().info("InventoryItems Initialization");
 
-        itemStackInventoryHashMap.put(ItemStackManager.getInstance().getItem(OreItems.OreItemNames.MENU_TOOLS.name()), new GuiConstructor(27,
+        itemStackInventoryHashMap.put(manager.getItem(GatherEnum.MENU_TOOLS.name()), new GuiConstructor(27,
                 ChatColor.RED + "Меню Инструментов")
                 .setItems(
-                        ItemStackManager.getInstance().getItem(OreItems.OreItemNames.T1_PICKAXE.name()),
-                        ItemStackManager.getInstance().getItem(OreItems.OreItemNames.T2_PICKAXE.name()),
-                        ItemStackManager.getInstance().getItem(OreItems.OreItemNames.T3_PICKAXE.name()),
-                        ItemStackManager.getInstance().getItem(OreItems.OreItemNames.T4_PICKAXE.name()),
-                        ItemStackManager.getInstance().getItem(OreItems.OreItemNames.T5_PICKAXE.name()),
-                        ItemStackManager.getInstance().getItem(OreItems.OreItemNames.T6_PICKAXE.name()))
+                        manager.getItem(GatherEnum.T1_PICKAXE.name()),
+                        manager.getItem(GatherEnum.T2_PICKAXE.name()),
+                        manager.getItem(GatherEnum.T3_PICKAXE.name()),
+                        manager.getItem(GatherEnum.T4_PICKAXE.name()),
+                        manager.getItem(GatherEnum.T5_PICKAXE.name()),
+                        manager.getItem(GatherEnum.T6_PICKAXE.name()),
+
+                        manager.getItem(GatherEnum.T1_AXE.name()),
+                        manager.getItem(GatherEnum.T2_AXE.name()),
+                        manager.getItem(GatherEnum.T3_AXE.name()),
+                        manager.getItem(GatherEnum.T4_AXE.name()),
+                        manager.getItem(GatherEnum.T5_AXE.name()),
+                        manager.getItem(GatherEnum.T6_AXE.name()),
+
+                        manager.getItem(GatherEnum.T1_FISHING_ROD.name()),
+                        manager.getItem(GatherEnum.T2_FISHING_ROD.name()),
+                        manager.getItem(GatherEnum.T3_FISHING_ROD.name()),
+                        manager.getItem(GatherEnum.T4_FISHING_ROD.name()),
+                        manager.getItem(GatherEnum.T5_FISHING_ROD.name()),
+                        manager.getItem(GatherEnum.T6_FISHING_ROD.name()),
+
+                        manager.getItem(GatherEnum.T1_HOE.name()),
+                        manager.getItem(GatherEnum.T2_HOE.name()),
+                        manager.getItem(GatherEnum.T3_HOE.name()),
+                        manager.getItem(GatherEnum.T4_HOE.name()),
+                        manager.getItem(GatherEnum.T5_HOE.name()),
+                        manager.getItem(GatherEnum.T6_HOE.name()))
+
                 .bulid());
 
-        itemStackInventoryHashMap.put(ItemStackManager.getInstance().getItem(OreItems.OreItemNames.MENU_PROF.name()), new GuiConstructor(27,
+        itemStackInventoryHashMap.put(manager.getItem(GatherEnum.MENU_PROF.name()), new GuiConstructor(27,
                 ChatColor.RED + "Меню Профессий")
                 .setItems(
-                        ItemStackManager.getInstance().getItem(OreItems.OreItemNames.MENU_MINING.name()),
-                        ItemStackManager.getInstance().getItem(OreItems.OreItemNames.MENU_LUMBER.name()),
-                        ItemStackManager.getInstance().getItem(OreItems.OreItemNames.MENU_FARMING.name()),
-                        ItemStackManager.getInstance().getItem(OreItems.OreItemNames.MENU_FISHING.name()),
-                        ItemStackManager.getInstance().getItem(OreItems.OreItemNames.MENU_TOOLS.name()))
+                        manager.getItem(GatherEnum.MENU_MINING.name()),
+                        manager.getItem(GatherEnum.MENU_LUMBER.name()),
+                        manager.getItem(GatherEnum.MENU_FARMING.name()),
+                        manager.getItem(GatherEnum.MENU_FISHING.name()),
+                        manager.getItem(GatherEnum.MENU_TOOLS.name()))
                 .bulid());
 
-        itemStackInventoryHashMap.put(ItemStackManager.getInstance().getItem(OreItems.OreItemNames.MENU_MINING.name()), new GuiConstructor(27,
+        itemStackInventoryHashMap.put(manager.getItem(GatherEnum.MENU_MINING.name()), new GuiConstructor(27,
                 ChatColor.RED + "Шахтерство")
                 .setItems(
-                        ItemStackManager.getInstance().getItem(OreItems.OreItemNames.STONE_ORE.name()),
-                        ItemStackManager.getInstance().getItem(OreItems.OreItemNames.COAL_ORE.name()),
-                        ItemStackManager.getInstance().getItem(OreItems.OreItemNames.COPPER_ORE.name()),
-                        ItemStackManager.getInstance().getItem(OreItems.OreItemNames.TIN_ORE.name()),
-                        ItemStackManager.getInstance().getItem(OreItems.OreItemNames.IRON_ORE.name()),
-                        ItemStackManager.getInstance().getItem(OreItems.OreItemNames.GOLD_ORE.name()),
-                        ItemStackManager.getInstance().getItem(OreItems.OreItemNames.ZINC_ORE.name()),
-                        ItemStackManager.getInstance().getItem(OreItems.OreItemNames.TITAN_ORE.name()),
-                        ItemStackManager.getInstance().getItem(OreItems.OreItemNames.MITHRIL_ORE.name()),
-                        ItemStackManager.getInstance().getItem(OreItems.OreItemNames.ADAMANTITE_ORE.name()),
-                        ItemStackManager.getInstance().getItem(OreItems.OreItemNames.QUARTZ_ORE.name()),
-                        ItemStackManager.getInstance().getItem(OreItems.OreItemNames.ETERNAL_FLAME_ORE.name()),
-                        ItemStackManager.getInstance().getItem(OreItems.OreItemNames.AETHERELITE_ORE.name()),
-                        ItemStackManager.getInstance().getItem(OreItems.OreItemNames.TENEBRIS_ORE.name()))
+                        manager.getItem(GatherEnum.STONE_ORE.name()),
+                        manager.getItem(GatherEnum.COAL_ORE.name()),
+                        manager.getItem(GatherEnum.COPPER_ORE.name()),
+                        manager.getItem(GatherEnum.TIN_ORE.name()),
+                        manager.getItem(GatherEnum.IRON_ORE.name()),
+                        manager.getItem(GatherEnum.GOLD_ORE.name()),
+                        manager.getItem(GatherEnum.ZINC_ORE.name()),
+                        manager.getItem(GatherEnum.TITAN_ORE.name()),
+                        manager.getItem(GatherEnum.MITHRIL_ORE.name()),
+                        manager.getItem(GatherEnum.ADAMANTITE_ORE.name()),
+                        manager.getItem(GatherEnum.QUARTZ_ORE.name()),
+                        manager.getItem(GatherEnum.ETERNAL_FLAME_ORE.name()),
+                        manager.getItem(GatherEnum.AETHERELITE_ORE.name()),
+                        manager.getItem(GatherEnum.TENEBRIS_ORE.name()))
                 .bulid());
 
-        itemStackInventoryHashMap.put(ItemStackManager.getInstance().getItem(OreItems.OreItemNames.MENU_LUMBER.name()), new GuiConstructor(27,
+        itemStackInventoryHashMap.put(manager.getItem(GatherEnum.MENU_LUMBER.name()), new GuiConstructor(27,
                 ChatColor.RED + "Лесорубство")
 
                 .bulid());
 
-        itemStackInventoryHashMap.put(ItemStackManager.getInstance().getItem(OreItems.OreItemNames.MENU_FARMING.name()), new GuiConstructor(27,
+        itemStackInventoryHashMap.put(manager.getItem(GatherEnum.MENU_FARMING.name()), new GuiConstructor(27,
                 ChatColor.RED + "Фермерство")
 
                 .bulid());
 
-        itemStackInventoryHashMap.put(ItemStackManager.getInstance().getItem(OreItems.OreItemNames.MENU_FISHING.name()), new GuiConstructor(27,
+        itemStackInventoryHashMap.put(manager.getItem(GatherEnum.MENU_FISHING.name()), new GuiConstructor(27,
                 ChatColor.RED + "Рыболовство")
 
                 .bulid());

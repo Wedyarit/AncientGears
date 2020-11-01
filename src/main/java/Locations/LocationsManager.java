@@ -1,13 +1,5 @@
 package Locations;
 
-import Gathering.Crop.Crop;
-import Gathering.Fish.Fish;
-import Gathering.ItemStackManager;
-import Gathering.Ore.Ore;
-import Gathering.ResourceManager;
-import Gathering.Tool;
-import Gathering.Tree.Tree;
-
 import java.util.ArrayList;
 
 public class LocationsManager {

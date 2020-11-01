@@ -1,13 +1,10 @@
-package Gathering.Ore;
+package Gather.Resources;
 
-import org.bukkit.entity.ArmorStand;
-import org.bukkit.entity.Item;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.ArrayList;
-
-public class Ore {
+public class Resource {
     private final String name;
+    private final ResourceType type;
     private final Integer tier;
     private final ItemStack material;
     private final ItemStack drop;
@@ -17,8 +14,9 @@ public class Ore {
 
 
 
-    public Ore(String name, Integer tier, ItemStack material, ItemStack drop, Double chance, Integer cooldown, Integer durability) {
+    public Resource(String name, ResourceType type, Integer tier, ItemStack material, ItemStack drop, Double chance, Integer cooldown, Integer durability) {
         this.name = name;
+        this.type = type;
         this.tier = tier;
         this.drop = drop;
         this.chance = chance;
@@ -27,6 +25,9 @@ public class Ore {
         this.material = material;
     }
 
+    public ResourceType getType() {
+        return type;
+    }
     public String getName() {
         return this.name;
     }

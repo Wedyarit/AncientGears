@@ -1,9 +1,7 @@
 package Entity;
 
-import Gathering.ResourceManager;
-import org.bukkit.entity.LivingEntity;
+import Gather.ResourceManager;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
 

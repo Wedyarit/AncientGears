@@ -2,9 +2,8 @@ package Recipes;
 
 import AncientGears.AncientGears;
 import GUI.GUIManager;
-import Gathering.ItemStackManager;
-import Gathering.Ore.OreItems;
-import org.bukkit.Bukkit;
+import Gather.GatherEnum;
+import Gather.ItemStackManager;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -21,8 +20,8 @@ public class BlastFurnaceRecipesManager {
 
     public static void InitializeBlastFurnaceRecipes() {
         blastFurnaceRecipes.add(new BlastFurnaceRecipe(new HashMap<ItemStack, Integer>() {{
-            put(ItemStackManager.getInstance().getItem(OreItems.OreItemNames.COAL_ORE.name()), 3);
-            put(ItemStackManager.getInstance().getItem(OreItems.OreItemNames.IRON_ORE.name()), 1);
+            put(ItemStackManager.getInstance().getItem(GatherEnum.COAL_ORE.name()), 3);
+            put(ItemStackManager.getInstance().getItem(GatherEnum.IRON_ORE.name()), 1);
         }}, new ItemStack(Material.IRON_INGOT, 2), 2));
     }
 

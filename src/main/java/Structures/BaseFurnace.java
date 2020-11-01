@@ -1,9 +1,6 @@
-package Gathering.Structures;
+package Structures;
 
 import org.bukkit.entity.ArmorStand;
-import org.bukkit.inventory.ItemStack;
-
-import java.util.ArrayList;
 
 public class BaseFurnace {
     private ArmorStand as;

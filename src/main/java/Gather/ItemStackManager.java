@@ -1,4 +1,4 @@
-package Gathering;
+package Gather;
 
 import org.bukkit.inventory.ItemStack;
 

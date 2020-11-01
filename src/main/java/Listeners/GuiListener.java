@@ -1,21 +1,17 @@
 package Listeners;
 
-import AncientGears.AncientGears;
 import GUI.GUIEnums;
 import GUI.GUIManager;
-import Gathering.ItemStackManager;
-import Gathering.Ore.Ore;
-import Gathering.Ore.OreItems;
-import Gathering.ResourceManager;
-import Gathering.Tool;
+import Gather.*;
+import Gather.Resources.Ore;
+import Gather.Resources.Resource;
+import Gather.Tools.Pickaxe;
+import Gather.Tools.Tool;
 import Recipes.BlastFurnaceRecipesManager;
-import Utilities.GuiConstructor;
 import Utilities.ResourceConstructor;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.World;
-import org.bukkit.block.BlastFurnace;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -32,12 +28,14 @@ import java.util.HashMap;
 
 public class GuiListener extends BaseListener {
     private final HashMap<ItemStack, Inventory> itemStackInventoryHashMap = GUIManager.itemStackInventoryHashMap;
+    private static final ResourceManager resourceM =  ResourceManager.getInstance();
+    private static final ItemStackManager ItemStackM = ItemStackManager.getInstance();
 
 
     @EventHandler
     public void onInteract(PlayerInteractEvent e) {
         if (e.getItem() == null) return;
-        if (!e.getItem().equals(ItemStackManager.getInstance().getItem(OreItems.OreItemNames.MENU_PROF.name()))) return;
+        if (!e.getItem().equals(ItemStackManager.getInstance().getItem(GatherEnum.MENU_PROF.name()))) return;
         e.getPlayer().openInventory(itemStackInventoryHashMap.get(e.getItem()));
     }
 
@@ -52,17 +50,17 @@ public class GuiListener extends BaseListener {
     @EventHandler
     public void onToolGuiClick(final InventoryClickEvent e) {
         Inventory inv = e.getInventory();
-        if (inv != itemStackInventoryHashMap.get(ItemStackManager.getInstance().getItem(OreItems.OreItemNames.MENU_TOOLS.name()))) return;
+        if (inv != itemStackInventoryHashMap.get(ItemStackManager.getInstance().getItem(GatherEnum.MENU_TOOLS.name()))) return;
         e.setCancelled(true);
 
         final ItemStack clickedItem = e.getCurrentItem();
         if (clickedItem == null || clickedItem.getType() == Material.AIR) return;
         Player player = (Player) e.getWhoClicked();
 
-        ArrayList<Tool> toolArrayList = ResourceManager.getInstance().getToolArrayList();
-        for (Tool tool : toolArrayList) {
-            if (clickedItem.equals(tool.getTool())) {
-                player.getInventory().addItem(tool.getTool());
+        ArrayList<Pickaxe> pickaxesArrayList = resourceM.getPickaxesArrayList();
+        for (Pickaxe pickaxe : pickaxesArrayList) {
+            if (clickedItem.equals(pickaxe.getTool())) {
+                player.getInventory().addItem(pickaxe.getTool());
                 break;
             }
         }
@@ -72,14 +70,14 @@ public class GuiListener extends BaseListener {
     @EventHandler
     public void onOreGuiClick(final InventoryClickEvent e) {
         Inventory inv = e.getInventory();
-        if (inv != itemStackInventoryHashMap.get(ItemStackManager.getInstance().getItem(OreItems.OreItemNames.MENU_MINING.name()))) return;
+        if (inv != itemStackInventoryHashMap.get(ItemStackManager.getInstance().getItem(GatherEnum.MENU_MINING.name()))) return;
         e.setCancelled(true);
 
         final ItemStack clickedItem = e.getCurrentItem();
         if (clickedItem == null || clickedItem.getType() == Material.AIR) return;
         Player player = (Player) e.getWhoClicked();
         World world = player.getWorld();
-        ArrayList<Ore> oreArrayList = ResourceManager.getInstance().getOreArrayList();
+        ArrayList<Ore> oreArrayList = resourceM.getOreArrayList();
         ArmorStand as = (ArmorStand) world.spawnEntity(player.getLocation(), EntityType.ARMOR_STAND);
         for (Ore ore : oreArrayList) {
             if (clickedItem.equals(ore.getDrop())) {
@@ -97,7 +95,7 @@ public class GuiListener extends BaseListener {
     @EventHandler
     public void onGatheringGuiClick(final InventoryClickEvent e) {
         Inventory inv = e.getInventory();
-        if (inv != itemStackInventoryHashMap.get(ItemStackManager.getInstance().getItem(OreItems.OreItemNames.MENU_PROF.name()))) return;
+        if (inv != itemStackInventoryHashMap.get(ItemStackM.getItem(GatherEnum.MENU_PROF.name()))) return;
         e.setCancelled(true);
 
         final ItemStack clickedItem = e.getCurrentItem();

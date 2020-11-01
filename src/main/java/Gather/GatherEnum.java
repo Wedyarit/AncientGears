@@ -1,0 +1,58 @@
+package Gather;
+
+public enum GatherEnum {
+    STONE_ORE,
+    COAL_ORE,
+    IRON_ORE,
+    TIN_ORE,
+    COPPER_ORE,
+    ZINC_ORE,
+    GOLD_ORE,
+    TITAN_ORE,
+    PLATINUM_ORE,
+    MITHRIL_ORE,
+    ADAMANTITE_ORE,
+    QUARTZ_ORE,
+    ETERNAL_FLAME_ORE,
+    AETHERELITE_ORE,
+    TENEBRIS_ORE,
+
+    COAL,
+
+    T1_PICKAXE,
+    T2_PICKAXE,
+    T3_PICKAXE,
+    T4_PICKAXE,
+    T5_PICKAXE,
+    T6_PICKAXE,
+
+    T1_AXE,
+    T2_AXE,
+    T3_AXE,
+    T4_AXE,
+    T5_AXE,
+    T6_AXE,
+
+    T1_FISHING_ROD,
+    T2_FISHING_ROD,
+    T3_FISHING_ROD,
+    T4_FISHING_ROD,
+    T5_FISHING_ROD,
+    T6_FISHING_ROD,
+
+    T1_HOE,
+    T2_HOE,
+    T3_HOE,
+    T4_HOE,
+    T5_HOE,
+    T6_HOE,,
+
+    BRASS_INGOT,
+
+    MENU_MINING,
+    MENU_FISHING,
+    MENU_TOOLS,
+    MENU_LUMBER,
+    MENU_FARMING,
+    MENU_PROF,
+}

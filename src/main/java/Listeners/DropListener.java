@@ -1,20 +1,17 @@
 package Listeners;
 
 import AncientGears.AncientGears;
-import Gathering.ItemStackManager;
-import Gathering.Ore.Ore;
-import Gathering.Ore.OreItems;
-import Gathering.Structures.BaseRecipe;
-import org.bukkit.Bukkit;
+import Gather.GatherEnum;
+import Gather.ItemStackManager;
+import Gather.GatherItems;
+import Structures.BaseRecipe;
 import org.bukkit.Particle;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.entity.EntityPickupItemEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
-import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -25,7 +22,7 @@ import java.util.Collection;
 public class DropListener extends BaseListener {
     private ArrayList<BaseRecipe> getRecipes() {
         ArrayList<BaseRecipe> arrayList = new ArrayList<>();
-        arrayList.add(new BaseRecipe(recipe(ItemStackManager.getInstance().getItem(OreItems.OreItemNames.ZINC_ORE.name()), ItemStackManager.getInstance().getItem(OreItems.OreItemNames.ZINC_ORE.name())), ItemStackManager.getInstance().getItem(OreItems.OreItemNames.BRASS_INGOT.name()), 2));
+        arrayList.add(new BaseRecipe(recipe(ItemStackManager.getInstance().getItem(GatherEnum.ZINC_ORE.name()), ItemStackManager.getInstance().getItem(GatherEnum.ZINC_ORE.name())), ItemStackManager.getInstance().getItem(GatherEnum.BRASS_INGOT.name()), 2));
         return arrayList;
     }
 

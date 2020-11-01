@@ -1,25 +1,25 @@
-package Gathering;
+package Gather.Tools;
 
 import org.bukkit.inventory.ItemStack;
 
 public class Tool {
-    private final Integer tier;
-    private final ItemStack tool;
-    private final Integer speed;
-    private final String toolType;
-    private final Integer luckFactor;
-
     public enum Type {
         PICKAXE,
         AXE,
-        FISHROD,
-        HOE;
+        FISHING_ROD,
+        HOE
     }
 
-    public Tool(Type toolType,  Integer tier, ItemStack tool, Integer speed, Integer luckFactor) {
+    private final Integer tier;
+    private final ItemStack tool;
+    private final Integer gatherPower;
+    private final String toolType;
+    private final Integer luckFactor;
+
+    public Tool(Type toolType, Integer tier, ItemStack tool, Integer gatherPower, Integer luckFactor) {
         this.tool = tool;
         this.tier = tier;
-        this.speed = speed;
+        this.gatherPower = gatherPower;
         this.toolType = toolType.name();
         this.luckFactor = luckFactor;
     }
@@ -36,8 +36,8 @@ public class Tool {
         return this.tier;
     }
 
-    public Integer getSpeed() {
-        return this.speed;
+    public Integer gatherPower() {
+        return this.gatherPower;
     }
 
     public Integer getLuckFactor() {

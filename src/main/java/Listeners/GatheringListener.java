@@ -1,10 +1,11 @@
 package Listeners;
 
-import Gathering.Ore.Ore;
-import Gathering.Ore.OreItems;
+import Gather.Resources.Ore;
+import Gather.Resources.Resource;
 import AncientGears.AncientGears;
-import Gathering.ResourceManager;
-import Gathering.Tool;
+import Gather.ResourceManager;
+import Gather.Tools.Pickaxe;
+import Gather.Tools.Tool;
 import com.google.common.base.Strings;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -15,20 +16,19 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityInteractEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
 
 
 public class GatheringListener extends BaseListener {
     public static boolean regenOre = false;
+    private static final ResourceManager rManager = ResourceManager.getInstance();
 
-    private int isContains(ArrayList<Tool> arrayList, ItemStack tool1) {
-        for (Tool tool : arrayList)
-            if (tool.getTool().equals(tool1)) return arrayList.indexOf(tool);
+    private int isContains(ArrayList<Pickaxe> arrayList, ItemStack pickaxe) {
+        for (Pickaxe tool : arrayList)
+            if (tool.getTool().equals(pickaxe)) return arrayList.indexOf(tool);
         return -1;
     }
 
@@ -38,15 +38,15 @@ public class GatheringListener extends BaseListener {
         Player player = (Player) e.getDamager();
         if (!(e.getEntity() instanceof ArmorStand)) return;
         ArmorStand resource = (ArmorStand) e.getEntity();
-        ArrayList<Ore> oreArrayList = ResourceManager.getInstance().getOreArrayList();
-        ArrayList<Tool> toolArrayList = ResourceManager.getInstance().getToolArrayList();
+        ArrayList<Ore> oreArrayList = rManager.getOreArrayList();
+        ArrayList<Pickaxe> pickaxesArrayList = rManager.getPickaxesArrayList();
         if (resource.getCustomName() != null)
             for (Ore ore : oreArrayList)
-                if (isContains(toolArrayList, player.getInventory().getItemInMainHand()) != -1)
+                if (isContains(pickaxesArrayList, player.getInventory().getItemInMainHand()) != -1)
                     if (resource.getCustomName().equals(ChatColor.GOLD + "[T" + ore.getTier() + "] " + ore.getName())) {
-                        int tier = toolArrayList.get(isContains(toolArrayList, player.getInventory().getItemInMainHand())).getTier();
+                        int tier = pickaxesArrayList.get(isContains(pickaxesArrayList, player.getInventory().getItemInMainHand())).getTier();
                         if (tier >= ore.getTier()) {
-                            gather(resource, toolArrayList.get(isContains(toolArrayList, player.getInventory().getItemInMainHand())), player, ore);
+                            gather(resource, pickaxesArrayList.get(isContains(pickaxesArrayList, player.getInventory().getItemInMainHand())), player, ore);
                             break;
                         } else {
                             player.sendMessage(AncientGears.prefix + player.getInventory().getItemInMainHand().getItemMeta().getDisplayName() + ChatColor.RED + " не может добыть " + ore.getName() + ChatColor.RED + ", нужна кирка минимум " + ChatColor.GRAY + ore.getTier() + ChatColor.RED + " тира!");
@@ -81,11 +81,11 @@ public class GatheringListener extends BaseListener {
                 + Strings.repeat("" + notCompletedColor + symbol, totalBars - progressBars);
     }
 
-    private void gather(ArmorStand as, Tool tool, Player player, Ore ore) {
+    private void gather(ArmorStand as, Tool tool, Player player, Resource ore) {
 
         new BukkitRunnable() {
             final String name = as.getCustomName();
-            final int power = tool.getSpeed();
+            final int power = tool.gatherPower();
             int current = ore.getDurability() + power;
             final char symbol = '|';
             final int maxDistance = 4;

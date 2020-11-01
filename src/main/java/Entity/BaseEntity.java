@@ -18,7 +18,7 @@ public class BaseEntity {
     private final LivingEntity entity;
     private final String name;
     private final int level;
-    private boolean isBoss;
+    private final boolean isBoss;
     private final ArrayList<ItemStack> specialDrop = new ArrayList<>();
     private final UUID uuid;
 
