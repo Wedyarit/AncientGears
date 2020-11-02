@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class ItemStackManager {
-    private final HashMap<String,ItemStack> itemStackHashMap = new HashMap<>();
+    private final HashMap<GatherEnum, ItemStack> itemStackHashMap = new HashMap<>();
     private static volatile ItemStackManager instance;
 
     public ItemStackManager() {
@@ -18,8 +18,8 @@ public class ItemStackManager {
     }
 
 
-    public ItemStack getItem(String name) {
-        for (String key : itemStackHashMap.keySet())
+    public ItemStack getItem(GatherEnum name) {
+        for (GatherEnum key : itemStackHashMap.keySet())
             if (key.equals(name)) return itemStackHashMap.get(key);
             return null;
     }

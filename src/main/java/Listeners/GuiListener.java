@@ -35,7 +35,7 @@ public class GuiListener extends BaseListener {
     @EventHandler
     public void onInteract(PlayerInteractEvent e) {
         if (e.getItem() == null) return;
-        if (!e.getItem().equals(ItemStackManager.getInstance().getItem(GatherEnum.MENU_PROF.name()))) return;
+        if (!e.getItem().equals(ItemStackManager.getInstance().getItem(GatherEnum.MENU_PROF))) return;
         e.getPlayer().openInventory(itemStackInventoryHashMap.get(e.getItem()));
     }
 
@@ -50,7 +50,7 @@ public class GuiListener extends BaseListener {
     @EventHandler
     public void onToolGuiClick(final InventoryClickEvent e) {
         Inventory inv = e.getInventory();
-        if (inv != itemStackInventoryHashMap.get(ItemStackManager.getInstance().getItem(GatherEnum.MENU_TOOLS.name()))) return;
+        if (inv != itemStackInventoryHashMap.get(ItemStackManager.getInstance().getItem(GatherEnum.MENU_TOOLS))) return;
         e.setCancelled(true);
 
         final ItemStack clickedItem = e.getCurrentItem();
@@ -70,15 +70,15 @@ public class GuiListener extends BaseListener {
     @EventHandler
     public void onOreGuiClick(final InventoryClickEvent e) {
         Inventory inv = e.getInventory();
-        if (inv != itemStackInventoryHashMap.get(ItemStackManager.getInstance().getItem(GatherEnum.MENU_MINING.name()))) return;
+        if (inv != itemStackInventoryHashMap.get(ItemStackManager.getInstance().getItem(GatherEnum.MENU_MINING))) return;
         e.setCancelled(true);
 
         final ItemStack clickedItem = e.getCurrentItem();
         if (clickedItem == null || clickedItem.getType() == Material.AIR) return;
         Player player = (Player) e.getWhoClicked();
         World world = player.getWorld();
-        ArrayList<Ore> oreArrayList = resourceM.getOreArrayList();
-        ArmorStand as = (ArmorStand) world.spawnEntity(player.getLocation(), EntityType.ARMOR_STAND);
+        ArrayList<Resource> oreArrayList = resourceM.getResourceArrayList();
+        Ore ore = new Ore(player.getLocation(),)
         for (Ore ore : oreArrayList) {
             if (clickedItem.equals(ore.getDrop())) {
                 as = new ResourceConstructor(as)
@@ -95,7 +95,7 @@ public class GuiListener extends BaseListener {
     @EventHandler
     public void onGatheringGuiClick(final InventoryClickEvent e) {
         Inventory inv = e.getInventory();
-        if (inv != itemStackInventoryHashMap.get(ItemStackM.getItem(GatherEnum.MENU_PROF.name()))) return;
+        if (inv != itemStackInventoryHashMap.get(ItemStackM.getItem(GatherEnum.MENU_PROF))) return;
         e.setCancelled(true);
 
         final ItemStack clickedItem = e.getCurrentItem();

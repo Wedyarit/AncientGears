@@ -6,80 +6,25 @@ import Gather.Tools.*;
 import java.util.ArrayList;
 
 public class ResourceManager {
-    private final ArrayList<Ore> oreArrayList = new ArrayList<>();
-    private final ArrayList<Tree> treesArrayList = new ArrayList<>();
-    private final ArrayList<Fish> fishArrayList = new ArrayList<>();
-    private final ArrayList<Crop> cropsArrayList = new ArrayList<>();
-
-    private final ArrayList<Pickaxe> pickaxesArrayList = new ArrayList<>();
-    private final ArrayList<Axe> axesArrayList = new ArrayList<>();
-    private final ArrayList<FishingRod> frArrayList = new ArrayList<>();
-    private final ArrayList<Hoe> hoesArrayList = new ArrayList<>();
+    private final ArrayList<Tool> toolArrayList = new ArrayList<>();
+    private final ArrayList<Resource> resourceArrayList = new ArrayList<>();
 
     private static ResourceManager instance;
 
-    public void addOre(Ore ore) {
-        oreArrayList.add(ore);
+    public void addResource(Resource resource) {
+        resourceArrayList.add(resource);
     }
 
-    public void addTree(Tree tree) {
-        treesArrayList.add(tree);
+    public void addTool(Tool tool) {
+        toolArrayList.add(tool);
     }
 
-    public void addFish(Fish fish) {
-        fishArrayList.add(fish);
+    public ArrayList<Resource> getResourceArrayList() {
+        return resourceArrayList;
     }
 
-    public void addCrop(Crop crop) {
-        cropsArrayList.add(crop);
-    }
-
-    public void addPickaxe(Pickaxe pickaxe) {
-        pickaxesArrayList.add(pickaxe);
-    }
-
-    public void addAxe(Axe axe) {
-        axesArrayList.add(axe);
-    }
-
-    public void addFishingRod(FishingRod rod) {
-        frArrayList.add(rod);
-    }
-
-    public void addHoe(Hoe hoe) {
-        hoesArrayList.add(hoe);
-    }
-
-    public ArrayList<Ore> getOreArrayList() {
-        return oreArrayList;
-    }
-
-    public ArrayList<Tree> getTreesArrayList() {
-        return treesArrayList;
-    }
-
-    public ArrayList<Crop> getCropsArrayList() {
-        return cropsArrayList;
-    }
-
-    public ArrayList<Fish> getFishArrayList() {
-        return fishArrayList;
-    }
-
-    public ArrayList<Axe> getAxesArrayList() {
-        return axesArrayList;
-    }
-
-    public ArrayList<FishingRod> getFrArrayList() {
-        return frArrayList;
-    }
-
-    public ArrayList<Hoe> getHoesArrayList() {
-        return hoesArrayList;
-    }
-
-    public ArrayList<Pickaxe> getPickaxesArrayList() {
-        return pickaxesArrayList;
+    public ArrayList<Tool> getToolArrayList() {
+        return toolArrayList;
     }
 
     public static ResourceManager getInstance() {

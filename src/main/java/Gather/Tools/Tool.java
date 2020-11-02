@@ -2,29 +2,25 @@ package Gather.Tools;
 
 import org.bukkit.inventory.ItemStack;
 
-public class Tool {
-    public enum Type {
-        PICKAXE,
-        AXE,
-        FISHING_ROD,
-        HOE
-    }
+public class Tool extends org.bukkit.inventory.ItemStack {
+
 
     private final Integer tier;
     private final ItemStack tool;
     private final Integer gatherPower;
-    private final String toolType;
+    private final ResourceTypeEnum toolType;
     private final Integer luckFactor;
 
-    public Tool(Type toolType, Integer tier, ItemStack tool, Integer gatherPower, Integer luckFactor) {
-        this.tool = tool;
+    public Tool(Integer tier, ItemStack tool, Integer gatherPower, ResourceTypeEnum toolType, Integer luckFactor) {
         this.tier = tier;
+        this.tool = tool;
         this.gatherPower = gatherPower;
-        this.toolType = toolType.name();
+        this.toolType = toolType;
         this.luckFactor = luckFactor;
     }
 
-    public String getType() {
+
+    public ResourceTypeEnum getToolType() {
         return this.toolType;
     }
 
