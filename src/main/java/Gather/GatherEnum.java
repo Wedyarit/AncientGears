@@ -54,5 +54,5 @@ public enum GatherEnum {
     MENU_TOOLS,
     MENU_LUMBER,
     MENU_FARMING,
-    MENU_PROF,
+    MENU_PROF
 }
