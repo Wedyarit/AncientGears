@@ -1,16 +1,20 @@
 package Commands;
 
 import AncientGears.AncientGears;
-import net.minecraft.server.v1_12_R1.EnumItemSlot;
-import net.minecraft.server.v1_12_R1.ItemStack;
-import net.minecraft.server.v1_12_R1.Item;
+import com.mojang.authlib.GameProfile;
+import net.minecraft.server.v1_16_R2.*;
+import net.minecraft.server.v1_16_R2.Item;
+import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import NPC.NPC;
+import org.bukkit.craftbukkit.v1_16_R2.CraftServer;
+import org.bukkit.craftbukkit.v1_16_R2.CraftWorld;
+import org.bukkit.craftbukkit.v1_16_R2.entity.CraftPlayer;
 import org.bukkit.entity.*;
 import org.bukkit.event.Listener;
+import java.util.UUID;
 
-import java.io.IOException;
 
 public class CommandTest implements CommandExecutor, Listener {
 
@@ -18,36 +22,16 @@ public class CommandTest implements CommandExecutor, Listener {
     public boolean onCommand(CommandSender sender, org.bukkit.command.Command cmd, String label, String[] args) {
         if (sender instanceof Player) {
             Player player = (Player) sender;
-            final boolean fixhead = true;
-            final boolean tablist = true;
+            Location playerLocation = player.getLocation();
+            MinecraftServer server = ((CraftServer)AncientGears.getInstance().getServer()).getServer();
+            WorldServer worldServer = ((CraftWorld)AncientGears.getInstance().getServer().getWorlds().get(0)).getHandle();
+            EntityPlayer npc = new EntityPlayer(server,worldServer,new GameProfile(UUID.randomUUID(), ChatColor.DARK_AQUA + "" + ChatColor.BOLD + "Hello"), new PlayerInteractManager(worldServer));
 
-            NPC npc = new NPC("name", player.getLocation(), AncientGears.getInstance());
+            npc.setLocation(playerLocation.getX(), playerLocation.getY(), playerLocation.getZ(), playerLocation.getYaw(), playerLocation.getPitch());
 
-            npc.setRecipientType(NPC.Recipient.LISTED_RECIPIENTS); //EDIT THE PACKET RECEIVERS
-            npc.addRecipient(player); //ADDING PLAYER TO PACKET RECEIVERS
-            npc.setSkin("(texture)", "(signature)"); //SET THE SKIN TEXTURES AND SIGNATURE
-            //PRE - INIT
-
-            npc.spawn(tablist, fixhead);
-            npc.setAnimation(NPC.NPCAnimation.SWING_MAIN_HAND);
-
-            try {
-                npc.setDisplayName("myglobalname");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            try {
-                npc.setDisplayNameAboveHead("name above head");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            npc.setTablistName("my new tablist name");
-            npc.setAction(new NPC.Action()
-                    .setCrouched(true)
-                    .setGlowing(true)
-            );
-            npc.setEquipment(EnumItemSlot.MAINHAND, new ItemStack(Item.getById(1)));
+            PlayerConnection playerConnection = ((CraftPlayer)player).getHandle().playerConnection;
+            playerConnection.sendPacket(new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.ADD_PLAYER, npc));
+            playerConnection.sendPacket(new PacketPlayOutNamedEntitySpawn(npc));
 //
 //            ItemStackManager instance = ItemStackManager.getInstance();
 //            double angle = 1.0;

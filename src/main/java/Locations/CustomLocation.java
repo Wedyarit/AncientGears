@@ -70,7 +70,6 @@ public class CustomLocation {
                 player.stopSound(location.getRecord());
                 location.removePlayer(player);
                 if (playerLocation == null) {
-                    player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 10, 1);
                     player.sendTitle("Локация обновлена", ChatColor.GOLD + "Неизведованные земли", 20, 25, 20);
                     return;
                 }
@@ -82,9 +81,8 @@ public class CustomLocation {
     }
 
     private static void processPlayer(Player player, CustomLocation playerLocation) {
-        player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 10, 1);
         player.sendTitle("Локация обновлена", ChatColor.GOLD + playerLocation.getName(), 20, 25, 20);
-        player.playSound(player.getLocation(), playerLocation.getRecord(), 10, 1);
+        player.playSound(player.getLocation(), playerLocation.getRecord(), 2, 1);
     }
 
     private static CustomLocation getPlayerLocation(Player player) {
