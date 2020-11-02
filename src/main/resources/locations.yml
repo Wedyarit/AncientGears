@@ -1,0 +1,25 @@
+locations:
+  lobby:
+    name: Лобби
+    world: world
+    music: MUSIC_DISC_11
+    location1:
+      x: 100
+      y: 100
+      z: 100
+    location2:
+      x: -100
+      y: -100
+      z: -100
+  cooperhelm:
+    name: Остров Куперхэльм
+    world: world
+    music: MUSIC_DISC_BLOCKS
+    location1:
+      x: 3650
+      y: 170
+      z: 1580
+    location2:
+      x: 3440
+      y: 0
+      z: 1370

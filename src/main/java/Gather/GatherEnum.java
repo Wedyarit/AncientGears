@@ -45,7 +45,7 @@ public enum GatherEnum {
     T3_HOE,
     T4_HOE,
     T5_HOE,
-    T6_HOE,,
+    T6_HOE,
 
     BRASS_INGOT,
 

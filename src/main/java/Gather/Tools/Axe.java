@@ -5,6 +5,6 @@ import org.bukkit.inventory.ItemStack;
 
 public class Axe extends Tool {
     public Axe(Integer tier, ItemStack tool, Integer gatherPower, Integer luckFactor) {
-        super(Tool.Type.HOE, tier, tool, gatherPower, luckFactor);
+        super(Type.AXE, tier, tool, gatherPower, luckFactor);
     }
 }

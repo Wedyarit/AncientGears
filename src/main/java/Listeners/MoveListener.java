@@ -14,25 +14,6 @@ public class MoveListener extends BaseListener {
     @EventHandler(priority = EventPriority.LOW)
     public void onMove(PlayerMoveEvent e) {
         Player player = e.getPlayer();
-        for (CustomLocation location : LocationsManager.getInstance().getlocationArrayList()) {
-            if (location.isInLocation(player)) {
-                if (!location.isAlreadyBeenInLocation(player)) {
-                    player.sendTitle("Локация обновлена", ChatColor.GOLD + location.getName(), 20, 25, 20);
-                    player.playSound(player.getLocation(), location.getRecord(), 10, 1);
-                    location.addPlayer(player);
-                    return;
-                }
-            }
-        }
-        for (CustomLocation location : LocationsManager.getInstance().getlocationArrayList()) {
-            if (!location.isInLocation(player)) {
-                if (location.isAlreadyBeenInLocation(player)) {
-                    player.sendTitle("Локация обновлена", ChatColor.GOLD + "Неизведованные земли", 20, 25, 20);
-                    player.stopSound(location.getRecord());
-                    location.removePlayer(player);
-                    return;
-                }
-            }
-        }
+        CustomLocation.updateLocation(player);
     }
 }

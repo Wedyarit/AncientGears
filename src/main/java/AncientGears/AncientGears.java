@@ -35,7 +35,6 @@ public final class AncientGears extends JavaPlugin {
         InitializeAllLocations();
         InitializeBlastFurnaceRecipes();
         registerListeners();
-
     }
 
     @Override

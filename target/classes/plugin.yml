@@ -1,0 +1,17 @@
+name: AncientGears
+version: 1.0-SNAPSHOT
+main: AncientGears.AncientGears
+api-version: 1.13
+prefix: Ancient Gear
+authors: [bob302, Doggy4]
+description: BestLife Clan Event (Excalibur-Craft)
+commands:
+  kit:
+    description: Kit command
+    usage: /<command>
+  regenAll:
+    description: RegenAll command
+    usage: /<command>
+  test:
+    description: CommandTest command
+    usage: /<command>

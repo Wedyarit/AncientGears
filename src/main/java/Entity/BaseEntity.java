@@ -43,7 +43,7 @@ public class BaseEntity {
         entity.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(damage);
         entity.getAttribute(Attribute.GENERIC_ARMOR).setBaseValue(armor);
         entity.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(speed);
-
+        entity.setHealth(health);
         return this;
     }
 
