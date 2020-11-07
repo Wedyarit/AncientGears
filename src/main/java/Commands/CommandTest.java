@@ -1,20 +1,12 @@
 package Commands;
 
-import AncientGears.AncientGears;
-import com.mojang.authlib.GameProfile;
-import net.minecraft.server.v1_16_R2.*;
-import net.minecraft.server.v1_16_R2.Item;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
+import CustomMobs.AggressiveIronGolem;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.craftbukkit.v1_16_R2.CraftServer;
 import org.bukkit.craftbukkit.v1_16_R2.CraftWorld;
-import org.bukkit.craftbukkit.v1_16_R2.entity.CraftPlayer;
-import org.bukkit.entity.*;
+import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
-import java.util.UUID;
-
+import org.bukkit.event.entity.CreatureSpawnEvent;
 
 public class CommandTest implements CommandExecutor, Listener {
 
@@ -22,16 +14,20 @@ public class CommandTest implements CommandExecutor, Listener {
     public boolean onCommand(CommandSender sender, org.bukkit.command.Command cmd, String label, String[] args) {
         if (sender instanceof Player) {
             Player player = (Player) sender;
-            Location playerLocation = player.getLocation();
-            MinecraftServer server = ((CraftServer)AncientGears.getInstance().getServer()).getServer();
-            WorldServer worldServer = ((CraftWorld)AncientGears.getInstance().getServer().getWorlds().get(0)).getHandle();
-            EntityPlayer npc = new EntityPlayer(server,worldServer,new GameProfile(UUID.randomUUID(), ChatColor.DARK_AQUA + "" + ChatColor.BOLD + "Hello"), new PlayerInteractManager(worldServer));
+            AggressiveIronGolem superZombie = new AggressiveIronGolem(player.getLocation());
+            ((CraftWorld)player.getLocation().getWorld()).getHandle().addEntity(superZombie, CreatureSpawnEvent.SpawnReason.CUSTOM);
 
-            npc.setLocation(playerLocation.getX(), playerLocation.getY(), playerLocation.getZ(), playerLocation.getYaw(), playerLocation.getPitch());
 
-            PlayerConnection playerConnection = ((CraftPlayer)player).getHandle().playerConnection;
-            playerConnection.sendPacket(new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.ADD_PLAYER, npc));
-            playerConnection.sendPacket(new PacketPlayOutNamedEntitySpawn(npc));
+//            Location playerLocation = player.getLocation();
+//            MinecraftServer server = ((CraftServer)AncientGears.getInstance().getServer()).getServer();
+//            WorldServer worldServer = ((CraftWorld)AncientGears.getInstance().getServer().getWorlds().get(0)).getHandle();
+//            EntityPlayer npc = new EntityPlayer(server,worldServer,new GameProfile(UUID.randomUUID(), ChatColor.DARK_AQUA + "" + ChatColor.BOLD + "Hello"), new PlayerInteractManager(worldServer));
+//
+//            npc.setLocation(playerLocation.getX(), playerLocation.getY(), playerLocation.getZ(), playerLocation.getYaw(), playerLocation.getPitch());
+//
+//            PlayerConnection playerConnection = ((CraftPlayer)player).getHandle().playerConnection;
+//            playerConnection.sendPacket(new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.ADD_PLAYER, npc));
+//            playerConnection.sendPacket(new PacketPlayOutNamedEntitySpawn(npc));
 //
 //            ItemStackManager instance = ItemStackManager.getInstance();
 //            double angle = 1.0;

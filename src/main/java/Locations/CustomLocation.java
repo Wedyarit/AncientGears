@@ -4,6 +4,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Sound;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.IronGolem;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitTask;
 
@@ -82,7 +84,7 @@ public class CustomLocation {
 
     private static void processPlayer(Player player, CustomLocation playerLocation) {
         player.sendTitle("Локация обновлена", ChatColor.GOLD + playerLocation.getName(), 20, 25, 20);
-        player.playSound(player.getLocation(), playerLocation.getRecord(), 2, 1);
+        player.playSound(player.getLocation(), playerLocation.getRecord(), 1, 1);
     }
 
     private static CustomLocation getPlayerLocation(Player player) {
